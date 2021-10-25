@@ -2,15 +2,16 @@ package main.java.mvc.model.domain;
 
 import java.util.List;
 
-public class Contato extends Pessoa {
+public class Contato extends EntidadeDominio {
 	
+	private String nome;
 	private String email;
     private Departamento departamento;
     private Telefone telefone;
     private Fornecedor fornecedor;
 
     public Contato(String nome, String email, String departamento, Telefone telefone, Fornecedor fornecedor) {
-        super(nome);
+        this.nome = nome;
         this.email = email;
         this.departamento = new Departamento(departamento);
         this.telefone = telefone;
@@ -48,7 +49,16 @@ public class Contato extends Pessoa {
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
     
+	
     
 
 	

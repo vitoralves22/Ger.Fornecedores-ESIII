@@ -37,6 +37,7 @@ public class FormCadastroFornecedor {
         String cidadeEndereco;
         String ufEndereco;
         String paisEndereco;
+        String status;
         
         char outroCnae = 'n';
         char outroContato = 'n';
@@ -165,10 +166,14 @@ public class FormCadastroFornecedor {
         
         System.out.print("Pais Endereco: ");
         paisEndereco = sc.nextLine();
+        
+        System.out.print("Status: ");
+        status = sc.nextLine();
+
 
         ControleCadastroFornecedor.salvarFornecedor(nomeFantasia, razaoSocial, cnpj, inscricaoEstadual, inscricaoMunicipal, email, tipoEndereco, cepEndereco, 
                 tipoLogradouroEndereco, logradouroEndereco, numeroEndereco, bairroEndereco, complementoEndereco, cidadeEndereco, ufEndereco, paisEndereco, cnaes,
-                nomeContatos, dptoContatos, emailContatos, dddTelefoneContatos, ddiTelefoneContatos, numeroTelefoneContatos
+                nomeContatos, dptoContatos, emailContatos, dddTelefoneContatos, ddiTelefoneContatos, numeroTelefoneContatos, status
         		);
     	}
     

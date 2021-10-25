@@ -1,5 +1,6 @@
 package main.java.mvc.core.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,48 +8,56 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import main.java.mvc.core.util.Conexao;
-import main.java.mvc.model.domain.Endereco;
 import main.java.mvc.model.domain.EntidadeDominio;
 import main.java.mvc.model.domain.Fornecedor;
 
 public class FornecedorDAO extends AbstractJdbcDAO{
+	
+	public FornecedorDAO(Connection cx){
+		super(cx, "tab_fornecedores", "for_id");
+	}
 
     public FornecedorDAO() {
-        super("tab_fornecedor", "for_id");
+        super("tab_fornecedores", "for_id");
     }
 
     @Override
     public void salvar(EntidadeDominio entidade) throws SQLException {
-        openConnection();
-        PreparedStatement pst = null;
-        Fornecedor fornecedor = (Fornecedor)entidade;
-        Endereco end = fornecedor.getEndereco();
-        
-        try {
-            connection.setAutoCommit(false);
-            EnderecoDAO endDAO = new EnderecoDAO();
-            endDAO.connection = connection;
-            endDAO.ctrlTransaction = false;
-            endDAO.salvar(end);
-
+    	if(connection == null){
+			openConnection();
+		}
+		PreparedStatement pst=null;
+		
+        	Fornecedor fornecedor = (Fornecedor)entidade;
             StringBuilder sql = new StringBuilder();
-            //sql.append("INSERT INTO tb_fornecedor(nmFantasia, rzSocial, cnpj, cnaes, inscricaoEstadual, inscricaoMunicipal, email, end_id"); 
-            sql.append("INSERT INTO tab_fornecedor(for_nmFantasia, for_rzSocial, for_cnpj, for_inscEstadual, for_inscMunicipal, for_email, end_id, for_dtCadastro) "); 
-            sql.append(" VALUES (?,?,?,?,?,?,?,?)");
+            
+            sql.append("INSERT INTO tab_fornecedores(for_nmFantasia, for_rzSocial, for_cnpj, for_inscEstadual, for_inscMunicipal, for_email, for_status,"
+            		+ "for_end_tipo, for_end_cep, for_end_tipoLogradouro, for_end_logradouro, for_end_numero, for_end_bairro, for_end_complemento,"
+            		+ "for_end_cidade, for_end_estado_uf, for_end_pais, for_dtCadastro) "); 
+            sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            
+            try {
+                connection.setAutoCommit(false);
 
             pst = connection.prepareStatement(sql.toString());
             pst.setString(1, fornecedor.getNmFantasia());
             pst.setString(2, fornecedor.getRzSocial());
             pst.setString(3, fornecedor.getCnpj());
-            //pst.setArray(4, fornecedor.getCnaes()); //TODO resolver retorno de cnae(retorna cnae)
             pst.setString(4, fornecedor.getInscricaoEstadual());
             pst.setString(5, fornecedor.getInscricaoMunicipal());
             pst.setString(6, fornecedor.getEmail());
-            pst.setInt(7, end.getId());
-
-            Timestamp time = new Timestamp(fornecedor.getDtCadastro().getTime());
-            
-            pst.setTimestamp(8, time);
+            pst.setString(7, fornecedor.getStatus().getDescricao());
+            pst.setString(8, fornecedor.getEndereco().getTipo());
+            pst.setString(9, fornecedor.getEndereco().getCep());
+            pst.setString(10, fornecedor.getEndereco().getTipoLogradouro());
+            pst.setString(11, fornecedor.getEndereco().getLogradouro());
+            pst.setString(12, fornecedor.getEndereco().getNumero());
+            pst.setString(13, fornecedor.getEndereco().getBairro());
+            pst.setString(14, fornecedor.getEndereco().getComplemento());
+            pst.setString(15, fornecedor.getEndereco().getCidade());
+            pst.setString(16, fornecedor.getEndereco().getEstadoUf());
+            pst.setString(17, fornecedor.getEndereco().getPais());
+            pst.setTimestamp(18, new Timestamp(fornecedor.getDtCadastro().getTime()));
             pst.executeUpdate();
             
             

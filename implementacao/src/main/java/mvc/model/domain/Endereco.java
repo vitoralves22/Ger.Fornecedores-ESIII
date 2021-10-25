@@ -2,31 +2,12 @@ package main.java.mvc.model.domain;
 
 public class Endereco extends EntidadeDominio {
 	
-	public Endereco(TipoEndereco tipoEndereco, String cepEndereco,
-			TipoLogradouro tipoLogradouroEndereco, String logradouroEndereco, 
-			String numeroEndereco, String complementoEndereco, String bairroEndereco,
-			Cidade cidadeEndereco) {
 	
-	this.tipoEndereco = tipoEndereco;
 	
-	}
+	public Endereco(String tipoEndereco, String cepEndereco, String tipoLogradouro,
+			String logradouro, String numeroEndereco, String bairro, String complemento, String cidade, String uf, String pais) {
 	
-	/*public Endereco(Cidade cidade, String cepEndereco,
-			String logradouro, String numeroEndereco, String complementoEndereco, String bairroEndereco) {
-	
-	this.cidade = cidade;
-	this.cep = cepEndereco;
-	this.logradouro = logradouro;
-	this.numero = numeroEndereco;
-	this.complemento = complementoEndereco;
-	this.bairro = bairroEndereco;
-	
-	}*/
-	
-	public Endereco(TipoEndereco tipoEndereco, String cepEndereco, TipoLogradouro tipoLogradouro,
-			String logradouro, String numeroEndereco, String bairro, String complemento, Cidade cidade, Uf uf, Pais pais) {
-	
-	this.tipoEndereco = tipoEndereco;
+	this.tipo = tipoEndereco;
 	this.cep = cepEndereco;
 	this.tipoLogradouro = tipoLogradouro;
 	this.logradouro = logradouro;
@@ -34,8 +15,11 @@ public class Endereco extends EntidadeDominio {
 	this.complemento = complemento;
 	this.bairro = bairro;
 	this.cidade = cidade;
-	this.cidade.setUf(uf);
-	this.cidade.getUf().setPais(pais);
+	this.estadoUf = uf;
+	this.pais = pais;
+	}
+	
+	public Endereco(){
 	
 	}
 
@@ -44,10 +28,13 @@ public class Endereco extends EntidadeDominio {
     private String numero;
     private String bairro;
     private String complemento;
-
-    private TipoLogradouro tipoLogradouro;
-    private TipoEndereco tipoEndereco;
-    private Cidade cidade;
+    private String tipoLogradouro;
+    private String tipo;
+    private String cidade;
+    private String estadoUf;
+    private String pais;
+    
+    
 	public String getCep() {
 		return cep;
 	}
@@ -78,24 +65,55 @@ public class Endereco extends EntidadeDominio {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
-	public TipoLogradouro getTipoLogradouro() {
+
+	public String getTipoLogradouro() {
 		return tipoLogradouro;
 	}
-	public void setTipoLogradouro(TipoLogradouro tipoLogradouro) {
+
+	public void setTipoLogradouro(String tipoLogradouro) {
 		this.tipoLogradouro = tipoLogradouro;
 	}
-	public TipoEndereco getTipoEndereco() {
-		return tipoEndereco;
+
+	public String getTipo() {
+		return tipo;
 	}
-	public void setTipoEndereco(TipoEndereco tipoEndereco) {
-		this.tipoEndereco = tipoEndereco;
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
-	public Cidade getCidade() {
+
+	public String getCidade() {
 		return cidade;
 	}
-	public void setCidade(Cidade cidade) {
+
+	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
+
+	public String getEstadoUf() {
+		return estadoUf;
+	}
+
+	public void setEstadoUf(String estadoUf) {
+		this.estadoUf = estadoUf;
+	}
+
+
+	public String getPais() {
+		return pais;
+	}
+
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+	
+	
+	
+	
+	
+	
+	
     
     
     

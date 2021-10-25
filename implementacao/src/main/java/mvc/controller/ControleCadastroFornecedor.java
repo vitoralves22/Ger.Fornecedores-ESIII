@@ -103,51 +103,47 @@ public class ControleCadastroFornecedor {
     
 	public static String salvarFornecedor(
         	String nomeFantasia, String razaoSocial, String cnpj, String inscricaoEstadual, String inscricaoMunicipal, String email,
-            String tipoEndereco, String cepEndereco, String tipoLogradouroEndereco, String logradouroEndereco, String numeroEndereco, String bairroEndereco,
-            String complementoEndereco, String cidadeEndereco, String estadoEndereco, String paisEndereco, List<String> cnaes,
+            String tipoEndereco, String cepEndereco, String tipoLogradouro, String logradouroEndereco, String numeroEndereco, String bairroEndereco,
+            String complementoEndereco, String cidade, String estadoUf, String paisEndereco, List<String> cnaes,
             List<String> nomeContatos, List<String> dptoContatos, 
             List<String> emailContatos, List<String> dddTelefoneContatos,
-            List<String> ddiTelefoneContatos, List<String> numeroTelefoneContatos){
+            List<String> ddiTelefoneContatos, List<String> numeroTelefoneContatos, String status){
 		
-        /*List<Cnae> listaCnaes = new ArrayList<>();
-        for (String cnae : listaCnaesString) {
-            listaCnaes.add(new Cnae(cnae));
-        }
-
-        IDAO cnaeDAO; 
-
-        for(Cnae cnae : listaCnaes) {
-            try {
-                cnaeDAO = new CnaeDAO();
-                cnae.setDtCadastro(new Date());
-                cnaeDAO.salvar(cnae);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }*/
-		
-		TipoLogradouro tipoLogradouro = new TipoLogradouro(tipoLogradouroEndereco);
-        TipoEndereco tipoEnd = new TipoEndereco(tipoEndereco);	
-        Pais pais = new Pais(paisEndereco);
-        Uf uf = new Uf(estadoEndereco, pais);
-        Cidade cidade = new Cidade(cidadeEndereco,uf);
-        Endereco end = new Endereco(tipoEnd, cepEndereco, tipoLogradouro, logradouroEndereco, numeroEndereco, bairroEndereco, complementoEndereco, cidade, uf, pais);
-        end.setDtCadastro(new Date());
+        //Endereco end = new Endereco(tipoEndereco, cepEndereco, tipoLogradouro, logradouroEndereco, numeroEndereco, bairroEndereco, complementoEndereco, cidade, estadoUf, paisEndereco);
+        Endereco end = new Endereco();
+        end.setTipo(tipoEndereco);
+        end.setCep(cepEndereco);
+        end.setTipoLogradouro(tipoLogradouro);
+        end.setLogradouro(logradouroEndereco);
+        end.setNumero(numeroEndereco);
+        end.setBairro(bairroEndereco);
+        end.setComplemento(complementoEndereco);
+        end.setCidade(cidade);
+        end.setEstadoUf(estadoUf);
+        end.setPais(paisEndereco);
+       
         
         Fornecedor fornecedor = new Fornecedor();
-		fornecedor.setDtCadastro(new Date());
-		end.setDtCadastro(new Date());
         fornecedor.setEndereco(end);
-        fornecedor.setDtCadastro(new Date());
         fornecedor.setNmFantasia(nomeFantasia);
         fornecedor.setRzSocial(razaoSocial);
         fornecedor.setCnpj(cnpj);
         fornecedor.setInscricaoEstadual(inscricaoEstadual);
         fornecedor.setInscricaoMunicipal(inscricaoMunicipal);   
         fornecedor.setEmail(email);
+        fornecedor.getStatus().setDescricao(status);;
+        
+        IDAO dao = new FornecedorDAO();
+
+        try {
+            dao.salvar(fornecedor);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 		
         
-        List<Telefone> listaTelefones = new ArrayList<>();
+        /*List<Telefone> listaTelefones = new ArrayList<>();
         for (int i=0; i<numeroTelefoneContatos.size(); i++) {
             listaTelefones.add(new Telefone(dddTelefoneContatos.get(i), ddiTelefoneContatos.get(i), numeroTelefoneContatos.get(i)));
         }
@@ -160,23 +156,18 @@ public class ControleCadastroFornecedor {
                     nomeContatos.get(i),
                     emailContatos.get(i),
                     dptoContatos.get(i),
+                    
                     new Telefone(
                         dddTelefoneContatos.get(i),
                         ddiTelefoneContatos.get(i),
                         numeroTelefoneContatos.get(i)), fornecedor)
+                
             );
         }
         
+        
         fornecedor.setContatos(listaContatos);
         
-        
-        IDAO fornecedorDAO = new FornecedorDAO();
-
-        try {
-            fornecedorDAO.salvar(fornecedor);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         
     
         IDAO ContatoDAO;
@@ -201,6 +192,23 @@ public class ControleCadastroFornecedor {
                 e.printStackTrace();
             }
         }
+        
+        /*List<Cnae> listaCnaes = new ArrayList<>();
+        for (String cnae : listaCnaesString) {
+            listaCnaes.add(new Cnae(cnae));
+        }
+
+        IDAO cnaeDAO; 
+
+        for(Cnae cnae : listaCnaes) {
+            try {
+                cnaeDAO = new CnaeDAO();
+                cnae.setDtCadastro(new Date());
+                cnaeDAO.salvar(cnae);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }*/
 
 
         return ("Fornecedor " + nomeFantasia + " SALVO!");

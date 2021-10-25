@@ -14,6 +14,7 @@ public abstract class EntidadeDominio {
         this.id = id;
     }
     public Date getDtCadastro() {
+    	this.dtCadastro = new Date();
         return dtCadastro;
     }
     public void setDtCadastro(Date dtCadastro) {
