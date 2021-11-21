@@ -1,5 +1,6 @@
 package main.java.mvc.model.domain;
 
+import java.sql.Date;
 import java.util.List;
 
 public class Fornecedor extends EntidadeDominio {
@@ -13,18 +14,19 @@ public class Fornecedor extends EntidadeDominio {
     private String rzSocial;
     private String nmFantasia;
 
+    private List<Telefone> telefones;
     private List<Empresa> empresas;
     private List<Os> osRegistradas;
     private List<Servico> servicosOfertados;
     private List<Produto> produtosOfertados;
-    private Status status;
-    private TipoFornecimento tipoFornecimento;
+    private String status;
     private List<Contato> contatos;
     private List<Cnae> cnaes;
     private Endereco endereco;
 
-    public Fornecedor() {
-        System.out.println("Criando fornecedor com nome fantasia: ");
+    public Fornecedor() {}
+    public Fornecedor(Integer id){
+        super(id);
     }
     
     public Fornecedor(String nmFantasia, String rzSocial, String cnpj, String inscEstadual, String inscMunicipal, String email, Endereco end) {
@@ -34,9 +36,50 @@ public class Fornecedor extends EntidadeDominio {
     	this.inscricaoEstadual = inscEstadual;
     	this.inscricaoMunicipal = inscMunicipal;
     	this.email = email;
-    	this.endereco = end;
-        System.out.println("Criando fornecedor com nome fantasia: ");
+    	this.endereco = end;    
+    	System.out.println("Fornecedor criado com sucesso");
     }
+    
+    public Fornecedor(String nmFantasia, String rzSocial, String cnpj, String inscricaoEstadual, String inscricaoMunicipal,
+            String email, Endereco endereco, List<Cnae> cnaes, List<Telefone> telefones, List<Contato> contatos,
+            List <Empresa> empresas, List<Produto> produtosOfertados, List<Servico> servicosOfertados){
+        this.cnpj = cnpj;
+        this.rzSocial = rzSocial;
+        this.nmFantasia = nmFantasia;
+        this.inscricaoMunicipal = inscricaoMunicipal;
+        this.inscricaoEstadual = inscricaoEstadual;
+        this.cnaes = cnaes;
+        this.email = email;
+        this.telefones = telefones;
+        this.contatos = contatos;
+        this.endereco = endereco;
+        this.empresas = empresas;
+        this.produtosOfertados = produtosOfertados;
+        this.servicosOfertados = servicosOfertados;
+        this.status = "ATIVO";
+    }
+    
+    public Fornecedor(Integer id, String nmFantasia, String rzSocial, String cnpj, String inscricaoEstadual, String inscricaoMunicipal,
+            String email, Endereco endereco, List<Cnae> cnaes, List<Telefone> telefones, List<Contato> contatos,
+            List <Empresa> empresas, List<Produto> produtosOfertados, List<Servico> servicosOfertados, String status, Date dtCadastro){
+    	super(id, dtCadastro);
+    	this.cnpj = cnpj;
+        this.rzSocial = rzSocial;
+        this.nmFantasia = nmFantasia;
+        this.inscricaoMunicipal = inscricaoMunicipal;
+        this.inscricaoEstadual = inscricaoEstadual;
+        this.cnaes = cnaes;
+        this.email = email;
+        this.telefones = telefones;
+        this.contatos = contatos;
+        this.endereco = endereco;
+        this.empresas = empresas;
+        this.produtosOfertados = produtosOfertados;
+        this.servicosOfertados = servicosOfertados;
+        this.status = status;
+    }
+    
+    
 
     public String getNmFantasia() {
         return nmFantasia;
@@ -150,23 +193,12 @@ public class Fornecedor extends EntidadeDominio {
 		this.produtosOfertados = produtosOfertados;
 	}
 
-	public Status getStatus() {
+	public String getStatus() {
 		return status;
 	}
-
-	public void setStatus(Status status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	public TipoFornecimento getTipoFornecimento() {
-		return tipoFornecimento;
-	}
-
-	public void setTipoFornecimento(TipoFornecimento tipoFornecimento) {
-		this.tipoFornecimento = tipoFornecimento;
-	}
-	
-
 	public List<Contato> getContatos() {
 		return contatos;
 	}
@@ -195,11 +227,28 @@ public class Fornecedor extends EntidadeDominio {
 		this.nmFantasia = nmFantasia;
 	}
 
+	public List<Telefone> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(List<Telefone> telefones) {
+		this.telefones = telefones;
+	}  
 	
-    
 	
-    
-    
-    
+	@Override
+    public String toString() {
+        return String.format(
+            "FORNECEDOR - Nome Fantasia: %2s, Razao Social: %2s CNPJ: %2s,  email: %2s, Status: %2s",
+         
+            this.getNmFantasia(),
+            this.getRzSocial(),
+            this.getCnpj(),
+            this.getEmail(),
+            this.getStatus()
+        );
+    }
+	
+	
 
 }

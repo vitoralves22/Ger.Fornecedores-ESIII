@@ -1,9 +1,37 @@
 package main.java.mvc.model.domain;
 
-public class Servico {
+import java.sql.Date;
 
-    private String descricao;
+public class Servico extends EntidadeDominio {
 
-    private Os os;
+	    private String descricao;
+
+	    public Servico(){}
+	    public Servico(Integer id){
+	        super(id);
+	    }
+	    public Servico(String descricao) {
+	        this.descricao = descricao;
+	    }
+	    public Servico(Integer id, String descricao, Date dtCadastro) {
+	        super(id, dtCadastro);
+	        this.descricao = descricao;
+	    }
+
+	    public String getDescricao() {
+	        return descricao;
+	    }
+
+	    public void setDescricao(String descricao) {
+	        this.descricao = descricao;
+	    }
+
+	    @Override
+	    public String toString() {
+	        return String.format(
+	            "SERVIÇO - Descrição: %2s",
+	            this.getDescricao()
+	        );
+	    }
 
 }

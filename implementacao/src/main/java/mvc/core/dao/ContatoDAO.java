@@ -1,17 +1,17 @@
 package main.java.mvc.core.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
-import main.java.mvc.model.domain.Contato;
-import main.java.mvc.model.domain.Endereco;
-import main.java.mvc.model.domain.EntidadeDominio;
-import main.java.mvc.model.domain.Fornecedor;
+import main.java.mvc.model.domain.*;
+
 
 public class ContatoDAO extends AbstractJdbcDAO {
 	
@@ -25,6 +25,7 @@ public class ContatoDAO extends AbstractJdbcDAO {
 	}
 	
 	public void salvar(EntidadeDominio entidade) {
+		
 		if(connection == null){
 			openConnection();
 		}
@@ -33,8 +34,8 @@ public class ContatoDAO extends AbstractJdbcDAO {
 		Contato ctt = (Contato)entidade;
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("INSERT INTO tab_contatos(ctt_nome, ctt_dpto, ctt_email, ctt_dtCadastro, for_id) ");
-		sql.append(" VALUES (?, ?, ?, ?, (SELECT MAX(tab_fornecedor.for_id) FROM tab_fornecedor))");	
+		sql.append("INSERT INTO tab_contatos(ctt_nome, ctt_dpto, ctt_email, ctt_dddtelefone, ctt_dditelefone, ctt_numerotelefone, ctt_dtCadastro, ctt_for_id) ");
+		sql.append(" VALUES (?, ?, ?, ?, ?, ?, ?, (SELECT MAX(tab_fornecedores.for_id) FROM tab_fornecedores))");	
 		try {
 			connection.setAutoCommit(false);
 								
@@ -42,21 +43,20 @@ public class ContatoDAO extends AbstractJdbcDAO {
 					Statement.RETURN_GENERATED_KEYS);
 			
             pst.setString(1, ctt.getNome());
-            pst.setString(2, ctt.getDepartamento().getDescricao());
+            pst.setString(2, ctt.getDepartamento());
 			pst.setString(3, ctt.getEmail());
-            
+			pst.setString(4, ctt.getTelefone().getDdd());
+			pst.setString(5, ctt.getTelefone().getDdi());
+			pst.setString(6, ctt.getTelefone().getNumero());
 			Timestamp time = new Timestamp(ctt.getDtCadastro().getTime());
-            pst.setTimestamp(4, time);
+            pst.setTimestamp(7, time);
             
-			
 			pst.executeUpdate();		
 					
 			ResultSet rs = pst.getGeneratedKeys();
-			int idContato=0;
-			if(rs.next())
-				idContato = rs.getInt(1);
-			ctt.setId(idContato);
-			
+			if(rs.next()){
+				ctt.setId(rs.getInt(1));
+			}
 			connection.commit();					
 		} catch (SQLException e) {
 			try {
@@ -64,6 +64,56 @@ public class ContatoDAO extends AbstractJdbcDAO {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
+			e.printStackTrace();	
+		} finally {
+			if(ctrlTransaction) {
+				try {
+					pst.close();
+					if(ctrlTransaction)
+						connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@Override
+	public void alterar(EntidadeDominio entidade) {
+		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
+		
+		Fornecedor fornecedor = (Fornecedor) entidade;
+		List<EntidadeDominio> listaContatos = new ArrayList<EntidadeDominio>();
+		openConnection();
+		PreparedStatement pst=null;
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT * FROM tab_contatos WHERE ctt_for_id = ?");
+		
+		try {
+			pst = connection.prepareStatement(sql.toString());
+            pst.setInt(1, fornecedor.getId());
+			
+			ResultSet rs = pst.executeQuery();
+			while(rs.next()){
+				listaContatos.add(new Contato(
+					rs.getInt("ctt_id"),
+					rs.getString("ctt_nome"),
+					rs.getString("ctt_dpto"),
+					rs.getString("ctt_email"),
+					new Telefone(
+					rs.getString("ctt_dddtelefone"),
+					rs.getString("ctt_dditelefone"),
+					rs.getString("ctt_numerotelefone")
+					),
+					new Date(rs.getTimestamp("ctt_dtcadastro").getTime())
+				));
+			}					
+		} catch (SQLException e) {
 			e.printStackTrace();	
 		}finally{
 			if(ctrlTransaction){
@@ -76,26 +126,11 @@ public class ContatoDAO extends AbstractJdbcDAO {
 				}
 			}
 		}
-	}
-
-	
-	@Override
-	public void alterar(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/** 
-	 * TODO Descricao do Metodo
-	 * @param entidade
-	 * @return
-	 * @see fai.dao.IDAO#consulta(fai.domain.EntidadeDominio)
-	 */
-	@Override
-	public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
-		return null;
+		//listaContatos.set(fornecedor.getContatos());
+		return listaContatos;
 	}
 
 }
+
+
 

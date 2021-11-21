@@ -4,21 +4,35 @@ import java.util.Date;
 
 public abstract class EntidadeDominio {
     
-    protected Integer id;
+	private Integer id;
     private Date dtCadastro;
+
+    public EntidadeDominio() {
+        this.dtCadastro = new Date();
+    }
+    public EntidadeDominio(Integer id) {
+        this.id = id;
+    }
+    public EntidadeDominio(Integer id, Date dtCadastro) {
+        this.id = id;
+        this.dtCadastro = dtCadastro;
+    }
 
     public Integer getId() {
         return id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
+
     public Date getDtCadastro() {
-    	this.dtCadastro = new Date();
         return dtCadastro;
     }
+
     public void setDtCadastro(Date dtCadastro) {
         this.dtCadastro = dtCadastro;
-    }
+    }  
+    
 
 }
