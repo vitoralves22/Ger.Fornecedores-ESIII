@@ -3,7 +3,7 @@ package core.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import model.domain.EntidadeDominio;
+import dominio.EntidadeDominio;
 
 public interface IDAO {
     

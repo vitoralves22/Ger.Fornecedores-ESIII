@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.domain.*;
+import dominio.*;
 
 
 public class ContatoDAO extends AbstractJdbcDAO {
@@ -25,7 +25,6 @@ public class ContatoDAO extends AbstractJdbcDAO {
 	}
 	
 	public void salvar(EntidadeDominio entidade) {
-		
 		if(connection == null){
 			openConnection();
 		}
@@ -35,7 +34,7 @@ public class ContatoDAO extends AbstractJdbcDAO {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("INSERT INTO tab_contatos(ctt_nome, ctt_dpto, ctt_email, ctt_dddtelefone, ctt_dditelefone, ctt_numerotelefone, ctt_dtCadastro, ctt_for_id) ");
-		sql.append(" VALUES (?, ?, ?, ?, ?, ?, ?, (SELECT MAX(tab_fornecedores.for_id) FROM tab_fornecedores))");	
+		sql.append(" VALUES (?, ?, ?, ?, ?, ?, ?, ?)");	
 		try {
 			connection.setAutoCommit(false);
 								
@@ -50,6 +49,7 @@ public class ContatoDAO extends AbstractJdbcDAO {
 			pst.setString(6, ctt.getTelefone().getNumero());
 			Timestamp time = new Timestamp(ctt.getDtCadastro().getTime());
             pst.setTimestamp(7, time);
+            pst.setInt(8, ctt.getForId());
             
 			pst.executeUpdate();		
 					
@@ -80,7 +80,52 @@ public class ContatoDAO extends AbstractJdbcDAO {
 
 	@Override
 	public void alterar(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
+		
+		if(connection == null){
+			openConnection();
+		}
+		PreparedStatement pst=null;
+		
+		Contato ctt = (Contato)entidade;
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("UPDATE tab_contatos SET ctt_nome=?, ctt_dpto=?, ctt_email=?, ctt_dddtelefone=?, ctt_dditelefone=?, ctt_numerotelefone=?");
+		sql.append("WHERE ctt_for_id=?");
+		
+		try {
+			connection.setAutoCommit(false);
+								
+			pst = connection.prepareStatement(sql.toString(), 
+					Statement.RETURN_GENERATED_KEYS);
+			
+            pst.setString(1, ctt.getNome());
+            pst.setString(2, ctt.getDepartamento());
+			pst.setString(3, ctt.getEmail());
+			pst.setString(4, ctt.getTelefone().getDdd());
+			pst.setString(5, ctt.getTelefone().getDdi());
+			pst.setString(6, ctt.getTelefone().getNumero());
+			pst.setInt(7, ctt.getForId());
+			pst.executeUpdate();		
+					
+			connection.commit();					
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();	
+		} finally {
+			if(ctrlTransaction) {
+				try {
+					pst.close();
+					if(ctrlTransaction)
+						connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -110,7 +155,8 @@ public class ContatoDAO extends AbstractJdbcDAO {
 					rs.getString("ctt_dditelefone"),
 					rs.getString("ctt_numerotelefone")
 					),
-					new Date(rs.getTimestamp("ctt_dtcadastro").getTime())
+					new Date(rs.getTimestamp("ctt_dtcadastro").getTime()),
+					rs.getInt("ctt_for_id")
 				));
 			}					
 		} catch (SQLException e) {

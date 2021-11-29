@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import core.util.Conexao;
-import model.domain.EntidadeDominio;
+import dominio.EntidadeDominio;
 
 public abstract class AbstractJdbcDAO implements IDAO {
     
