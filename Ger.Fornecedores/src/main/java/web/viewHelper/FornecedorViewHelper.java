@@ -23,244 +23,274 @@ import dominio.Telefone;
 
 public class FornecedorViewHelper implements IViewHelper {
 
-    @Override
-    public EntidadeDominio getEntidade(HttpServletRequest request) {
+	@Override
+	public EntidadeDominio getEntidade(HttpServletRequest request) {
 
-        String operacao = request.getParameter("OPERACAO");
+		String operacao = request.getParameter("OPERACAO");
 
-        Endereco endereco = new Endereco();
-        Fornecedor fornecedor = new Fornecedor();    
-        Empresa empresa = new Empresa();
-        List<Empresa> listaEmpresas = new ArrayList<>();
-        Cnae cnae = new Cnae();
-        List<Cnae> listaCnaes = new ArrayList<>();
-        Telefone telefone = new Telefone();
-        List<Telefone> listaTelefones = new ArrayList<Telefone>();
-        Contato contato = new Contato();
-        List<Contato> listaContatos = new ArrayList<>();
-        Produto produto = new Produto();
-        List<Produto> listaProdutos = new ArrayList<>();
-        Servico servico = new Servico();
-        List<Servico> listaServicos = new ArrayList<>();
+		Endereco endereco = new Endereco();
+		Fornecedor fornecedor = new Fornecedor();
+		Empresa empresa = new Empresa();
+		List<Empresa> listaEmpresas = new ArrayList<>();
+		Cnae cnae = new Cnae();
+		List<Cnae> listaCnaes = new ArrayList<>();
+		Telefone telefone = new Telefone();
+		List<Telefone> listaTelefones = new ArrayList<Telefone>();
+		Contato contato = new Contato();
+		List<Contato> listaContatos = new ArrayList<>();
+		Produto produto = new Produto();
+		List<Produto> listaProdutos = new ArrayList<>();
+		Servico servico = new Servico();
+		List<Servico> listaServicos = new ArrayList<>();
 
-        if (!operacao.equals("VISUALIZAR") && !operacao.equals("EXCLUIR") && !operacao.equals("CONSULTAR")) {
+		if (!operacao.equals("VISUALIZAR") && !operacao.equals("EXCLUIR") && !operacao.equals("CONSULTAR")) {
 
-            // Dados de Endereco.
-            String endTipo = request.getParameter("txtEndTipo");
-            String endCEP = request.getParameter("txtEndCEP");
-            String endTipoLogradouro = request.getParameter("txtEndTipoLogradouro");
-            String endLogradouro = request.getParameter("txtEndLogradouro");
-            String endNumero = request.getParameter("txtEndNumero");
-            String endBairro = request.getParameter("txtEndBairro");
-            String endComplemento = request.getParameter("txtEndComplemento");
-            String endCidade = request.getParameter("txtEndCidade");
-            String endEstadoUf = request.getParameter("txtEndEstadoUf");
-            String endPais = request.getParameter("txtEndPais");      
-            
-            if (endTipo != null && !endTipo.trim().equals("")) {
-                endereco.setTipo(endTipo);
-            }
-            if (endCEP != null && !endCEP.trim().equals("")) {
-                endereco.setCep(endCEP);
-            }
-            if (endTipoLogradouro != null && !endTipoLogradouro.trim().equals("")) {
-                endereco.setTipoLogradouro(endTipoLogradouro);
-            }
-            if (endLogradouro != null && !endLogradouro.trim().equals("")) {
-                endereco.setLogradouro(endLogradouro);
-            }
-            if (endNumero != null && !endNumero.trim().equals("")) {
-                endereco.setNumero(endNumero);
-            }
-            if (endBairro != null && !endBairro.trim().equals("")) {
-                endereco.setBairro(endBairro);
-            }
-            if (endComplemento != null && !endComplemento.trim().equals("")) {
-                endereco.setComplemento(endComplemento);
-            }
-            if (endCidade != null && !endCidade.trim().equals("")) {
-                endereco.setCidade(endCidade);
-            }
-            if (endEstadoUf != null && !endEstadoUf.trim().equals("")) {
-                endereco.setEstadoUf(endEstadoUf);
-            }
-            if (endPais != null && !endPais.trim().equals("")) {
-                endereco.setPais(endPais);
-            }
-            
-         // Dados de Telefone.
-            String telDDI = request.getParameter("txtTelDDI");
-            String telDDD = request.getParameter("txtTelDDD");
-            String telNumero = request.getParameter("txtTelNumero");
+			// Dados de Endereco.
+			String endTipo = request.getParameter("txtEndTipo");
+			String endCEP = request.getParameter("txtEndCEP");
+			String endTipoLogradouro = request.getParameter("txtEndTipoLogradouro");
+			String endLogradouro = request.getParameter("txtEndLogradouro");
+			String endNumero = request.getParameter("txtEndNumero");
+			String endBairro = request.getParameter("txtEndBairro");
+			String endComplemento = request.getParameter("txtEndComplemento");
+			String endCidade = request.getParameter("txtEndCidade");
+			String endEstadoUf = request.getParameter("txtEndEstadoUf");
+			String endPais = request.getParameter("txtEndPais");
 
-            if (telDDI != null && !telDDI.trim().equals("")) {
-                telefone.setDdi(telDDI);
-            }
-            if (telDDD != null && !telDDD.trim().equals("")) {
-                telefone.setDdd(telDDD);
-            }
-            if (telNumero != null && !telNumero.trim().equals("")) {
-                telefone.setNumero(telNumero);
-            }
+			if (endTipo != null && !endTipo.trim().equals("")) {
+				endereco.setTipo(endTipo);
+			}
+			if (endCEP != null && !endCEP.trim().equals("")) {
+				endereco.setCep(endCEP);
+			}
+			if (endTipoLogradouro != null && !endTipoLogradouro.trim().equals("")) {
+				endereco.setTipoLogradouro(endTipoLogradouro);
+			}
+			if (endLogradouro != null && !endLogradouro.trim().equals("")) {
+				endereco.setLogradouro(endLogradouro);
+			}
+			if (endNumero != null && !endNumero.trim().equals("")) {
+				endereco.setNumero(endNumero);
+			}
+			if (endBairro != null && !endBairro.trim().equals("")) {
+				endereco.setBairro(endBairro);
+			}
+			if (endComplemento != null && !endComplemento.trim().equals("")) {
+				endereco.setComplemento(endComplemento);
+			}
+			if (endCidade != null && !endCidade.trim().equals("")) {
+				endereco.setCidade(endCidade);
+			}
+			if (endEstadoUf != null && !endEstadoUf.trim().equals("")) {
+				endereco.setEstadoUf(endEstadoUf);
+			}
+			if (endPais != null && !endPais.trim().equals("")) {
+				endereco.setPais(endPais);
+			}
 
-            // Dados do Empresa.
-            String tipoEmpresa = request.getParameter("txtCttTipoEmpresas");
-            String tipoFornecimento = request.getParameter("txtCttTipoFornecimento");
-            
-            if (tipoEmpresa != null && !tipoEmpresa.trim().equals("")) {
-                empresa.setTipoEmpresa(tipoEmpresa);
-            }
-            if (tipoFornecimento != null && !tipoFornecimento.trim().equals("")) {
-                empresa.setTipoFornecimento(tipoFornecimento);
-            }
-            
-            // Dados do Cnae.
-            String codigo = request.getParameter("txtCnaeCodigo");
+			// Dados de Telefone.
+			String telDDI = request.getParameter("txtTelDDI");
+			String telDDD = request.getParameter("txtTelDDD");
+			String telNumero = request.getParameter("txtTelNumero");
 
-            if (codigo != null && !codigo.trim().equals("")) {
-                cnae.setCodigo(codigo);
-            }
-            
-            // Dados do Fornecedor.
-            String nomeFantasia = request.getParameter("txtForNomeFantasia");
-            String razaoSocial = request.getParameter("txtForRazaoSocial");
-            String cnpj = request.getParameter("txtForCNPJ");
-            String inscricaoEstadual = request.getParameter("txtForInscricaoEstadual");
-            String inscricaoMunicipal = request.getParameter("txtForInscricaoMunicipal");
-            String email = request.getParameter("txtForEmail");
-            
-            if (nomeFantasia != null && !nomeFantasia.trim().equals("")) {
-                fornecedor.setNmFantasia(nomeFantasia);
-            }
-            if (razaoSocial != null && !razaoSocial.trim().equals("")) {
-                fornecedor.setRzSocial(razaoSocial);
-            }
-            if (cnpj != null && !cnpj.trim().equals("")) {
-                fornecedor.setCnpj(cnpj);
-            }
-            if (inscricaoEstadual != null && !inscricaoEstadual.trim().equals("")) {
-                fornecedor.setInscricaoEstadual(inscricaoEstadual);
-            }
-            if (inscricaoMunicipal != null && !inscricaoMunicipal.trim().equals("")) {
-                fornecedor.setInscricaoMunicipal(inscricaoMunicipal);
-            }
-            if (email != null && !email.trim().equals("")) {
-                fornecedor.setEmail(email);
-            }
-            
-            if (endereco != null) {
-               fornecedor.setEndereco(endereco);
-            }
-            
-            if (cnae != null) {
-            	listaCnaes.add(cnae);
-                fornecedor.setCnaes(listaCnaes);
-            }
-            
-            if (telefone != null) {
-            	listaTelefones.add(telefone);
-                fornecedor.setTelefones(listaTelefones);
-            }
-            
-            if (contato != null) {
-            	listaContatos.add(contato);
-                fornecedor.setContatos(listaContatos);
-            }
-            
-            if (produto != null) {
-            	listaProdutos.add(produto);
-                fornecedor.setProdutosOfertados(listaProdutos);
-            }
-            
-            if (servico != null) {
-            	listaServicos .add(servico);
-                fornecedor.setServicosOfertados(listaServicos);
-                fornecedor.setStatus("ativo");
-            }
+			if (telDDI != null && !telDDI.trim().equals("")) {
+				telefone.setDdi(telDDI);
+			}
+			if (telDDD != null && !telDDD.trim().equals("")) {
+				telefone.setDdd(telDDD);
+			}
+			if (telNumero != null && !telNumero.trim().equals("")) {
+				telefone.setNumero(telNumero);
+			}
+			
+			// Dados do Cnae.
+			String codigo = request.getParameter("txtCnaeCodigo");
 
-            if (operacao.equals("ALTERAR")) {
+			if (codigo != null && !codigo.trim().equals("")) {
+				cnae.setCodigo(codigo);
+			}
 
-                int for_id = Integer.valueOf(request.getParameter("txtAlterarFornecedorId"));
-                fornecedor.setId(for_id);
-            }
+			// Dados do Contato.
+			String cttNome = request.getParameter("txtCttnome");
+			String cttDepartamento = request.getParameter("txtCttdepartamento");
+			String cttEmail = request.getParameter("txtCttemail");
 
-        } else {
+			if (cttNome != null && !cttNome.trim().equals("")) {
+				contato.setNome(cttNome);
+			}
+			if (cttDepartamento != null && !cttDepartamento.trim().equals("")) {
+				contato.setDepartamento(cttDepartamento);
+			}
+			if (cttEmail != null && !cttEmail.trim().equals("")) {
+				contato.setEmail(cttEmail);
+			}
+			if (telefone != null) {
+				contato.setTelefone(telefone);
+			}
+			
+			// Dados do Produto.
+			String pdtDescricao = request.getParameter("txtPdtDescricao");
+			
+			if (pdtDescricao != null && !pdtDescricao.trim().equals("")) {
+				produto.setDescricao(pdtDescricao);
+			}
+						
+			// Dados do Serviço.
+			String srvDescricao = request.getParameter("txtPdtDescricao");
+			
+			if (srvDescricao != null && !srvDescricao.trim().equals("")) {
+				servico.setDescricao(srvDescricao);
+			}
+			
+			// Dados do Fornecedor.
+			String nomeFantasia = request.getParameter("txtForNomeFantasia");
+			String razaoSocial = request.getParameter("txtForRazaoSocial");
+			String cnpj = request.getParameter("txtForCNPJ");
+			String inscricaoEstadual = request.getParameter("txtForInscricaoEstadual");
+			String inscricaoMunicipal = request.getParameter("txtForInscricaoMunicipal");
+			String tipoEmpresa = request.getParameter("txtForTipoEmpresas");
+			String tipoFornecimento = request.getParameter("txtForTipoFornecimento");
+			String email = request.getParameter("txtForEmail");
+			
+			if (nomeFantasia != null && !nomeFantasia.trim().equals("")) {
+				fornecedor.setNmFantasia(nomeFantasia);
+			}
+			if (razaoSocial != null && !razaoSocial.trim().equals("")) {
+				fornecedor.setRzSocial(razaoSocial);
+			}
+			if (cnpj != null && !cnpj.trim().equals("")) {
+				fornecedor.setCnpj(cnpj);
+			}
+			if (inscricaoEstadual != null && !inscricaoEstadual.trim().equals("")) {
+				fornecedor.setInscricaoEstadual(inscricaoEstadual);
+			}
+			if (inscricaoMunicipal != null && !inscricaoMunicipal.trim().equals("")) {
+				fornecedor.setInscricaoMunicipal(inscricaoMunicipal);
+			}
+			/*
+			 * if (tipoEmpresa != null && !tipoEmpresa.trim().equals("")) {
+			 * fornecedor.setTipoEmpresa(tipoEmpresa); } if (tipoFornecimento != null &&
+			 * !tipoFornecimento.trim().equals("")) {
+			 * fornecedor.setTipoFornecimento(tipoFornecimento); }
+			 */
+			if (email != null && !email.trim().equals("")) {
+				fornecedor.setEmail(email);
+			}
 
-            HttpSession session = request.getSession();
-            Resultado resultado = (Resultado) session.getAttribute("fornecedorSessao");
-            String listaId = request.getParameter("txtListaId");
-            String pesquisa = request.getParameter("txtPesquisa");
+			if (endereco != null) {
+				fornecedor.setEndereco(endereco);
+			}
 
-            if (pesquisa != null && !pesquisa.trim().equals("")) {
-                fornecedor.setForPesquisa(pesquisa);
-            }
+			if (cnae != null) {
+				listaCnaes.add(cnae);
+				fornecedor.setCnaes(listaCnaes);
+			}
 
-            if (!operacao.equals("CONSULTAR")) {
-                if (listaId != null && !listaId.trim().equals("")) {
+			if (telefone != null) {
+				listaTelefones.add(telefone);
+				fornecedor.setTelefones(listaTelefones);
+			}
 
-                    int id = Integer.parseInt(listaId);
+			if (contato != null) {
+				listaContatos.add(contato);
+				fornecedor.setContatos(listaContatos);
+			}
 
-                    for (EntidadeDominio e : resultado.getEntidades()) {
-                        if (e.getId() == id) {
-                            fornecedor = (Fornecedor) e;
-                        }
-                    }
-                }
-            } else {
-                fornecedor.setId(0);
-            }
+			if (produto != null) {
+				listaProdutos.add(produto);
+				fornecedor.setProdutosOfertados(listaProdutos);
+			}
 
-        }
-        return fornecedor;
-    }
+			if (servico != null) {
+				listaServicos.add(servico);
+				fornecedor.setServicosOfertados(listaServicos);
+				fornecedor.setStatus("ativo");
+			}
 
-    @Override
-    public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+			if (operacao.equals("ALTERAR")) {
 
-        String operacao = request.getParameter("OPERACAO");
-        RequestDispatcher dispatcher = null;
+				int for_id = Integer.valueOf(request.getParameter("txtAlterarFornecedorId"));
+				fornecedor.setId(for_id);
+			}
 
-        if (operacao.equals("SALVAR")) {
-            if (resultado.getMsg().equals("Fornecedor salvo com sucesso.")) {
+		} else {
 
-                request.setAttribute("resultado", resultado);
-                request.getSession().setAttribute("clienteSessao", resultado);
-                dispatcher = request.getRequestDispatcher("/ConsultarCliente?txtPesquisa=ativo&OPERACAO=CONSULTAR");
+			HttpSession session = request.getSession();
+			Resultado resultado = (Resultado) session.getAttribute("fornecedorSessao");
+			String listaId = request.getParameter("txtListaId");
+			String pesquisa = request.getParameter("txtPesquisa");
 
-            } else {
-                request.setAttribute("resultado", resultado);
-                request.getSession().setAttribute("clienteSessao", resultado);
-                dispatcher = request.getRequestDispatcher("cliente/FormCadastrarCliente.jsp");
-            }
-        } else if (operacao.equals("CONSULTAR")) {
+			if (pesquisa != null && !pesquisa.trim().equals("")) {
+				fornecedor.setForPesquisa(pesquisa);
+			}
 
-            request.getSession().setAttribute("clienteSessao", resultado);
-            dispatcher = request.getRequestDispatcher("cliente/FormListarCliente.jsp");
+			if (!operacao.equals("CONSULTAR")) {
+				if (listaId != null && !listaId.trim().equals("")) {
 
-        } else if (operacao.equals("VISUALIZAR")) {
+					int id = Integer.parseInt(listaId);
 
-            request.getSession().setAttribute("VisualizarCliente", resultado.getEntidades().get(0));
-            dispatcher = request.getRequestDispatcher("cliente/FormVisualizarCliente.jsp");
+					for (EntidadeDominio e : resultado.getEntidades()) {
+						if (e.getId() == id) {
+							fornecedor = (Fornecedor) e;
+						}
+					}
+				}
+			} else {
+				fornecedor.setId(0);
+			}
 
-        } else if (operacao.equals("ALTERAR")) {
+		}
+		return fornecedor;
+	}
 
-            if (resultado.getMsg().equals("Alterado com sucesso.")) {
-                request.setAttribute("resultado", resultado);
-                request.getSession().setAttribute("clienteSessao", resultado);
-                dispatcher = request.getRequestDispatcher("/ConsultarCliente?txtPesquisa=ativo&OPERACAO=CONSULTAR");
-            } else {
-                request.setAttribute("resultado", resultado);
-                request.getSession().setAttribute("enderecoSessao", resultado);
-                dispatcher = request.getRequestDispatcher("cliente/FormVisualizarCliente.jsp");
-            }
+	@Override
+	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 
-        } else if (operacao.equals("EXCLUIR")) {
+		String operacao = request.getParameter("OPERACAO");
+		RequestDispatcher dispatcher = null;
 
-            request.setAttribute("resultado", resultado);
-            dispatcher = request.getRequestDispatcher("/ConsultarCliente?OPERACAO=CONSULTAR");
-        }
+		if (operacao.equals("SALVAR")) {
+			if (resultado.getMsg().equals("Fornecedor salvo com sucesso.")) {
 
-        dispatcher.forward(request, response);
-    }
+				request.setAttribute("resultado", resultado);
+				request.getSession().setAttribute("clienteSessao", resultado);
+				dispatcher = request.getRequestDispatcher("/ConsultarCliente?txtPesquisa=ativo&OPERACAO=CONSULTAR");
+
+			} else {
+				request.setAttribute("resultado", resultado);
+				request.getSession().setAttribute("clienteSessao", resultado);
+				dispatcher = request.getRequestDispatcher("cliente/FormCadastrarCliente.jsp");
+			}
+		} else if (operacao.equals("CONSULTAR")) {
+
+			request.getSession().setAttribute("clienteSessao", resultado);
+			dispatcher = request.getRequestDispatcher("cliente/FormListarCliente.jsp");
+
+		} else if (operacao.equals("VISUALIZAR")) {
+
+			request.getSession().setAttribute("VisualizarCliente", resultado.getEntidades().get(0));
+			dispatcher = request.getRequestDispatcher("cliente/FormVisualizarCliente.jsp");
+
+		} else if (operacao.equals("ALTERAR")) {
+
+			if (resultado.getMsg().equals("Alterado com sucesso.")) {
+				request.setAttribute("resultado", resultado);
+				request.getSession().setAttribute("clienteSessao", resultado);
+				dispatcher = request.getRequestDispatcher("/ConsultarCliente?txtPesquisa=ativo&OPERACAO=CONSULTAR");
+			} else {
+				request.setAttribute("resultado", resultado);
+				request.getSession().setAttribute("enderecoSessao", resultado);
+				dispatcher = request.getRequestDispatcher("cliente/FormVisualizarCliente.jsp");
+			}
+
+		} else if (operacao.equals("EXCLUIR")) {
+
+			request.setAttribute("resultado", resultado);
+			dispatcher = request.getRequestDispatcher("/ConsultarCliente?OPERACAO=CONSULTAR");
+		}
+
+		dispatcher.forward(request, response);
+	}
 
 }

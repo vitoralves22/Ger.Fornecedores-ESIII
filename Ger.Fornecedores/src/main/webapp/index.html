@@ -38,9 +38,6 @@
                 <tr>
                     <th>ID</th>
                     <th>Nome Fantasia</th>
-                    <th>Razão Social</th>
-                    <th>CNPJ</th>
-                    <th>Inscrição Estadual</th>
                     <th>CNPJ</th>
                     <th>UF</th>
                     <th>Tipo</th>
@@ -81,64 +78,112 @@
                             <div class="tab-content">
                                 <h1></h1>
                                 <form id="form" class="modal-form">
-                                    <input id="nome_fantasia" type="text" data-index="new" class="modal-field"
-                                        placeholder="Nome Fantasia" required>
-                                    <input id="razao_social" type="text" class="modal-field" placeholder="Razão Social">
-                                    <input id="data_cadastro" type="date" class="modal-field"
-                                        placeholder="Data de Cadastro">
-                                    <input id="cnpj" type="text" class="modal-field" placeholder="CNPJ" required>
-                                    <input id="inscricao_estadual" type="text" class="modal-field"
-                                        placeholder="Inscrição Estadual">
-                                    <input id="inscricao_municipal" type="text" class="modal-field"
-                                        placeholder="Inscrição Municipal">
-                                    <input id="cnae" type="text" class="modal-field" placeholder="CNAE">
-                                    <input id="tipo_fornecedor" type="text" class="modal-field" placeholder="Tipo"
-                                        required>
-                                    <input id="produto" type="text" class="modal-field" placeholder="Produto">
-                                    <input id="servico" type="text" class="modal-field" placeholder="Serviço">
+                                	
+                                    <input id="txtForNomeFantasia" type="text" data-index="new" class="modal-field"
+                                        placeholder="Nome Fantasia" required>              
+                                      
+                                    <input id="txtForRazaoSocial" type="text" class="modal-field" placeholder="Razão Social" required>                                    
+                                 
+                                    <input id="txtForCNPJ" type="text" class="modal-field" placeholder="CNPJ" required>
+                                                                   
+                                    <input id="txtForInscricaoEstadual" type="text" class="modal-field"
+                                        placeholder="Inscrição Estadual" required>                                 
+                                    
+                                    <input id="txtForInscricaoMunicipal" type="text" class="modal-field"
+                                        placeholder="Inscrição Municipal" required>
+                                                                      
+                                    <input id="txtForEmail" type="text" class="modal-field"
+                                        placeholder="Email" required>                                       
+                                   
+                                    <input id="txtForTipoEmpresas" type="text" class="modal-field"
+                                        placeholder="Tipo Empresa" required>
+                                             
+                                    <input id="txtForTipoFornecimento" type="text" class="modal-field"
+                                        placeholder="Tipo Fornecimento" required>
+       
                                 </form>
                             </div>
                         </li>
                         <li>
                             <input type="radio" name="tabs" class="rd_tab" id="tab2">
-                            <label for="tab2" class="tab_label">Endereço</label>
+                            <label for="tab2" class="tab_label">CNAE</label>
                             <div class="tab-content">
                                 <h2></h2>
-                                <form id="form2" class="modal-form">
-                                    <input id="tipo_endereco" type="text" class="modal-field"
-                                        placeholder="Tipo Endereço">
-                                    <input id="tipo_logradouro" type="text" class="modal-field"
-                                        placeholder="Tipo Logradouro">
-                                    <input id="logradouro" type="text" class="modal-field" placeholder="Logradouro">
-                                    <input id="numero_endereco" type="text" class="modal-field" placeholder="Numero">
-                                    <input id="bairro" type="text" class="modal-field" placeholder="Bairro">
-                                    <input id="cidade" type="text" class="modal-field" placeholder="Cidade">
-                                    <input id="uf" type="text" class="modal-field" placeholder="UF" required>
-                                    <input id="pais" type="text" class="modal-field" placeholder="País">
-                                    <input id="cep" type="text" class="modal-field" placeholder="CEP">
-                                    <input id="complemento" type="text" class="modal-field" placeholder="Complemento">
+                                <form id="form2" class="modal-form">                                                         
+                                    <input id="txtCnaeCodigo" type="text" class="modal-field" placeholder="CNAE" required>
+                                         
+                                    <button type="button" class="button addContato" id="adicionarCnae">Add+</button>
                                 </form>
                             </div>
                         </li>
                         <li>
                             <input type="radio" name="tabs" class="rd_tab" id="tab3">
-                            <label for="tab3" class="tab_label">Contato</label>
+                            <label for="tab3" class="tab_label">Fornecimento</label>
                             <div class="tab-content">
                                 <h2></h2>
                                 <form id="form3" class="modal-form">
-                                    <input id="nome_contato" type="text" class="modal-field" placeholder="Nome">
-                                    <input id="email_contato" type="email" class="modal-field" placeholder="Email"
+                                    <input id="tipo_fornecimento" type="text" class="modal-field" placeholder="Tipo">
+                                    <input id="descricao_fornecimento" type="text" class="modal-field"
+                                        placeholder="Descrição">
+                                   
+                                    <button type="button" class="button addContato" id="adicionarFornecimento">Add+</button>
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <input type="radio" name="tabs" class="rd_tab" id="tab4">
+                            <label for="tab4" class="tab_label">Endereço</label>
+                            <div class="tab-content">
+                                <h2></h2>
+                                <form id="form4" class="modal-form">
+                                    <input id="txtEndTipo" type="text" class="modal-field"
+                                        placeholder="Tipo Endereço">
+                                    <input id="txtEndTipoLogradouro" type="text" class="modal-field"
+                                        placeholder="Tipo Logradouro">
+                                    <input id="txtEndLogradouro" type="text" class="modal-field" placeholder="Logradouro">
+                                    <input id="txtEndNumero" type="text" class="modal-field" placeholder="Numero">
+                                    <input id="txtEndBairro" type="text" class="modal-field" placeholder="Bairro">
+                                    <input id="txtEndCidade" type="text" class="modal-field" placeholder="Cidade">
+                                    <input id="txtEndEstadoUf" type="text" class="modal-field" placeholder="UF" required>
+                                    <input id="txtEndPais" type="text" class="modal-field" placeholder="País">
+                                    <input id="txtEndCEP" type="text" class="modal-field" placeholder="CEP">
+                                    <input id="txtEndComplemento" type="text" class="modal-field" placeholder="Complemento">
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <input type="radio" name="tabs" class="rd_tab" id="tab5">
+                            <label for="tab5" class="tab_label">Contato</label>
+                            <div class="tab-content">
+                                <h2></h2>
+                                <form id="form5" class="modal-form">
+                                    <input id="txtCttnome" type="text" class="modal-field" placeholder="Nome" required>
+                                    <input id="txtCttemail" type="email" class="modal-field" placeholder="Email"
                                         required>
-                                    <input id="departamento_contato" type="text" class="modal-field"
-                                        placeholder="Departamento">
-                                    <input id="ddd_contato" type="text" class="modal-field" placeholder="DDD">
-                                    <input id="ddi_contato" type="text" class="modal-field" placeholder="DDI">
-                                    <input id="telefone_contato" type="tel" class="modal-field" placeholder="Telefone">
-                                    <input id="ramal_contato" type="text" class="modal-field" placeholder="Ramal">
+                                    <input id="txtCttdepartamento" type="text" class="modal-field"
+                                        placeholder="Departamento" required>
+                                    <input id="txtTelDDI" type="text" class="modal-field" placeholder="DDI" required>
+                                    <input id="txtTelDDD" type="text" class="modal-field" placeholder="DDD" required>
+                                    <input id="txtTelNumero" type="tel" class="modal-field" placeholder="Telefone" required>
+                                   <!--  <input id="ramal_contato" type="text" class="modal-field" placeholder="Ramal">
                                     <input id="codigo_contato" type="text" class="modal-field" placeholder="Código">
                                     <input id="descricao_contato" type="text" class="modal-field"
-                                        placeholder="Descrição">
+                                        placeholder="Descrição"> -->
                                     <button type="button" class="button addContato" id="adicionarContato">Add+</button>
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <input type="radio" name="tabs" class="rd_tab" id="tab6">
+                            <label for="tab6" class="tab_label">Telefone</label>
+                            <div class="tab-content">
+                                <h2></h2>
+                                <form id="form6" class="modal-form">
+                                    <input id="ddd_telefone" type="text" class="modal-field" placeholder="DDD">
+                                    <input id="ddi_telefone" type="text" class="modal-field"
+                                        placeholder="DDI">
+                                    <input id="numero_telefone" type="tel" class="modal-field" placeholder="Numero">
+                                    <button type="button" class="button addContato" id="adicionarTelefone">Add+</button>
                                 </form>
                             </div>
                         </li>

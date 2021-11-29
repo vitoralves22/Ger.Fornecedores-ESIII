@@ -1,11 +1,14 @@
 package web.viewHelper;
 
 import core.aplicacao.Resultado;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import dominio.EntidadeDominio;
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 
 public interface IViewHelper {
 
