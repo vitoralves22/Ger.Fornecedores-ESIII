@@ -9,10 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import core.util.Conexao;
-import model.domain.Empresa;
-import model.domain.EntidadeDominio;
-import model.domain.Fornecedor;
-import model.domain.Servico;
+import dominio.*;
 
 
 public class ServicoDAO extends AbstractJdbcDAO{
@@ -36,14 +33,15 @@ public class ServicoDAO extends AbstractJdbcDAO{
             StringBuilder sql = new StringBuilder();
             
             sql.append("INSERT INTO tab_servicos(ser_descricao, ser_for_id, ser_dtCadastro ) "); 
-            sql.append(" VALUES (?, (SELECT MAX(tab_fornecedores.for_id) FROM tab_fornecedores), ?)");
+            sql.append(" VALUES (?, ?, ?)");
             
             try {
                 connection.setAutoCommit(false);
 
             pst = connection.prepareStatement(sql.toString());
-            pst.setString(1, servico.getDescricao());      
-            pst.setTimestamp(2, new Timestamp(servico.getDtCadastro().getTime()));
+            pst.setString(1, servico.getDescricao());
+            pst.setInt(2, servico.getForId());         
+            pst.setTimestamp(3, new Timestamp(servico.getDtCadastro().getTime()));
             pst.executeUpdate();
             
             
@@ -76,8 +74,46 @@ public class ServicoDAO extends AbstractJdbcDAO{
 
     @Override
     public void alterar(EntidadeDominio entidade) throws SQLException {
-        // TODO Auto-generated method stub
-        
+    	if(connection == null){
+			openConnection();
+		}
+		
+    	PreparedStatement pst=null;
+		
+        	Servico servico = (Servico)entidade;
+            StringBuilder sql = new StringBuilder();
+            
+            sql.append("UPDATE tab_servicos SET ser_descricao=? ) "); 
+            sql.append("WHERE ser_for_id=?");
+            
+            try {
+                connection.setAutoCommit(false);
+
+            pst = connection.prepareStatement(sql.toString());
+            pst.setString(1, servico.getDescricao());
+            pst.setInt(2, servico.getForId());          
+            pst.executeUpdate();
+                        
+
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+       
+        }finally{
+            try {
+                pst.close();
+                if(ctrlTransaction)
+                connection.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -95,12 +131,13 @@ public class ServicoDAO extends AbstractJdbcDAO{
 			pst = connection.prepareStatement(sql.toString());
             pst.setInt(1, fornecedor.getId());
 			
-			ResultSet rs = pst.executeQuery();
+            ResultSet rs = pst.executeQuery();
 			while(rs.next()){
 				listaServicos.add(new Servico(
 					rs.getInt("ser_id"),
 					rs.getString("ser_descricao"),
-					new Date(rs.getTimestamp("ser_dtcadastro").getTime())
+					new Date(rs.getTimestamp("ser_dtcadastro").getTime()),
+					rs.getInt("ser_for_id")
 				));
 			}					
 		} catch (SQLException e) {

@@ -10,9 +10,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.domain.Telefone;
-import model.domain.EntidadeDominio;
-import model.domain.Fornecedor;
+import dominio.*;
 
 public class TelefoneDAO extends AbstractJdbcDAO {
 	
@@ -35,7 +33,7 @@ public class TelefoneDAO extends AbstractJdbcDAO {
 		
 		
 		sql.append("INSERT INTO tab_telefones(tel_dddTelefone, tel_ddiTelefone, tel_numeroTelefone, tel_for_id, tel_dtCadastro)");
-		sql.append(" VALUES (?, ?, ?, (SELECT MAX(tab_fornecedores.for_id) FROM tab_fornecedores), ?)");	
+		sql.append(" VALUES (?, ?, ?, ?, ?)");	
 		try {
 			connection.setAutoCommit(false);
 								
@@ -44,9 +42,11 @@ public class TelefoneDAO extends AbstractJdbcDAO {
 			
             pst.setString(1, tel.getDdd());
             pst.setString(2, tel.getDdi());
-            pst.setString(3, tel.getNumero());            
+            pst.setString(3, tel.getNumero());
+            pst.setInt(4, tel.getForId());
+
 			Timestamp time = new Timestamp(tel.getDtCadastro().getTime());
-            pst.setTimestamp(4, time);
+            pst.setTimestamp(5, time);
 			
 			pst.executeUpdate();		
 					
@@ -78,9 +78,50 @@ public class TelefoneDAO extends AbstractJdbcDAO {
 	
 	@Override
 	public void alterar(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
+		if(connection == null){
+			openConnection();
+		}
+		PreparedStatement pst=null;
+		Telefone tel = (Telefone)entidade;
+		StringBuilder sql = new StringBuilder();
+		
+		
+		sql.append("UPDATE tab_telefones SET tel_dddTelefone=?, tel_ddiTelefone=?, tel_numeroTelefone=?");
+        sql.append("WHERE tel_for_id=?");
 
+		try {
+			connection.setAutoCommit(false);
+								
+			pst = connection.prepareStatement(sql.toString(), 
+					Statement.RETURN_GENERATED_KEYS);
+			
+            pst.setString(1, tel.getDdd());
+            pst.setString(2, tel.getDdi());
+            pst.setString(3, tel.getNumero());
+            pst.setInt(4, tel.getForId());
+			pst.executeUpdate();		
+					
+			connection.commit();					
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();	
+		}finally{
+			if(ctrlTransaction) {
+				try {
+					pst.close();
+					if(ctrlTransaction)
+						connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
+
 
 	@Override
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
@@ -96,16 +137,17 @@ public class TelefoneDAO extends AbstractJdbcDAO {
 			pst = connection.prepareStatement(sql.toString());
             pst.setInt(1, fornecedor.getId());
 			
-			ResultSet rs = pst.executeQuery();
+            ResultSet rs = pst.executeQuery();
 			while(rs.next()){
 				listaTelefones.add(new Telefone(
 					rs.getInt("tel_id"),
 					rs.getString("tel_dddtelefone"),
 					rs.getString("tel_dditelefone"),
 					rs.getString("tel_numerotelefone"),
-					new Date(rs.getTimestamp("tel_dtcadastro").getTime())
+					new Date(rs.getTimestamp("tel_dtcadastro").getTime()),
+					rs.getInt("tel_for_id")
 				));
-			}					
+			}				
 		} catch (SQLException e) {
 			e.printStackTrace();	
 		}finally{

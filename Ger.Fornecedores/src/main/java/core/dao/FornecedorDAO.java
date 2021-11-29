@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.util.Conexao;
-import model.domain.EntidadeDominio;
-import model.domain.*;
+import dominio.*;
 
 public class FornecedorDAO extends AbstractJdbcDAO{
 	
@@ -82,6 +81,7 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 			for(Contato contato : fornecedor.getContatos()) {
 	            try {
 	                contatoDAO = new ContatoDAO();
+	                contato.setForId(fornecedor.getId());
 	                contatoDAO.salvar(contato);
 	            } catch (SQLException e) {
 	                e.printStackTrace();
@@ -90,7 +90,8 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 	        
 	        for(Telefone telefone : fornecedor.getTelefones()) {
 	            try {
-	                telefoneDAO = new TelefoneDAO();                
+	                telefoneDAO = new TelefoneDAO();  
+	                telefone.setForId(fornecedor.getId());
 	                telefoneDAO.salvar(telefone);
 	            } catch (SQLException e) {
 	                e.printStackTrace();
@@ -99,7 +100,8 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 	        
 	        for(Cnae cnae : fornecedor.getCnaes()) {
 	            try {
-	                cnaeDAO = new CnaeDAO();	                
+	                cnaeDAO = new CnaeDAO();
+	                cnae.setForId(fornecedor.getId());
 	                cnaeDAO.salvar(cnae);
 	            } catch (SQLException e) {
 	                e.printStackTrace();
@@ -108,7 +110,8 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 	             
 	        for(Empresa empresa : fornecedor.getEmpresas()) {
 	            try {
-	                empresaDAO = new EmpresaDAO();	                
+	                empresaDAO = new EmpresaDAO();	
+	                empresa.setForId(fornecedor.getId());
 	                empresaDAO.salvar(empresa);
 	            } catch (SQLException e) {
 	                e.printStackTrace();
@@ -117,7 +120,8 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 	        
 	        for(Produto produto : fornecedor.getProdutosOfertados()) {
 	            try {
-	                produtoDAO = new ProdutoDAO();	                
+	                produtoDAO = new ProdutoDAO();	 
+	                produto.setForId(fornecedor.getId());
 	                produtoDAO.salvar(produto);
 	            } catch (SQLException e) {
 	                e.printStackTrace();
@@ -126,7 +130,8 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 	        
 	        for(Servico servico : fornecedor.getServicosOfertados()) {
 	            try {
-	                servicoDAO = new ServicoDAO();	                
+	                servicoDAO = new ServicoDAO();
+	                servico.setForId(fornecedor.getId());
 	                servicoDAO.salvar(servico);
 	            } catch (SQLException e) {
 	                e.printStackTrace();
@@ -154,8 +159,135 @@ public class FornecedorDAO extends AbstractJdbcDAO{
     }
 
     @Override
-    public void alterar(EntidadeDominio entidade) throws SQLException {
-        // TODO Auto-generated method stub
+    public void alterar(EntidadeDominio entidade) {
+
+    	Fornecedor fornecedor = (Fornecedor)entidade;  	
+    	
+    	IDAO empresaDAO = new EmpresaDAO();
+    	IDAO cnaeDAO = new CnaeDAO();
+        IDAO contatoDAO = new ContatoDAO();
+        IDAO telefoneDAO = new TelefoneDAO();
+        IDAO produtoDAO = new ProdutoDAO();
+        IDAO servicoDAO = new ServicoDAO();
+        
+    	openConnection();
+		PreparedStatement pst=null;
+        StringBuilder sql = new StringBuilder();
+        
+        sql.append("UPDATE tab_fornecedores SET for_nmFantasia=?, for_rzSocial=?, for_cnpj=?, for_inscEstadual=?, for_inscMunicipal=?, for_email=?, for_status=?,"
+        		+ "for_end_tipo=?, for_end_cep=?, for_end_tipoLogradouro=?, for_end_logradouro=?, for_end_numero=?, for_end_bairro=?, for_end_complemento=?,"
+        		+ "for_end_cidade=?, for_end_estado_uf=?, for_end_pais=?, for_dtCadastro=?"); 
+        sql.append("WHERE for_id=?;");
+  
+        
+        try {
+            connection.setAutoCommit(false);
+            
+        pst = connection.prepareStatement(sql.toString(), 
+					Statement.RETURN_GENERATED_KEYS);
+        pst.setString(1, fornecedor.getNmFantasia());
+        pst.setString(2, fornecedor.getRzSocial());
+        pst.setString(3, fornecedor.getCnpj());
+        pst.setString(4, fornecedor.getInscricaoEstadual());
+        pst.setString(5, fornecedor.getInscricaoMunicipal());
+        pst.setString(6, fornecedor.getEmail());
+        pst.setString(7, fornecedor.getStatus());
+        pst.setString(8, fornecedor.getEndereco().getTipo());
+        pst.setString(9, fornecedor.getEndereco().getCep());
+        pst.setString(10, fornecedor.getEndereco().getTipoLogradouro());
+        pst.setString(11, fornecedor.getEndereco().getLogradouro());
+        pst.setString(12, fornecedor.getEndereco().getNumero());
+        pst.setString(13, fornecedor.getEndereco().getBairro());
+        pst.setString(14, fornecedor.getEndereco().getComplemento());
+        pst.setString(15, fornecedor.getEndereco().getCidade());
+        pst.setString(16, fornecedor.getEndereco().getEstadoUf());
+        pst.setString(17, fornecedor.getEndereco().getPais());
+        pst.setTimestamp(18, new Timestamp(fornecedor.getDtCadastro().getTime()));
+        pst.setInt(19, fornecedor.getId());
+        pst.executeUpdate();
+        connection.commit();
+        
+        ResultSet rs = pst.getGeneratedKeys();
+        
+		if(rs.next()) {
+			fornecedor.setId(rs.getInt(1));
+			
+		}
+		
+		System.out.println(fornecedor.getId());	
+			
+		for(Contato contato : fornecedor.getContatos()) {
+            try {
+                contatoDAO = new ContatoDAO();
+                contatoDAO.salvar(contato);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        for(Telefone telefone : fornecedor.getTelefones()) {
+            try {
+                telefoneDAO = new TelefoneDAO();                
+                telefoneDAO.salvar(telefone);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        for(Cnae cnae : fornecedor.getCnaes()) {
+            try {
+                cnaeDAO = new CnaeDAO();	                
+                cnaeDAO.salvar(cnae);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+             
+        for(Empresa empresa : fornecedor.getEmpresas()) {
+            try {
+                empresaDAO = new EmpresaDAO();	                
+                empresaDAO.salvar(empresa);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        for(Produto produto : fornecedor.getProdutosOfertados()) {
+            try {
+                produtoDAO = new ProdutoDAO();	                
+                produtoDAO.salvar(produto);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        for(Servico servico : fornecedor.getServicosOfertados()) {
+            try {
+                servicoDAO = new ServicoDAO();	                
+                servicoDAO.salvar(servico);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+    } catch (SQLException e) {
+        try {
+            connection.rollback();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        e.printStackTrace();
+    }finally{
+    	if(ctrlTransaction) {
+			try {
+				pst.close();
+				if(ctrlTransaction)
+					connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+    }
     }
 
     @Override

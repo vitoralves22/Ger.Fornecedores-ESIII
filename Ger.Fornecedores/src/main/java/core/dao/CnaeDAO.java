@@ -9,10 +9,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import core.util.Conexao;
-import model.domain.Empresa;
-import model.domain.EntidadeDominio;
-import model.domain.Fornecedor;
-import model.domain.Cnae;
+import dominio.Empresa;
+import dominio.EntidadeDominio;
+import dominio.Fornecedor;
+import dominio.Cnae;
 
 
 public class CnaeDAO extends AbstractJdbcDAO{
@@ -36,7 +36,7 @@ public class CnaeDAO extends AbstractJdbcDAO{
             StringBuilder sql = new StringBuilder();
             
             sql.append("INSERT INTO tab_cnaes(cna_numero, cna_dtCadastro, cna_for_id) "); 
-            sql.append(" VALUES (?, ?, (SELECT MAX(tab_fornecedores.for_id) FROM tab_fornecedores))");
+            sql.append(" VALUES (?, ?, ?)");
             
             try {
                 connection.setAutoCommit(false);
@@ -44,6 +44,7 @@ public class CnaeDAO extends AbstractJdbcDAO{
             pst = connection.prepareStatement(sql.toString());
             pst.setString(1, cnae.getCodigo());
             pst.setTimestamp(2, new Timestamp(cnae.getDtCadastro().getTime()));
+            pst.setInt(3, cnae.getForId());
             pst.executeUpdate();
             
             
@@ -76,8 +77,51 @@ public class CnaeDAO extends AbstractJdbcDAO{
 
     @Override
     public void alterar(EntidadeDominio entidade) throws SQLException {
-        // TODO Auto-generated method stub
-        
+    	if(connection == null){
+			openConnection();
+		}
+		PreparedStatement pst=null;
+		
+        	Cnae cnae = (Cnae)entidade;
+            StringBuilder sql = new StringBuilder();
+            
+            sql.append("UPDATE tab_cnaes SET cna_numero=?"); 
+            sql.append("WHERE cna_for_id=?");
+            
+            try {
+                connection.setAutoCommit(false);
+
+            pst = connection.prepareStatement(sql.toString());
+            pst.setString(1, cnae.getCodigo());
+            pst.setInt(2, cnae.getForId());
+            pst.executeUpdate();
+            
+            
+            ResultSet rs = pst.getGeneratedKeys();
+			int idCnae=0;
+			if(rs.next())
+                idCnae = rs.getInt(1);
+			cnae.setId(idCnae);
+
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+       
+        }finally{
+            try {
+                pst.close();
+                if(ctrlTransaction)
+                connection.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -100,8 +144,9 @@ public class CnaeDAO extends AbstractJdbcDAO{
 				listaCnaes.add(new Cnae(
 					rs.getInt("cna_id"),
 					rs.getString("cna_numero"),
-					new Date(rs.getTimestamp("cna_dtcadastro").getTime())
-				));
+					new Date(rs.getTimestamp("cna_dtcadastro").getTime()),
+					rs.getInt("cna_for_id")
+					));
 			}					
 		} catch (SQLException e) {
 			e.printStackTrace();	
