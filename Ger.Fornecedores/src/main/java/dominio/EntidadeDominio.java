@@ -7,12 +7,17 @@ public abstract class EntidadeDominio implements IEntidade {
 	private Integer id;
     private Date dtCadastro;
     private Integer forId;
+    private String pesquisa;
 
     public EntidadeDominio() {
         this.dtCadastro = new Date();
     }
     public EntidadeDominio(Integer id) {
         this.id = id;
+    }
+    
+    public EntidadeDominio(String pesquisa) {
+        this.pesquisa = pesquisa;
     }
     public EntidadeDominio(Integer id, Date dtCadastro) {
         this.id = id;
@@ -45,7 +50,15 @@ public abstract class EntidadeDominio implements IEntidade {
 	}
 	public void setForId(Integer forId) {
 		this.forId = forId;
+	}
+	public String getPesquisa() {
+		return pesquisa;
+	}
+	public void setPesquisa(String pesquisa) {
+		this.pesquisa = pesquisa;
 	}  
+	
+	
     
     
     

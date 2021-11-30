@@ -95,13 +95,6 @@ public class CnaeDAO extends AbstractJdbcDAO{
             pst.setString(1, cnae.getCodigo());
             pst.setInt(2, cnae.getForId());
             pst.executeUpdate();
-            
-            
-            ResultSet rs = pst.getGeneratedKeys();
-			int idCnae=0;
-			if(rs.next())
-                idCnae = rs.getInt(1);
-			cnae.setId(idCnae);
 
             connection.commit();
         } catch (SQLException e) {

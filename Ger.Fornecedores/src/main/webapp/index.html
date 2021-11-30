@@ -1,0 +1,207 @@
+<!--
+    Alunos: Lenita Misaki, Vitor Alves 
+    Engenharia de Software III                                        
+    Prof. Rodrigo Rocha                                                     
+-->
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,200;1,800&display=swap">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/button.css">
+    <link rel="stylesheet" href="css/records.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/tabs.css">
+    <link rel="stylesheet" href="css/checkbox.css">
+    <link rel="stylesheet" href="css/span.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="main.js" defer></script>
+    <title>CRUD</title>
+</head>
+
+<body>
+    <header>
+        <h1 class="header-title">Cadastro de Fornecedores</h1>
+    </header>
+    <main>
+        <div>
+	    	<button type="button" class="button blue mobile" id="cadastrarFornecedor">Cadastrar Fornecedor</button>
+	    		<input type= "search" id= "searchfield" placeholder="Pesquisar"/>
+			<span id="spanSearch" class="search material-icons">search</span>
+    	</div>
+        <table id="tableFornecedor" class="records">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome Fantasia</th>
+                    <th>CNPJ</th>
+                    <th>UF</th>
+                    <th>Tipo</th>
+                    <th>Contato</th>
+                    <th>Ativo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td> 
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <div class="form-group">
+                            <input class="checkbox" id="checkbox1" type='checkbox' />
+                        </div>
+                    </td>
+                    <td>
+                        <span class="edit material-icons"> edit</span>
+                        <span class="consult material-icons">description</span>
+                        <span class="delete material-icons">delete</span>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <nav class="nav_tabs">
+                    <ul>
+                        <li>
+                            <input type="radio" id="tab1" class="rd_tab" name="tabs" checked>
+                            <span class="modal-close" id="modalClose">&#10006;</span>
+                            <label for="tab1" class="tab_label">Empresa</label>
+                            <div class="tab-content">
+                                <h1></h1>
+                                <form id="form" class="modal-form" action="FornecedorViewHelper" method="get">
+                                	
+                                    <input id="txtForNomeFantasia" type="text" data-index="new" class="modal-field"
+                                        placeholder="Nome Fantasia" required>              
+                                      
+                                    <input id="txtForRazaoSocial" type="text" class="modal-field" placeholder="Razão Social" required>                                    
+                                 
+                                    <input id="txtForCNPJ" type="text" class="modal-field" placeholder="CNPJ" required>
+                                                                   
+                                    <input id="txtForInscricaoEstadual" type="text" class="modal-field"
+                                        placeholder="Inscrição Estadual" required>                                 
+                                    
+                                    <input id="txtForInscricaoMunicipal" type="text" class="modal-field"
+                                        placeholder="Inscrição Municipal" required>
+                                                                      
+                                    <input id="txtForEmail" type="text" class="modal-field"
+                                        placeholder="Email" required>                                       
+                                   
+                                    <input id="txtForTipoEmpresas" type="text" class="modal-field"
+                                        placeholder="Tipo Empresa" required>
+                                             
+                                    <input id="txtForTipoFornecimento" type="text" class="modal-field"
+                                        placeholder="Tipo Fornecimento" required>
+       
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <input type="radio" name="tabs" class="rd_tab" id="tab2">
+                            <label for="tab2" class="tab_label">CNAE</label>
+                            <div class="tab-content">
+                                <h2></h2>
+                                <form id="form2" class="modal-form">                                                         
+                                    <input id="txtCnaeCodigo" type="text" class="modal-field" placeholder="CNAE" required>
+                                         
+                                    <button type="button" class="button addContato" id="adicionarCnae">Add+</button>
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <input type="radio" name="tabs" class="rd_tab" id="tab3">
+                            <label for="tab3" class="tab_label">Fornecimento</label>
+                            <div class="tab-content">
+                                <h2></h2>
+                                <form id="form3" class="modal-form">
+                                    <input id="tipo_fornecimento" type="text" class="modal-field" placeholder="Tipo">
+                                    <input id="descricao_fornecimento" type="text" class="modal-field"
+                                        placeholder="Descrição">
+                                   
+                                    <button type="button" class="button addContato" id="adicionarFornecimento">Add+</button>
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <input type="radio" name="tabs" class="rd_tab" id="tab4">
+                            <label for="tab4" class="tab_label">Endereço</label>
+                            <div class="tab-content">
+                                <h2></h2>
+                                <form id="form4" class="modal-form">
+                                    <input id="txtEndTipo" type="text" class="modal-field"
+                                        placeholder="Tipo Endereço">
+                                    <input id="txtEndTipoLogradouro" type="text" class="modal-field"
+                                        placeholder="Tipo Logradouro">
+                                    <input id="txtEndLogradouro" type="text" class="modal-field" placeholder="Logradouro">
+                                    <input id="txtEndNumero" type="text" class="modal-field" placeholder="Numero">
+                                    <input id="txtEndBairro" type="text" class="modal-field" placeholder="Bairro">
+                                    <input id="txtEndCidade" type="text" class="modal-field" placeholder="Cidade">
+                                    <input id="txtEndEstadoUf" type="text" class="modal-field" placeholder="UF" required>
+                                    <input id="txtEndPais" type="text" class="modal-field" placeholder="País">
+                                    <input id="txtEndCEP" type="text" class="modal-field" placeholder="CEP">
+                                    <input id="txtEndComplemento" type="text" class="modal-field" placeholder="Complemento">
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <input type="radio" name="tabs" class="rd_tab" id="tab5">
+                            <label for="tab5" class="tab_label">Contato</label>
+                            <div class="tab-content">
+                                <h2></h2>
+                                <form id="form5" class="modal-form">
+                                    <input id="txtCttnome" type="text" class="modal-field" placeholder="Nome" required>
+                                    <input id="txtCttemail" type="email" class="modal-field" placeholder="Email"
+                                        required>
+                                    <input id="txtCttdepartamento" type="text" class="modal-field"
+                                        placeholder="Departamento" required>
+                                    <input id="txtTelDDI" type="text" class="modal-field" placeholder="DDI" required>
+                                    <input id="txtTelDDD" type="text" class="modal-field" placeholder="DDD" required>
+                                    <input id="txtTelNumero" type="tel" class="modal-field" placeholder="Telefone" required>
+                                   <!--  <input id="ramal_contato" type="text" class="modal-field" placeholder="Ramal">
+                                    <input id="codigo_contato" type="text" class="modal-field" placeholder="Código">
+                                    <input id="descricao_contato" type="text" class="modal-field"
+                                        placeholder="Descrição"> -->
+                                    <button type="button" class="button addContato" id="adicionarContato">Add+</button>
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <input type="radio" name="tabs" class="rd_tab" id="tab6">
+                            <label for="tab6" class="tab_label">Telefone</label>
+                            <div class="tab-content">
+                                <h2></h2>
+                                <form id="form6" class="modal-form">
+                                    <input id="ddd_telefone" type="text" class="modal-field" placeholder="DDD">
+                                    <input id="ddi_telefone" type="text" class="modal-field"
+                                        placeholder="DDI">
+                                    <input id="numero_telefone" type="tel" class="modal-field" placeholder="Numero">
+                                    <button type="button" class="button addContato" id="adicionarTelefone">Add+</button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <footer class="modal-footer">
+                    <button id="salvar" class="button save">Salvar</button>
+                    <button id="cancelar" class="button cancel">Cancelar</button>
+                </footer>
+            </div>
+        </div>
+    </main>
+    <footer>
+    </footer>
+</body>
+
+</html>

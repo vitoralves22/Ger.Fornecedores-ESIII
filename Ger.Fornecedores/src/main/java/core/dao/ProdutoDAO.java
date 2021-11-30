@@ -85,7 +85,7 @@ public class ProdutoDAO extends AbstractJdbcDAO{
         	Produto produto = (Produto)entidade;
             StringBuilder sql = new StringBuilder();
             
-            sql.append("UPDATE tab_produtos SET pro_descricao=? ) "); 
+            sql.append("UPDATE tab_produtos SET pro_descricao=?"); 
             sql.append("WHERE pro_for_id=?");
             
             try {

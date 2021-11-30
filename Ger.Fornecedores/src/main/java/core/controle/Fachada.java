@@ -24,19 +24,29 @@ public class Fachada implements IFachada {
         rns = new HashMap<String, Map<String, List<IStrategy>>>();
 		Map<String, List<IStrategy>> rnsSALVAR = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsALTERAR = new HashMap<String, List<IStrategy>>();
-		
+		Map<String, List<IStrategy>> rnsCONSULTAR = new HashMap<String, List<IStrategy>>();
+		Map<String, List<IStrategy>> rnsEXCLUIR = new HashMap<String, List<IStrategy>>();
+
         ValidadorCnpj vCnpj = new ValidadorCnpj();
 
         ArrayList<IStrategy> rnsFornecedorSalvar = new ArrayList<IStrategy>();
         rnsFornecedorSalvar.add(vCnpj);
+        
         ArrayList<IStrategy> rnsFornecedorAlterar = new ArrayList<IStrategy>();
         rnsFornecedorAlterar.add(vCnpj);
-
+        
+        ArrayList<IStrategy> rnsFornecedorConsultar = new ArrayList<IStrategy>();
+        
+        ArrayList<IStrategy> rnsFornecedorExcluir = new ArrayList<IStrategy>();
+        
+        
         rnsSALVAR.put(Fornecedor.class.getName(), rnsFornecedorSalvar);
         rnsALTERAR.put(Fornecedor.class.getName(), rnsFornecedorAlterar);
-
+       
         rns.put("SALVAR", rnsSALVAR);
         rns.put("ALTERAR", rnsALTERAR);
+        rns.put("CONSULTAR", rnsCONSULTAR);
+        rns.put("EXCLUIR", rnsEXCLUIR);
     }
 	
 	 @Override
@@ -143,7 +153,7 @@ public class Fachada implements IFachada {
         if (msg == null) {
             IDAO dao = daos.get(nomeClasse);
             try {
-                if (entidade.getId() == 0) {
+                if (entidade.getId() == null) {
                     resultado.setEntidades(dao.consultar(entidade));
                 } else {
                     resultado.setEntidades(new ArrayList<EntidadeDominio>(1));
@@ -159,7 +169,6 @@ public class Fachada implements IFachada {
             resultado.setMsg(msg);
         }
         
-        System.out.println(resultado.getEntidades().get(0).getDtCadastro());
         return resultado;
         
     }
@@ -182,6 +191,7 @@ public class Fachada implements IFachada {
 	private String executarRegras(EntidadeDominio entidade, String operacao) {
         String nomeClasse = entidade.getClass().getName();
         StringBuilder msg = new StringBuilder();
+        
         Map<String, List<IStrategy>> regrasOperacao = rns.get(nomeClasse);
         if (regrasOperacao != null) {
             List<IStrategy> regras = regrasOperacao.get(operacao);
@@ -194,6 +204,7 @@ public class Fachada implements IFachada {
                 }
             }
         }
+        
         if (msg.length() > 0) {
             return msg.toString();
         } else {

@@ -31,6 +31,10 @@ public class Fornecedor extends EntidadeDominio {
         super(id);
     }
     
+    public Fornecedor(String pesquisa){
+        super(pesquisa);
+    }
+    
     public Fornecedor(String nmFantasia, String rzSocial, String cnpj, String inscEstadual, String inscMunicipal, String email, Endereco end) {
     	this.nmFantasia = nmFantasia;
     	this.rzSocial = rzSocial;
@@ -39,6 +43,16 @@ public class Fornecedor extends EntidadeDominio {
     	this.inscricaoMunicipal = inscMunicipal;
     	this.email = email;
     	this.endereco = end;    
+    	System.out.println("Fornecedor criado com sucesso");
+    }
+    
+    public Fornecedor(String nmFantasia, String rzSocial, String cnpj, String inscEstadual, String inscMunicipal, String email) {
+    	this.nmFantasia = nmFantasia;
+    	this.rzSocial = rzSocial;
+    	this.cnpj = cnpj;
+    	this.inscricaoEstadual = inscEstadual;
+    	this.inscricaoMunicipal = inscMunicipal;
+    	this.email = email; 
     	System.out.println("Fornecedor criado com sucesso");
     }
     

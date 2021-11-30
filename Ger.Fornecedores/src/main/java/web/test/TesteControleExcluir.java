@@ -8,7 +8,7 @@ public class TesteControleExcluir {
 	
 	public static void main(String[] args) {
 
-		    int id = 44;
+		    int id = 10;
 	        Fornecedor fornecedor = new Fornecedor(id);
 
 	        Fachada fachada = new Fachada();

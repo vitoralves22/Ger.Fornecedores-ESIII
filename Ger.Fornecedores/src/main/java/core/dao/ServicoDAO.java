@@ -83,7 +83,7 @@ public class ServicoDAO extends AbstractJdbcDAO{
         	Servico servico = (Servico)entidade;
             StringBuilder sql = new StringBuilder();
             
-            sql.append("UPDATE tab_servicos SET ser_descricao=? ) "); 
+            sql.append("UPDATE tab_servicos SET ser_descricao=?"); 
             sql.append("WHERE ser_for_id=?");
             
             try {

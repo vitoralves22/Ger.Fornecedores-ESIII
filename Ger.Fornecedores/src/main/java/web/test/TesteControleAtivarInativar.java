@@ -9,7 +9,7 @@ public static void main(String[] args) {
 
         Controle controle = new Controle();
         //System.out.println(controleFornecedor.inativarFornecedor(id));
-        System.out.println(controle.ativarFornecedor(id));
+        //System.out.println(controle.ativarFornecedor(id));
 
     }
 

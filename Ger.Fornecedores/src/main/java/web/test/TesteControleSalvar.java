@@ -1,7 +1,7 @@
 package web.test;
 
 import web.controle.*;
-import core.controle.Fachada;
+import web.command.*;
 import core.controle.IFachada;
 import core.dao.*;
 import dominio.*;
@@ -12,7 +12,7 @@ public class TesteControleSalvar {
 	
 	public static void main(String[] args) {
 			
-			IDAO fornecedorDAO = new FornecedorDAO();
+			
 			List<Contato> listaContatos = new ArrayList<>();
 	        List<Cnae> listaCnaes = new ArrayList<>();
 	        List<Produto> listaProdutos = new ArrayList<>();
@@ -21,7 +21,7 @@ public class TesteControleSalvar {
 	        List<Telefone> listaTelefones = new ArrayList<Telefone>();
 	
 	        Endereco endereco1 = new Endereco("ViranoAdireita", "cep1", "tipoLog1", "log1", "num1", "bai1", "comple1", "cid1", "est", "pais1");
-	        Fornecedor for1 = new Fornecedor("Creusa", "rzsocial1", "22222222555", "insmun1", "insest1", "email1", endereco1);
+	        Fornecedor for1 = new Fornecedor("Creusa", "rzsocialDaCreusa", "22222222555", "insmun1", "insest1", "email1", endereco1);
 	        Cnae cnae1 = new Cnae("123");
 	        Contato ctt1 = new Contato("fulano1", "email1", "dpto1", new Telefone("11","22","40028922"));
 	        Telefone tel1 = new Telefone("11", "11", "111111111");
@@ -42,7 +42,7 @@ public class TesteControleSalvar {
 	        Produto pro2 = new Produto("pneu");
 	        Servico ser2 = new Servico("limpeza");
 	        
-	        IFachada fachada = new Fachada();
+	        ICommand command = new SalvarCommand();
 	        
 	        listaContatos.add(ctt1);
 	        listaCnaes.add(cnae1);
@@ -57,7 +57,7 @@ public class TesteControleSalvar {
 	        for1.setServicosOfertados(listaServicos);
 	        for1.setStatus("Ativo");
 	        for1.setTelefones(listaTelefones);
-	        fachada.salvar(for1);
+	        command.executar(for1);
 	        
 	        listaContatos.clear();
 	        listaCnaes.clear();
@@ -83,7 +83,7 @@ public class TesteControleSalvar {
 	        for2.setServicosOfertados(listaServicos);
 	        for2.setStatus("Ativo");
 	        for2.setTelefones(listaTelefones);
-	        fachada.salvar(for2);  
+	        command.executar(for2);  
 		}
 
 }
