@@ -17,7 +17,7 @@ public class TesteControleConsultar {
 	public static void main(String[] args) throws SQLException {
 	
 		ICommand command = new ConsultarCommand();
-		Fornecedor fornecedor = new Fornecedor("rzsocialDaCreusa");
+		Fornecedor fornecedor = new Fornecedor("vitor");
         Resultado resultado = new Resultado();
         List<EntidadeDominio> creusas = new ArrayList<>();       
         
@@ -26,7 +26,7 @@ public class TesteControleConsultar {
         
         System.out.println(resultado.getMsg());
         for(EntidadeDominio creusa : creusas) {
-        	System.out.println(creusa.toString() + "\n");
+        	System.out.println(creusa);
         }
             
     }

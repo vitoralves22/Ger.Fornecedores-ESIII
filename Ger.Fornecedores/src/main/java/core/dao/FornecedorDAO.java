@@ -291,8 +291,10 @@ public class FornecedorDAO extends AbstractJdbcDAO{
         
 
         String sqlFornecedor = null;
+		System.out.println(fornecedor.getPesquisa());
 
         if (fornecedor.getPesquisa() != null) {
+
             sqlFornecedor = "Select * from tab_fornecedores WHERE "
                     + "CAST(for_id as text) LIKE '%" + fornecedor.getPesquisa() + "%' or "
                     + "CAST(for_dtcadastro as text) LIKE '%" + fornecedor.getPesquisa() + "%' or "
@@ -302,6 +304,9 @@ public class FornecedorDAO extends AbstractJdbcDAO{
                     + "CAST(for_inscestadual as text) LIKE '%" + fornecedor.getPesquisa() + "%' or "
                     + "for_email LIKE '%" + fornecedor.getPesquisa() + "%' or "
                     + "CAST(for_inscmunicipal as text) LIKE '%" + fornecedor.getPesquisa() + "%' ORDER BY for_id;";
+            
+			System.out.println(sqlFornecedor);
+
         } else {
             sqlFornecedor = "SELECT * FROM tab_fornecedor ORDER BY for_id;";
         }

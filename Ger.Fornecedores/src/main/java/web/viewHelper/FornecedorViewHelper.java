@@ -225,11 +225,15 @@ public class FornecedorViewHelper implements IViewHelper {
 			Resultado resultado = (Resultado) session.getAttribute("fornecedorSessao");
 			String listaId = request.getParameter("txtListaId");
 			String pesquisa = request.getParameter("txtPesquisa");
-
+			
+		
+			
 			if (pesquisa != null && !pesquisa.trim().equals("")) {
-				fornecedor.setForPesquisa(pesquisa);
+				fornecedor.setPesquisa(pesquisa);
+				
 			}
 
+			
 			if (!operacao.equals("CONSULTAR")) {
 				if (listaId != null && !listaId.trim().equals("")) {
 
@@ -242,7 +246,7 @@ public class FornecedorViewHelper implements IViewHelper {
 					}
 				}
 			} else {
-				fornecedor.setId(0);
+				fornecedor.setId(null);
 			}
 
 		}
@@ -258,10 +262,9 @@ public class FornecedorViewHelper implements IViewHelper {
 
 		if (operacao.equals("SALVAR")) {
 			if (resultado.getMsg().equals("Fornecedor salvo com sucesso.")) {
-
-				request.setAttribute("resultado", resultado);
-				request.getSession().setAttribute("fornecedorSessao", resultado);
-				dispatcher = request.getRequestDispatcher("/ConsultarCliente?txtPesquisa=ativo&OPERACAO=CONSULTAR");
+				request.setAttribute("resultado", resultado);						//reflita :O
+				request.getSession().setAttribute("fornecedorSessao", resultado);	//reflita :O
+				dispatcher = request.getRequestDispatcher("index.jsp");
 
 			} else {
 				request.setAttribute("resultado", resultado);
@@ -269,31 +272,31 @@ public class FornecedorViewHelper implements IViewHelper {
 				dispatcher = request.getRequestDispatcher("index.jsp");
 			}
 		} else if (operacao.equals("CONSULTAR")) {
-
-			request.getSession().setAttribute("clienteSessao", resultado);
-			dispatcher = request.getRequestDispatcher("index.jsp");
-
+			request.setAttribute("resultado", resultado);
+			request.getSession().setAttribute("fornecedorSessao", resultado);	
+			dispatcher = request.getRequestDispatcher("/ConsultarFornecedor.jsp");
+			
 		} else if (operacao.equals("VISUALIZAR")) {
 
-			request.getSession().setAttribute("VisualizarCliente", resultado.getEntidades().get(0));
+			request.getSession().setAttribute("VisualizarFornecedor", resultado.getEntidades().get(0));
 			dispatcher = request.getRequestDispatcher("cliente/FormVisualizarCliente.jsp");
 
 		} else if (operacao.equals("ALTERAR")) {
 
 			if (resultado.getMsg().equals("Alterado com sucesso.")) {
 				request.setAttribute("resultado", resultado);
-				request.getSession().setAttribute("clienteSessao", resultado);
-				dispatcher = request.getRequestDispatcher("/ConsultarCliente?txtPesquisa=ativo&OPERACAO=CONSULTAR");
+				request.getSession().setAttribute("fornecedorSessao", resultado);
+				dispatcher = request.getRequestDispatcher("/ConsultarFornecedor?txtPesquisa=ativo&OPERACAO=CONSULTAR");
 			} else {
 				request.setAttribute("resultado", resultado);
-				request.getSession().setAttribute("enderecoSessao", resultado);
-				dispatcher = request.getRequestDispatcher("cliente/FormVisualizarCliente.jsp");
+				request.getSession().setAttribute("fornecedorSessao", resultado);
+				dispatcher = request.getRequestDispatcher("VisualizarFornecedor.jsp");
 			}
 
 		} else if (operacao.equals("EXCLUIR")) {
 
 			request.setAttribute("resultado", resultado);
-			dispatcher = request.getRequestDispatcher("/ConsultarCliente?OPERACAO=CONSULTAR");
+			dispatcher = request.getRequestDispatcher("/ConsultarFornecedor?OPERACAO=CONSULTAR");
 		}
 
 		dispatcher.forward(request, response);

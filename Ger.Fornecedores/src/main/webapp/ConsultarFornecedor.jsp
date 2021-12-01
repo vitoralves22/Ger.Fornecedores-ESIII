@@ -36,206 +36,17 @@
 	<header>
 		<h1 class="header-title">Cadastro de Fornecedores</h1>
 	</header>
-	 <%       
-            Resultado resultado = (Resultado) request.getAttribute("resultado");
-            Resultado fornecedores = (Resultado) session.getAttribute("fornecedorSessao");
-            
-            String nomeFantasia =  "";
-			String razaoSocial =  "";
-			String cnpj =  "";
-			String inscricaoEstadual =  "";
-			String inscricaoMunicipal =  "";
-			String tipoEmpresa =  "";
-			String tipoFornecimento =  "";
-			String email =  "";
-			String endTipo =  "";
-			String endCEP =  "";
-			String endTipoLogradouro =  "";
-			String endLogradouro =  "";
-			String endNumero =  "";
-			String endBairro =  "";
-			String endComplemento =  "";
-			String endCidade =  "";
-			String endEstadoUf =  "";
-			String endPais =  "";
-			String codigo =  "";
-			String telDDI = "";
-			String telDDD = "";;
-			String telNumero = "";
-			String cttNome = "";
-			String cttDepartamento = "";
-			String cttEmail = "";
-			String cttTelDDI = "";
-			String cttTelDDD = "";;
-			String cttTelNumero = "";
-			String proDescricao = "";
-			String serDescricao = "";
-					
-            if (resultado != null) {
-                if (resultado.getEntidades() != null) {
-                    Fornecedor fornecedor = (Fornecedor) fornecedores.getEntidades().get(0);
-                    if (fornecedor.getNmFantasia() == null) {
-                    	nomeFantasia = "";
-                    } else {
-                    	nomeFantasia = fornecedor.getNmFantasia();
-                    }
-                    if (fornecedor.getRzSocial() == null) {
-                    	razaoSocial = "";
-                    } else {
-                    	razaoSocial = fornecedor.getRzSocial();
-                    }
-                    if (fornecedor.getCnpj() == null) {
-                    	cnpj = "";
-                    } else {
-                    	cnpj = fornecedor.getCnpj() ;
-                    }
-                    if (fornecedor.getInscricaoEstadual()== null) {
-                    	inscricaoEstadual = "";
-                    } else {
-                    	inscricaoEstadual = fornecedor.getInscricaoEstadual();
-                    }
-                    if (fornecedor.getInscricaoMunicipal() == null) {
-                    	inscricaoMunicipal = "";
-                    } else {
-                    	inscricaoMunicipal = fornecedor.getInscricaoMunicipal();
-                    }
-                    
-                   	if (fornecedor.getEmpresa().getTipo() == null) {
-                    	tipoEmpresa = "";
-                    } else {
-                    	tipoEmpresa = fornecedor.getEmpresa().getTipo();
-                    }
-                   	
-                    if (fornecedor.getEmpresa().getTipoFornecimento() == null) {
-                    	tipoFornecimento = "";
-                    } else {
-                    	tipoFornecimento = fornecedor.getEmpresa().getTipoFornecimento();
-                    }
-                    
-                    if (fornecedor.getEmail() == null) {
-                    	email  = "";
-                    } else {
-                    	email = fornecedor.getEmail();
-                    }
-                    if (fornecedor.getEndereco().getTipo() == null) {
-                    	endTipo  = "";
-                    } else {
-                    	endTipo = fornecedor.getEndereco().getTipo();
-                    }
-                    if (fornecedor.getEndereco().getCep() == null) {
-                    	endCEP  = "";
-                    } else {
-                    	endCEP = fornecedor.getEndereco().getCep();
-                    }
-                    if (fornecedor.getEndereco().getTipoLogradouro() == null) {
-                    	endTipoLogradouro  = "";
-                    } else {
-                    	endTipoLogradouro = fornecedor.getEndereco().getTipoLogradouro();
-                    }
-                    if (fornecedor.getEndereco().getLogradouro() == null) {
-                    	endLogradouro  = "";
-                    } else {
-                    	endLogradouro = fornecedor.getEndereco().getLogradouro();
-                    }
-                    if (fornecedor.getEndereco().getNumero() == null) {
-                    	endNumero  = "";
-                    } else {
-                    	endNumero = fornecedor.getEndereco().getNumero();
-                    }
-                    if (fornecedor.getEndereco().getBairro() == null) {
-                    	endBairro  = "";
-                    } else {
-                    	endBairro = fornecedor.getEndereco().getBairro();
-                    }
-                    if (fornecedor.getEndereco().getComplemento() == null) {
-                    	endComplemento  = "";
-                    } else {
-                    	endComplemento = fornecedor.getEndereco().getComplemento();
-                    }
-                    if (fornecedor.getEndereco().getCidade() == null) {
-                    	endCidade  = "";
-                    } else {
-                    	endCidade = fornecedor.getEndereco().getCidade();
-                    }
-                    if (fornecedor.getEndereco().getEstadoUf() == null) {
-                    	endEstadoUf  = "";
-                    } else {
-                    	endEstadoUf = fornecedor.getEndereco().getEstadoUf();
-                    }
-                    if (fornecedor.getEndereco().getPais() == null) {
-                    	endPais  = "";
-                    } else {
-                    	endPais = fornecedor.getEndereco().getPais();
-                    }
-                    if (fornecedor.getCnaes().get(0).getCodigo() == null) {
-                    	codigo  = "";
-                    } else {
-                    	codigo = fornecedor.getCnaes().get(0).getCodigo() ;
-                    } 
-                    if (fornecedor.getTelefones().get(0).getDdi() == null) {
-                    	telDDI = "";
-                    } else {
-                    	telDDI = fornecedor.getTelefones().get(0).getDdi();
-                    } 
-                    if (fornecedor.getTelefones().get(0).getDdd() == null) {
-                    	telDDD = "";
-                    } else {
-                    	telDDD = fornecedor.getTelefones().get(0).getDdd();
-                    } 
-                    if (fornecedor.getTelefones().get(0).getNumero() == null) {
-                    	telNumero = "";
-                    } else {
-                    	telNumero = fornecedor.getTelefones().get(0).getNumero();
-                    } 
-                    if (fornecedor.getContatos().get(0).getNome() == null) {
-                    	cttNome = "";
-                    } else {
-                    	cttNome = fornecedor.getContatos().get(0).getNome();
-                    } 
-                    if (fornecedor.getContatos().get(0).getDepartamento()== null) {
-                    	cttDepartamento = "";
-                    } else {
-                    	cttDepartamento = fornecedor.getContatos().get(0).getDepartamento();
-                    } 
-                    if (fornecedor.getContatos().get(0).getEmail()== null) {
-                    	cttEmail = "";
-                    } else {
-                    	cttEmail = fornecedor.getContatos().get(0).getEmail();
-                    }
-                    if (fornecedor.getContatos().get(0).getTelefone().getDdi() == null) {
-                    	telDDI = "";
-                    } else {
-                    	telDDI = fornecedor.getContatos().get(0).getTelefone().getDdi();
-                    } 
-                    if (fornecedor.getContatos().get(0).getTelefone().getDdd() == null) {
-                    	telDDD = "";
-                    } else {
-                    	telDDD = fornecedor.getContatos().get(0).getTelefone().getDdd();
-                    } 
-                    if (fornecedor.getContatos().get(0).getTelefone().getNumero() == null) {
-                    	telNumero = "";
-                    } else {
-                    	telNumero = fornecedor.getContatos().get(0).getTelefone().getNumero() ;
-                    }
-                    if (fornecedor.getProdutosOfertados().get(0).getDescricao() == null) {
-                    	proDescricao = "";
-                    } else {
-                    	proDescricao = fornecedor.getProdutosOfertados().get(0).getDescricao();
-                    }
-                    if (fornecedor.getServicosOfertados().get(0).getDescricao() == null) {
-                    	serDescricao = "";
-                    } else {
-                    	serDescricao = fornecedor.getServicosOfertados().get(0).getDescricao();
-                    }
-                }
-            }
-        %>
+	 <%
+	 	//Resultado resultado = (Resultado) session.getAttribute("fornecedorSessao"); 
+	 	Resultado resultado = (Resultado) request.getAttribute("resultado");
+     
+      %>
 	<main>
-		
 		<div>
     		<button type="button" class="button blue mobile" id="cadastrarFornecedor">Cadastrar Fornecedor</button>
-    		
-    		<form action="${pageContext.request.contextPath}/ConsultarFornecedor"> 			
+    		<a class="nav-link" href="${pageContext.request.contextPath}/index.jsp">Voltar</a>	
+    		  		
+    		<form action="${pageContext.request.contextPath}/ConsultarFornecedor">				
     			<input type="text" class="form-control" id="txtPesquisa"name="txtPesquisa" placeholder="Pesquisa">
                 <input class="btn btn-info" type="submit" id="OPERACAO" name="OPERACAO" value="CONSULTAR" />
     		</form>
@@ -249,29 +60,34 @@
 				<tr>
 					<th>ID</th>
 					<th>Nome Fantasia</th>
-					<th>CNPJ</th>
-					<th>UF</th>
-					<th>Tipo</th>
-					<th>Contato</th>
-					<th>Ativo</th>
+					<th>CNPJ</th>				
 				</tr>
 			</thead>		
-
+					<%
+                    if (resultado != null) {
+                        List<EntidadeDominio> fornecedores = resultado.getEntidades();
+                        if (fornecedores != null) {
+                            for (int i = 0; i < fornecedores.size(); i++) {
+                                Fornecedor f = (Fornecedor) fornecedores.get(i);               
+                	%>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    
-                    <td></td>
-                    <td></td>
+                    <td><%= f.getId()%></td>
+                    <td><%= f.getNmFantasia()%></td>
+                    <td><%= f.getCnpj()%></td>
+                    <td><a href="${pageContext.request.contextPath}/ConsultarFornecedor?txtListaId=<%=f.getId()%>&OPERACAO=VISUALIZAR" class="btn btn-default" >Visualizar</a></td>
+                    <td><a href="${pageContext.request.contextPath}/ExcluirFornecedor?OPERACAO=EXCLUIR&txtListaId=<%=f.getId()%>" class="btn btn-default" >Excluir</a></td>
                 </tr>
 
+                <%
+                                
+                            }
+                        }
+                    }
+                %>
 		</table>
-		<div class="modal" id="modal">
+		
+		<!-- SE PRECISAR MOSTRAR O MODAL NA LISTAGEM DESCOMENTAR -->
+		<%-- <div class="modal" id="modal">
 		<form action="${pageContext.request.contextPath}/SalvarFornecedor">
 			<div class="modal-content">
 				<nav class="nav_tabs">
@@ -330,7 +146,8 @@
 										placeholder="Produto"> 
 									<input id="txtDescServico" name="txtDescServico" type="text" class="modal-field" value="<%= serDescricao %>"
 										placeholder="Servico">
-									
+									<input id="descricao_fornecimento" type="text" class="modal-field" value="<%= srvDescricao %>"
+										placeholder="Descrição">
 
 									<button type="button" class="button addContato"
 										id="adicionarFornecimento">Add+</button>
@@ -394,7 +211,10 @@
 										
 									<input id="txtTelNumero" name="txtTelNumero" type="tel" class="modal-field" value="<%= cttTelNumero %>"
 										placeholder="Telefone" >
-									
+									<!--  <input id="ramal_contato" type="text" class="modal-field" placeholder="Ramal">
+                                    <input id="codigo_contato" type="text" class="modal-field" placeholder="Código">
+                                    <input id="descricao_contato" type="text" class="modal-field"
+                                        placeholder="Descrição"> -->
 									<button type="button" class="button addContato"
 										id="adicionarContato">Add+</button>
 								</div>
@@ -419,12 +239,14 @@
 							</div></li>
 					</ul>
 				</nav>
-				<footer class="modal-footer">				
+				<footer class="modal-footer">
+					<button id="salvar" class="button save">Salvar</button>
 					 <input type="submit" class="button save" id="OPERACAO" name="OPERACAO" value="SALVAR"/>
+					<button id="cancelar" class="button cancel">Cancelar</button>
 				</footer>
 			</div>
 			</form>
-		</div>
+		</div> --%>
 	</main>
 	<footer> </footer>
 </html>

@@ -2,6 +2,7 @@ package web.controle;
 
 import core.aplicacao.Resultado;
 import dominio.EntidadeDominio;
+import dominio.Fornecedor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,26 +32,38 @@ public class Controle extends jakarta.servlet.http.HttpServlet {
         vhs.put("/Ger.Fornecedores/ConsultarFornecedor", new FornecedorViewHelper());
         vhs.put("/Ger.Fornecedores/SalvarFornecedor", new FornecedorViewHelper());
         vhs.put("/Ger.Fornecedores/ExcluirFornecedor", new FornecedorViewHelper());
+        
     }
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String uri = request.getRequestURI();
-
+      
         String operacao = request.getParameter("OPERACAO");
 
         IViewHelper vh = vhs.get(uri);
 
         EntidadeDominio entidade = vh.getEntidade(request);
-
+       
         ICommand command = commands.get(operacao);
 
         Resultado resultado = command.executar(entidade);
+        
+        
+        
+        for(EntidadeDominio fornecedor :  resultado.getEntidades()) {
+        	System.out.println((Fornecedor)fornecedor);
+        }
+
 
         vh.setView(resultado, request, response);
 
     }
+    
+    
 
 }
+
+
 
 

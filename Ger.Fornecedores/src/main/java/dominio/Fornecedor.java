@@ -13,8 +13,6 @@ public class Fornecedor extends EntidadeDominio {
     private String inscricaoMunicipal;
     private String rzSocial;
     private String nmFantasia;
-    private String forPesquisa;
-
 
     private List<Telefone> telefones;
     private Empresa empresa;
@@ -263,12 +261,8 @@ public class Fornecedor extends EntidadeDominio {
             this.getStatus()
         );
     }
-	public String getForPesquisa() {
-		return forPesquisa;
-	}
-	public void setForPesquisa(String forPesquisa) {
-		this.forPesquisa = forPesquisa;
-	}
+	
+	
 	
 	
 	
