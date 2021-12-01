@@ -27,7 +27,6 @@ public class FornecedorDAO extends AbstractJdbcDAO{
     public void salvar(EntidadeDominio entidade) throws SQLException {
         	Fornecedor fornecedor = (Fornecedor)entidade;  	
         	
-        	IDAO empresaDAO = new EmpresaDAO();
         	IDAO cnaeDAO = new CnaeDAO();
             IDAO contatoDAO = new ContatoDAO();
             IDAO telefoneDAO = new TelefoneDAO();
@@ -40,8 +39,8 @@ public class FornecedorDAO extends AbstractJdbcDAO{
             
             sql.append("INSERT INTO tab_fornecedores(for_nmFantasia, for_rzSocial, for_cnpj, for_inscEstadual, for_inscMunicipal, for_email, for_status,"
             		+ "for_end_tipo, for_end_cep, for_end_tipoLogradouro, for_end_logradouro, for_end_numero, for_end_bairro, for_end_complemento,"
-            		+ "for_end_cidade, for_end_estado_uf, for_end_pais, for_dtCadastro) "); 
-            sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            		+ "for_end_cidade, for_end_estado_uf, for_end_pais, for_tipo_empresa, for_tipo_fornecimento, for_dtCadastro) "); 
+            sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
             try {
                 connection.setAutoCommit(false);
@@ -65,7 +64,9 @@ public class FornecedorDAO extends AbstractJdbcDAO{
             pst.setString(15, fornecedor.getEndereco().getCidade());
             pst.setString(16, fornecedor.getEndereco().getEstadoUf());
             pst.setString(17, fornecedor.getEndereco().getPais());
-            pst.setTimestamp(18, new Timestamp(fornecedor.getDtCadastro().getTime()));
+            pst.setString(18, fornecedor.getEmpresa().getTipo());
+            pst.setString(19, fornecedor.getEmpresa().getTipoFornecimento());
+            pst.setTimestamp(20, new Timestamp(fornecedor.getDtCadastro().getTime()));
             pst.executeUpdate();
             connection.commit();
             
@@ -103,16 +104,6 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 	                cnaeDAO = new CnaeDAO();
 	                cnae.setForId(fornecedor.getId());
 	                cnaeDAO.salvar(cnae);
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-	        }
-	             
-	        for(Empresa empresa : fornecedor.getEmpresas()) {
-	            try {
-	                empresaDAO = new EmpresaDAO();	
-	                empresa.setForId(fornecedor.getId());
-	                empresaDAO.salvar(empresa);
 	            } catch (SQLException e) {
 	                e.printStackTrace();
 	            }
@@ -163,7 +154,6 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 
     	Fornecedor fornecedor = (Fornecedor)entidade;  	
     	
-    	IDAO empresaDAO = new EmpresaDAO();
     	IDAO cnaeDAO = new CnaeDAO();
         IDAO contatoDAO = new ContatoDAO();
         IDAO telefoneDAO = new TelefoneDAO();
@@ -176,7 +166,7 @@ public class FornecedorDAO extends AbstractJdbcDAO{
         
         sql.append("UPDATE tab_fornecedores SET for_nmFantasia=?, for_rzSocial=?, for_cnpj=?, for_inscEstadual=?, for_inscMunicipal=?, for_email=?, for_status=?,"
         		+ "for_end_tipo=?, for_end_cep=?, for_end_tipoLogradouro=?, for_end_logradouro=?, for_end_numero=?, for_end_bairro=?, for_end_complemento=?,"
-        		+ "for_end_cidade=?, for_end_estado_uf=?, for_end_pais=?, for_dtCadastro=?"); 
+        		+ "for_end_cidade=?, for_end_estado_uf=?, for_end_pais=?, for_tipo_empresa=?, for_tipo_fornecimento=?, for_dtCadastro=?"); 
         sql.append("WHERE for_id=?;");
   
         
@@ -202,8 +192,10 @@ public class FornecedorDAO extends AbstractJdbcDAO{
         pst.setString(15, fornecedor.getEndereco().getCidade());
         pst.setString(16, fornecedor.getEndereco().getEstadoUf());
         pst.setString(17, fornecedor.getEndereco().getPais());
-        pst.setTimestamp(18, new Timestamp(fornecedor.getDtCadastro().getTime()));
-        pst.setInt(19, fornecedor.getId());
+        pst.setString(18, fornecedor.getEmpresa().getTipo());
+        pst.setString(19, fornecedor.getEmpresa().getTipoFornecimento());
+        pst.setTimestamp(20, new Timestamp(fornecedor.getDtCadastro().getTime()));
+        pst.setInt(21, fornecedor.getId());
         pst.executeUpdate();
         connection.commit();
 		
@@ -239,15 +231,6 @@ public class FornecedorDAO extends AbstractJdbcDAO{
             }
         }
              
-        for(Empresa empresa : fornecedor.getEmpresas()) {
-            try {
-                empresaDAO = new EmpresaDAO();	
-                empresa.setForId(fornecedor.getId());
-                empresaDAO.alterar(empresa);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
         
         for(Produto produto : fornecedor.getProdutosOfertados()) {
             try {
@@ -296,14 +279,12 @@ public class FornecedorDAO extends AbstractJdbcDAO{
         List<Contato> contatos = new ArrayList<>();
         List<Telefone> telefones = new ArrayList<>();
         List<Cnae> cnaes = new ArrayList<>();
-        List<Empresa> empresas = new ArrayList<>();
         List<Produto> produtos = new ArrayList<>();
         List<Servico> servicos = new ArrayList<>();
 
         PreparedStatement pstFornecedor = null;
         PreparedStatement pstCnae = null;
         PreparedStatement pstTelefone = null;
-        PreparedStatement pstEmpresa = null;
         PreparedStatement pstContato = null;
         PreparedStatement pstProduto = null;
         PreparedStatement pstServico = null;
@@ -328,7 +309,6 @@ public class FornecedorDAO extends AbstractJdbcDAO{
         String sqlContato = "SELECT * FROM tab_contatos WHERE ctt_for_id = ? ORDER BY ctt_id;";
         String sqlTelefone = "SELECT * FROM tab_telefones WHERE tel_for_id = ? ORDER BY tel_id;";
         String sqlCnae = "SELECT * FROM tab_cnaes WHERE cna_for_id = ? ORDER BY cna_id;";
-        String sqlEmpresa = "SELECT * FROM tab_empresas WHERE emp_for_id = ? ORDER BY emp_id;";
         String sqlProduto = "SELECT * FROM tab_produtos WHERE pro_for_id = ? ORDER BY pro_id;";
         String sqlServico = "SELECT * FROM tab_servicos WHERE ser_for_id = ? ORDER BY ser_id;";
 
@@ -361,6 +341,10 @@ public class FornecedorDAO extends AbstractJdbcDAO{
                 e.setEstadoUf(rsFornecedor.getString("for_end_estado_uf"));
                 e.setPais(rsFornecedor.getString("for_end_pais"));
                 f.setEndereco(e);
+                Empresa emp = new Empresa();
+                emp.setTipo(rsFornecedor.getString("for_tipo_empresa"));
+                emp.setTipoFornecimento(rsFornecedor.getString("for_tipo_fornecimento"));
+                f.setEmpresa(emp);
                 
                 
                 pstCnae = connection.prepareStatement(sqlCnae);
@@ -408,21 +392,6 @@ public class FornecedorDAO extends AbstractJdbcDAO{
                     telefone.setNumero(rsTelefone.getString("tel_numerotelefone"));
                     telefones.add(telefone);
                     f.setTelefones(telefones);
-                }
-                
-
-                pstEmpresa = connection.prepareStatement(sqlEmpresa);
-                pstEmpresa.setInt(1, f.getId());
-                ResultSet rsEmpresa = pstEmpresa.executeQuery();
-
-                while (rsEmpresa.next()) {
-                    Empresa emp = new Empresa();
-                    emp.setId(rsEmpresa.getInt("emp_id"));
-                    emp.setTipoEmpresa(rsEmpresa.getString("emp_tipo"));
-                    emp.setTipoFornecimento(rsEmpresa.getString("emp_tipo_fornecimento"));
-                    emp.setDtCadastro(rsEmpresa.getDate("emp_dtcadastro"));
-                    empresas.add(emp);
-                    f.setEmpresas(empresas);
                 }
                 
                 

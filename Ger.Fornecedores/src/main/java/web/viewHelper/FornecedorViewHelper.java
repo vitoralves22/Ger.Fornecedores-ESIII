@@ -27,11 +27,9 @@ public class FornecedorViewHelper implements IViewHelper {
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
 
 		String operacao = request.getParameter("OPERACAO");
-
 		Endereco endereco = new Endereco();
 		Fornecedor fornecedor = new Fornecedor();
 		Empresa empresa = new Empresa();
-		List<Empresa> listaEmpresas = new ArrayList<>();
 		Cnae cnae = new Cnae();
 		List<Cnae> listaCnaes = new ArrayList<>();
 		Telefone telefone = new Telefone();
@@ -129,14 +127,14 @@ public class FornecedorViewHelper implements IViewHelper {
 			}
 			
 			// Dados do Produto.
-			String pdtDescricao = request.getParameter("txtPdtDescricao");
+			String proDescricao = request.getParameter("txtDescProduto");
 			
-			if (pdtDescricao != null && !pdtDescricao.trim().equals("")) {
-				produto.setDescricao(pdtDescricao);
+			if (proDescricao != null && !proDescricao.trim().equals("")) {
+				produto.setDescricao(proDescricao);
 			}
 						
 			// Dados do Serviço.
-			String srvDescricao = request.getParameter("txtPdtDescricao");
+			String srvDescricao = request.getParameter("txtDescServico");
 			
 			if (srvDescricao != null && !srvDescricao.trim().equals("")) {
 				servico.setDescricao(srvDescricao);
@@ -148,7 +146,7 @@ public class FornecedorViewHelper implements IViewHelper {
 			String cnpj = request.getParameter("txtForCNPJ");
 			String inscricaoEstadual = request.getParameter("txtForInscricaoEstadual");
 			String inscricaoMunicipal = request.getParameter("txtForInscricaoMunicipal");
-			String tipoEmpresa = request.getParameter("txtForTipoEmpresas");
+			String tipoEmpresa = request.getParameter("txtForTipoEmpresa");
 			String tipoFornecimento = request.getParameter("txtForTipoFornecimento");
 			String email = request.getParameter("txtForEmail");
 			
@@ -167,19 +165,27 @@ public class FornecedorViewHelper implements IViewHelper {
 			if (inscricaoMunicipal != null && !inscricaoMunicipal.trim().equals("")) {
 				fornecedor.setInscricaoMunicipal(inscricaoMunicipal);
 			}
-			/*
-			 * if (tipoEmpresa != null && !tipoEmpresa.trim().equals("")) {
-			 * fornecedor.setTipoEmpresa(tipoEmpresa); } if (tipoFornecimento != null &&
-			 * !tipoFornecimento.trim().equals("")) {
-			 * fornecedor.setTipoFornecimento(tipoFornecimento); }
-			 */
+			
+			if (tipoEmpresa != null && !tipoEmpresa.trim().equals("")) {
+			  empresa.setTipo(tipoEmpresa); 
+			} 			
+			
+			if (tipoFornecimento != null &&
+			  !tipoFornecimento.trim().equals("")) {
+			  empresa.setTipoFornecimento(tipoFornecimento); 
+			}
+			
+			if (empresa != null) {
+				fornecedor.setEmpresa(empresa);
+			}
+			 
 			if (email != null && !email.trim().equals("")) {
 				fornecedor.setEmail(email);
 			}
 
 			if (endereco != null) {
 				fornecedor.setEndereco(endereco);
-			}
+			}	
 
 			if (cnae != null) {
 				listaCnaes.add(cnae);
@@ -213,7 +219,7 @@ public class FornecedorViewHelper implements IViewHelper {
 				fornecedor.setId(for_id);
 			}
 
-		} else {
+			} else {
 
 			HttpSession session = request.getSession();
 			Resultado resultado = (Resultado) session.getAttribute("fornecedorSessao");
@@ -265,7 +271,7 @@ public class FornecedorViewHelper implements IViewHelper {
 		} else if (operacao.equals("CONSULTAR")) {
 
 			request.getSession().setAttribute("clienteSessao", resultado);
-			dispatcher = request.getRequestDispatcher("cliente/FormListarCliente.jsp");
+			dispatcher = request.getRequestDispatcher("index.jsp");
 
 		} else if (operacao.equals("VISUALIZAR")) {
 

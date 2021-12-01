@@ -17,10 +17,9 @@ public class TesteControleSalvar {
 	        List<Cnae> listaCnaes = new ArrayList<>();
 	        List<Produto> listaProdutos = new ArrayList<>();
 	        List<Servico> listaServicos = new ArrayList<>();
-	        List<Empresa> listaEmpresas = new ArrayList<>();
 	        List<Telefone> listaTelefones = new ArrayList<Telefone>();
 	
-	        Endereco endereco1 = new Endereco("ViranoAdireita", "cep1", "tipoLog1", "log1", "num1", "bai1", "comple1", "cid1", "est", "pais1");
+	        Endereco endereco1 = new Endereco("ViranoAdireita", "cep1", "tipoLog1", "log1", "num1", "bai1", "comple1", "cid1", "RJ", "pais1");
 	        Fornecedor for1 = new Fornecedor("Creusa", "rzsocialDaCreusa", "22222222555", "insmun1", "insest1", "email1", endereco1);
 	        Cnae cnae1 = new Cnae("123");
 	        Contato ctt1 = new Contato("fulano1", "email1", "dpto1", new Telefone("11","22","40028922"));
@@ -29,7 +28,7 @@ public class TesteControleSalvar {
 	        Produto pro1 = new Produto("pneu");
 	        Servico ser1 = new Servico("limpeza");
 	        
-	        Endereco endereco2 = new Endereco("LogoAli", "cep2", "tipoLog2", "log2", "num2", "bai2", "comple2", "cid2", "est", "pais2");
+	        Endereco endereco2 = new Endereco("LogoAli", "cep2", "tipoLog2", "log2", "num2", "bai2", "comple2", "cid2", "SP", "pais2");
 	        Fornecedor for2 = new Fornecedor("Valentin", "rzsocial2", "33333333777", "insmun2", "insest2", "email2", endereco2);   
 	        Cnae cnae2 = new Cnae("321");
 	        Cnae cnae3 = new Cnae("456");
@@ -46,22 +45,20 @@ public class TesteControleSalvar {
 	        
 	        listaContatos.add(ctt1);
 	        listaCnaes.add(cnae1);
-	        listaEmpresas.add(emp1);
 	        listaProdutos.add(pro1);
 	        listaServicos.add(ser1);
 	        listaTelefones.add(tel1);
 	        for1.setContatos(listaContatos);
 	        for1.setCnaes(listaCnaes);
-	        for1.setEmpresas(listaEmpresas);
 	        for1.setProdutosOfertados(listaProdutos);
 	        for1.setServicosOfertados(listaServicos);
 	        for1.setStatus("Ativo");
 	        for1.setTelefones(listaTelefones);
+	        for1.setEmpresa(emp1);
 	        command.executar(for1);
 	        
 	        listaContatos.clear();
 	        listaCnaes.clear();
-	        listaEmpresas.clear();
 	        listaProdutos.clear();
 	        listaServicos.clear();
 	        listaTelefones.clear();
@@ -73,16 +70,15 @@ public class TesteControleSalvar {
 	        listaCnaes.add(cnae3);
 	        listaTelefones.add(tel2);
 	        listaTelefones.add(tel3);
-	        listaEmpresas.add(emp2);
 	        listaProdutos.add(pro2);
 	        listaServicos.add(ser2);
 	        for2.setContatos(listaContatos);
 	        for2.setCnaes(listaCnaes);
-	        for2.setEmpresas(listaEmpresas);
 	        for2.setProdutosOfertados(listaProdutos);
 	        for2.setServicosOfertados(listaServicos);
 	        for2.setStatus("Ativo");
 	        for2.setTelefones(listaTelefones);
+	        for2.setEmpresa(emp2);
 	        command.executar(for2);  
 		}
 

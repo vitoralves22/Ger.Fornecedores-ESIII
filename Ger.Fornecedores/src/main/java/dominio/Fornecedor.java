@@ -17,7 +17,7 @@ public class Fornecedor extends EntidadeDominio {
 
 
     private List<Telefone> telefones;
-    private List<Empresa> empresas;
+    private Empresa empresa;
     private List<Os> osRegistradas;
     private List<Servico> servicosOfertados;
     private List<Produto> produtosOfertados;
@@ -58,7 +58,7 @@ public class Fornecedor extends EntidadeDominio {
     
     public Fornecedor(String nmFantasia, String rzSocial, String cnpj, String inscricaoEstadual, String inscricaoMunicipal,
             String email, Endereco endereco, List<Cnae> cnaes, List<Telefone> telefones, List<Contato> contatos,
-            List <Empresa> empresas, List<Produto> produtosOfertados, List<Servico> servicosOfertados){
+            Empresa empresa, List<Produto> produtosOfertados, List<Servico> servicosOfertados){
         this.cnpj = cnpj;
         this.rzSocial = rzSocial;
         this.nmFantasia = nmFantasia;
@@ -69,7 +69,7 @@ public class Fornecedor extends EntidadeDominio {
         this.telefones = telefones;
         this.contatos = contatos;
         this.endereco = endereco;
-        this.empresas = empresas;
+        this.empresa = empresa;
         this.produtosOfertados = produtosOfertados;
         this.servicosOfertados = servicosOfertados;
         this.status = "ATIVO";
@@ -77,7 +77,7 @@ public class Fornecedor extends EntidadeDominio {
     
     public Fornecedor(Integer id, String nmFantasia, String rzSocial, String cnpj, String inscricaoEstadual, String inscricaoMunicipal,
             String email, Endereco endereco, List<Cnae> cnaes, List<Telefone> telefones, List<Contato> contatos,
-            List <Empresa> empresas, List<Produto> produtosOfertados, List<Servico> servicosOfertados, String status, Date dtCadastro){
+            Empresa empresa, List<Produto> produtosOfertados, List<Servico> servicosOfertados, String status, Date dtCadastro){
     	super(id, dtCadastro);
     	this.cnpj = cnpj;
         this.rzSocial = rzSocial;
@@ -89,7 +89,7 @@ public class Fornecedor extends EntidadeDominio {
         this.telefones = telefones;
         this.contatos = contatos;
         this.endereco = endereco;
-        this.empresas = empresas;
+        this.empresa = empresa;
         this.produtosOfertados = produtosOfertados;
         this.servicosOfertados = servicosOfertados;
         this.status = status;
@@ -177,14 +177,13 @@ public class Fornecedor extends EntidadeDominio {
 		this.rzSocial = rzSocial;
 	}
 
-	public List<Empresa> getEmpresas() {
-		return empresas;
-	}
 
-	public void setEmpresas(List<Empresa> empresas) {
-		this.empresas = empresas;
+	public Empresa getEmpresa() {
+		return empresa;
 	}
-
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 	public List<Os> getOsRegistradas() {
 		return osRegistradas;
 	}

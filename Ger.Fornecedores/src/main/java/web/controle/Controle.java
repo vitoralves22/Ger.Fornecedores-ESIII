@@ -27,10 +27,10 @@ public class Controle extends jakarta.servlet.http.HttpServlet {
 
         vhs = new HashMap<>();
 
-        vhs.put("/FornecedorCRUD/AlterarFornecedor", new FornecedorViewHelper());
-        vhs.put("/FornecedorCRUD/ConsultarFornecedor", new FornecedorViewHelper());
+        vhs.put("/Ger.Fornecedores/AlterarFornecedor", new FornecedorViewHelper());
+        vhs.put("/Ger.Fornecedores/ConsultarFornecedor", new FornecedorViewHelper());
         vhs.put("/Ger.Fornecedores/SalvarFornecedor", new FornecedorViewHelper());
-        vhs.put("/FornecedorCRUD/ExcluirFornecedor", new FornecedorViewHelper());
+        vhs.put("/Ger.Fornecedores/ExcluirFornecedor", new FornecedorViewHelper());
     }
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

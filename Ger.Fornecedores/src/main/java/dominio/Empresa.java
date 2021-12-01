@@ -6,7 +6,7 @@ import java.util.Collection;
 public class Empresa extends EntidadeDominio {
 	
 	
-    String tipoEmpresa;
+    String tipo;
     String tipoFornecimento;
     
     public Empresa() {}
@@ -15,24 +15,24 @@ public class Empresa extends EntidadeDominio {
     }
     
     public Empresa(String tipoEmp, String tipoFor) {
-    	this.tipoEmpresa = tipoEmp;
+    	this.tipo = tipoEmp;
     	this.tipoFornecimento = tipoFor;
     }
     
     public Empresa(Integer id, String tipoEmp, String tipoFor, Date dtCadastro, Integer empresaForId) {
     	super(id, dtCadastro, empresaForId);
-    	this.tipoEmpresa = tipoEmp;
+    	this.tipo = tipoEmp;
     	this.tipoFornecimento = tipoFor;
     }
     
 	private Collection<Fornecedor> fornecedores;
 
-	public String getTipoEmpresa() {
-		return tipoEmpresa;
+	public String getTipo() {
+		return tipo;
 	}
 
-	public void setTipoEmpresa(String tipoEmpresa) {
-		this.tipoEmpresa = tipoEmpresa;
+	public void setTipo(String tipoEmpresa) {
+		this.tipo = tipoEmpresa;
 	}
 
 	public String getTipoFornecimento() {
@@ -47,7 +47,7 @@ public class Empresa extends EntidadeDominio {
     public String toString() {
         return String.format(
             "EMPRESA - Tipo da empresa: %2s, Tipo do fornecimento: %2s",
-            this.getTipoEmpresa(),
+            this.getTipo(),
             this.getTipoFornecimento()
         );
     }
