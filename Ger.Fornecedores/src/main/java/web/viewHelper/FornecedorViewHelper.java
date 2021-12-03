@@ -256,14 +256,18 @@ public class FornecedorViewHelper implements IViewHelper {
 	@Override
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		
+		 
 
 		String operacao = request.getParameter("OPERACAO");
+		
+		
+		
 		RequestDispatcher dispatcher = null;
 
 		if (operacao.equals("SALVAR")) {
 			if (resultado.getMsg().equals("Fornecedor salvo com sucesso.")) {
 				request.setAttribute("resultado", resultado);						//reflita :O
-				request.getSession().setAttribute("fornecedorSessao", resultado);	//reflita :O
 				dispatcher = request.getRequestDispatcher("index.jsp");
 
 			} else {
@@ -272,11 +276,18 @@ public class FornecedorViewHelper implements IViewHelper {
 				dispatcher = request.getRequestDispatcher("index.jsp");
 			}
 		} else if (operacao.equals("CONSULTAR")) {
+			
+			 for(EntidadeDominio fornecedor :  resultado.getEntidades()) {
+		        	System.out.println((Fornecedor)fornecedor);
+		        }
+			 
 			request.setAttribute("resultado", resultado);
 			request.getSession().setAttribute("fornecedorSessao", resultado);	
 			dispatcher = request.getRequestDispatcher("/ConsultarFornecedor.jsp");
 			
 		} else if (operacao.equals("VISUALIZAR")) {
+			
+			
 
 			request.getSession().setAttribute("VisualizarFornecedor", resultado.getEntidades().get(0));
 			dispatcher = request.getRequestDispatcher("cliente/FormVisualizarCliente.jsp");
@@ -285,7 +296,7 @@ public class FornecedorViewHelper implements IViewHelper {
 
 			if (resultado.getMsg().equals("Alterado com sucesso.")) {
 				request.setAttribute("resultado", resultado);
-				request.getSession().setAttribute("fornecedorSessao", resultado);
+				//request.getSession().setAttribute("fornecedorSessao", resultado);
 				dispatcher = request.getRequestDispatcher("/ConsultarFornecedor?txtPesquisa=ativo&OPERACAO=CONSULTAR");
 			} else {
 				request.setAttribute("resultado", resultado);
@@ -300,6 +311,8 @@ public class FornecedorViewHelper implements IViewHelper {
 		}
 
 		dispatcher.forward(request, response);
+		
+		
 	}
 
 }

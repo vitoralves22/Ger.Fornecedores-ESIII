@@ -47,14 +47,8 @@ public class Controle extends jakarta.servlet.http.HttpServlet {
        
         ICommand command = commands.get(operacao);
 
-        Resultado resultado = command.executar(entidade);
+        Resultado resultado = command.executar(entidade); 
         
-        
-        
-        for(EntidadeDominio fornecedor :  resultado.getEntidades()) {
-        	System.out.println((Fornecedor)fornecedor);
-        }
-
 
         vh.setView(resultado, request, response);
 

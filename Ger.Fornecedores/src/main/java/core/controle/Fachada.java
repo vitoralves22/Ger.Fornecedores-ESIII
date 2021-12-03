@@ -151,15 +151,12 @@ public class Fachada implements IFachada {
 
         String msg = executarRegras(entidade, "CONSULTAR");
         String nomeClasse = entidade.getClass().getName();
-		System.out.println("NAOEntronuIF");
         if (msg == null) {
-        	System.out.println("AgorS");
             IDAO dao = daos.get(nomeClasse);
-            System.out.println(dao.getClass());
+           
             try {
             	System.out.println(entidade.getId());
                 if (entidade.getId() == null) {
-                	System.out.println("to nu 2 if");
                     resultado.setEntidades(dao.consultar(entidade));
                 } else {
                     resultado.setEntidades(new ArrayList<EntidadeDominio>(1));
@@ -169,7 +166,6 @@ public class Fachada implements IFachada {
                 resultado.setMsg("Não foi possível consultar!");
             }
         } else {
-        	System.out.println("numdeu:(");
             List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
             entidades.add(entidade);
             resultado.setEntidades(entidades);

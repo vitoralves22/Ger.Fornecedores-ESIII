@@ -36,9 +36,49 @@
 	<header>
 		<h1 class="header-title">Cadastro de Fornecedores</h1>
 	</header>
-	 <%       
-            Resultado resultado = (Resultado) request.getAttribute("resultado");
-            Resultado fornecedores = (Resultado) session.getAttribute("fornecedorSessao");
+	
+	<main>
+		
+		<div>
+    		<button type="button" class="button blue mobile" id="cadastrarFornecedor">Cadastrar Fornecedor</button>					
+			<span id="spanSearch" class="search material-icons">search</span>
+   		 </div>
+			
+		<table id="tableFornecedor" class="records">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nome Fantasia</th>
+					<th>CNPJ</th>
+					<th>UF</th>
+					<th>Tipo</th>
+					<th>Contato</th>
+					<th>Ativo</th>
+				</tr>
+			</thead>		
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    
+                    <td></td>
+                    <td></td>
+                </tr>
+
+		</table>
+		
+		
+		<div class="modal" id="modal">
+		<form action="${pageContext.request.contextPath}/SalvarFornecedor">
+		
+						 <%       
+            Resultado resultadoCadastro = (Resultado) request.getAttribute("resultado");
+            Resultado fornecedoresCadastro = (Resultado) session.getAttribute("fornecedorSessao");
             
             String nomeFantasia =  "";
 			String razaoSocial =  "";
@@ -71,9 +111,9 @@
 			String proDescricao = "";
 			String serDescricao = "";
 					
-            if (resultado != null) {
-                if (resultado.getEntidades() != null) {
-                    Fornecedor fornecedor = (Fornecedor) fornecedores.getEntidades().get(0);
+            if (resultadoCadastro != null) {
+                if (resultadoCadastro.getEntidades() != null) {
+                    Fornecedor fornecedor = (Fornecedor) fornecedoresCadastro.getEntidades().get(0);
                     if (fornecedor.getNmFantasia() == null) {
                     	nomeFantasia = "";
                     } else {
@@ -230,49 +270,8 @@
                 }
             }
         %>
-	<main>
 		
-		<div>
-    		<button type="button" class="button blue mobile" id="cadastrarFornecedor">Cadastrar Fornecedor</button>
-    		
-    		<form action="${pageContext.request.contextPath}/ConsultarFornecedor"> 			
-    			<input type="text" class="form-control" id="txtPesquisa"name="txtPesquisa" placeholder="Pesquisa">
-                <input class="btn btn-info" type="submit" id="OPERACAO" name="OPERACAO" value="CONSULTAR" />
-    		</form>
-    			
-    			
-			<span id="spanSearch" class="search material-icons">search</span>
-   		 </div>
-			
-		<table id="tableFornecedor" class="records">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Nome Fantasia</th>
-					<th>CNPJ</th>
-					<th>UF</th>
-					<th>Tipo</th>
-					<th>Contato</th>
-					<th>Ativo</th>
-				</tr>
-			</thead>		
-
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    
-                    <td></td>
-                    <td></td>
-                </tr>
-
-		</table>
-		<div class="modal" id="modal">
-		<form action="${pageContext.request.contextPath}/SalvarFornecedor">
+		
 			<div class="modal-content">
 				<nav class="nav_tabs">
 					<ul>
