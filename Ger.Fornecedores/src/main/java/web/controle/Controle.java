@@ -44,6 +44,8 @@ public class Controle extends jakarta.servlet.http.HttpServlet {
         IViewHelper vh = vhs.get(uri);
 
         EntidadeDominio entidade = vh.getEntidade(request);
+        
+        //System.out.println(entidade.getId());
        
         ICommand command = commands.get(operacao);
 

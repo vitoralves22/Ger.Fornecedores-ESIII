@@ -155,7 +155,6 @@ public class Fachada implements IFachada {
             IDAO dao = daos.get(nomeClasse);
            
             try {
-            	System.out.println(entidade.getId());
                 if (entidade.getId() == null) {
                     resultado.setEntidades(dao.consultar(entidade));
                 } else {

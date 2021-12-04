@@ -77,7 +77,7 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 				
 			}
 			
-			System.out.println(fornecedor.getId());	
+			
 				
 			for(Contato contato : fornecedor.getContatos()) {
 	            try {
@@ -199,7 +199,7 @@ public class FornecedorDAO extends AbstractJdbcDAO{
         pst.executeUpdate();
         connection.commit();
 		
-		System.out.println(fornecedor.getId());	
+		
 			
 		for(Contato contato : fornecedor.getContatos()) {
             try {

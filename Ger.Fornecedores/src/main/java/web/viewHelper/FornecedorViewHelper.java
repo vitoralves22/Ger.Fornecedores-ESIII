@@ -223,6 +223,7 @@ public class FornecedorViewHelper implements IViewHelper {
 
 			HttpSession session = request.getSession();
 			Resultado resultado = (Resultado) session.getAttribute("fornecedorSessao");
+			//System.out.println(resultado.getEntidades().get(0).getId());
 			String listaId = request.getParameter("txtListaId");
 			String pesquisa = request.getParameter("txtPesquisa");
 			
@@ -277,11 +278,6 @@ public class FornecedorViewHelper implements IViewHelper {
 			}
 		} else if (operacao.equals("CONSULTAR")) {
 			
-			 for(EntidadeDominio fornecedor :  resultado.getEntidades()) {
-		        	System.out.println((Fornecedor)fornecedor);
-		        }
-			 
-			request.setAttribute("resultado", resultado);
 			request.getSession().setAttribute("fornecedorSessao", resultado);	
 			dispatcher = request.getRequestDispatcher("/ConsultarFornecedor.jsp");
 			
@@ -306,7 +302,7 @@ public class FornecedorViewHelper implements IViewHelper {
 
 		} else if (operacao.equals("EXCLUIR")) {
 
-			request.setAttribute("resultado", resultado);
+			request.setAttribute("fornecedorSessao", resultado);
 			dispatcher = request.getRequestDispatcher("/ConsultarFornecedor?OPERACAO=CONSULTAR");
 		}
 

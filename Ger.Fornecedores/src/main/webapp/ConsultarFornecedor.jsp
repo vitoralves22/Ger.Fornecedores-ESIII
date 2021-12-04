@@ -82,7 +82,7 @@
 		
 		
 		<div class="modal" id="modal">
-		<form action="${pageContext.request.contextPath}/SalvarFornecedor">
+		<%-- <form action="${pageContext.request.contextPath}/SalvarFornecedor">
 		
 						 <%       
             Resultado resultadoCadastro = (Resultado) request.getAttribute("resultado");
@@ -430,7 +430,7 @@
 					 <input type="submit" class="button save" id="OPERACAO" name="OPERACAO" value="SALVAR"/>
 				</footer>
 			</div>
-			</form>
+			</form> --%>
 		</div>
 	</main>
 	<footer> </footer>
