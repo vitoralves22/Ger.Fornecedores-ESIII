@@ -1,4 +1,4 @@
-<%-- <%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
@@ -28,28 +28,25 @@
 	<link rel="stylesheet" href="css/span.css">
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<script src="main.js" defer></script>
+	 <script src="main.js" defer></script> 
 	
 </head>
 
 <body>
+
+		<%
+           Resultado resultado = (Resultado) request.getAttribute("resultado");
+           Fornecedor fornecedor = (Fornecedor) session.getAttribute("VisualizarFornecedor");
+        %>
+
 	<header>
 		<h1 class="header-title">Cadastro de Fornecedores</h1>
 	</header>
-	 <%
-         Resultado resultado = (Resultado) request.getAttribute("fornecedorSessao");
-         Fornecedor fornecedor = (Fornecedor) session.getAttribute("fornecedorSessao"); 
-     %>
+	
 	<main>
 		
-		<div>
-    		<button type="button" class="button blue mobile" id="cadastrarFornecedor">Cadastrar Fornecedor</button> 		
-    		    		
-    		<form action="${pageContext.request.contextPath}/ConsultarFornecedor">				
-    			<input type="text" class="form-control" id="txtPesquisa"name="txtPesquisa" placeholder="Pesquisa">
-                <input class="btn btn-info" type="submit" id="OPERACAO" name="OPERACAO" value="CONSULTAR" />
-    		</form>
-    			   			
+		 <div>
+    		<button type="button" class="button blue mobile" id="cadastrarFornecedor">Cadastrar Fornecedor</button>					
 			<span id="spanSearch" class="search material-icons">search</span>
    		 </div>
 			
@@ -64,29 +61,29 @@
 					<th>Contato</th>
 					<th>Ativo</th>
 				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>
-						<div class="form-group">
-							<input class="checkbox" id="checkbox1" type='checkbox' />
-						</div>
-					</td>
-					<td><span class="edit material-icons"> edit</span> <span
-						class="consult material-icons">description</span> <span
-						class="delete material-icons">delete</span></td>
-				</tr>
+			</thead>		
 
-			</tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    
+                    <td></td>
+                    <td></td>
+                </tr>
+
 		</table>
+		
+		
 		<div class="modal" id="modal">
 		<form action="${pageContext.request.contextPath}/AlterarFornecedor">
+		
+		
+		
 			<div class="modal-content">
 				<nav class="nav_tabs">
 					<ul>
@@ -95,153 +92,171 @@
 							<label for="tab1" class="tab_label">Empresa</label>
 							<div class="tab-content">
 								<h1></h1>
+								
+								<div class="row">
 								<div id="form" class="modal-form">
-									<input type="text" class="form-control" value="<%= fornecedor.getId %>" id="txtAlterarClienteId" name="txtAlterarClienteId" readonly>
-									
-									<input id="txtForNomeFantasia" name="txtForNomeFantasia"  type="text" data-index="new" class="modal-field" value="<%= fornecedor.getNmFantasia() %>"
-										placeholder="Nome Fantasia" required>
+								
+									<div class="form-group col-1">
+				                        <label for="txtAlterarFornecedorId">Id: </label>
+				                        <input type="text" class="form-control" value="<%=fornecedor.getId()%>" id="txtAlterarFornecedorId" name="txtAlterarFornecedorId" readonly>
+                   					 </div>
 
-									<input id="txtForRazaoSocial" name="txtForRazaoSocial" type="text" class="modal-field" value="<%= fornecedor.getRzSocial() %>"
-										placeholder="Razão Social" required> 
-										
-									<input id="txtForCNPJ" name="txtForCNPJ" type="text" class="modal-field" value="<%= fornecedor.getCnpj() %>"
-										placeholder="CNPJ" required> 
+									<div class="form-group col-5">
+				                        <label for="txtForNomeFantasia">Nome Fantasia: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedor.getNmFantasia()%>" id="txtForNomeFantasia" name="txtForNomeFantasia" placeholder="Nome fantasia" maxlength="30">
+                    				</div>
+                    				
+									<div class="form-group col-5">
+				                        <label for="txtForRazaoSocial">Razao Social: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedor.getRzSocial()%>" id="txtForRazaoSocial" name="txtForRazaoSocial" placeholder="Razao social" maxlength="30">
+                    				</div>
+                    				
+									<div class="form-group col-5">
+				                        <label for="txtForCNPJ">Cnpj: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedor.getCnpj()%>" id="txtForCNPJ" name="txtForCNPJ" placeholder="CNPJ" maxlength="14">
+                    				</div>
+                    				
+									<div class="form-group col-5">
+				                        <label for="txtForInscricaoEstadual">Inscricao Estadual: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedor.getInscricaoEstadual()%>" id="txtForInscricaoEstadual" name="txtForInscricaoEstadual" placeholder="Insc. Estadual" maxlength="30">
+                    				</div>
 									
-									<input id="txtForInscricaoEstadual" name="txtForInscricaoEstadual" type="text" class="modal-field" value="<%= fornecedor.getInscricaoEstadual() %>"
-										placeholder="Inscrição Estadual" required> 
-									
-									<input id="txtForInscricaoMunicipal" name="txtForInscricaoMunicipal" type="text" class="modal-field" value="<%= fornecedor.getInscricaoMunicipal() %>"
-										placeholder="Inscrição Municipal" required> 
+									<div class="form-group col-5">
+				                        <label for="txtForInscricaoMunicipal">Inscricao Municipal: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedor.getInscricaoMunicipal()%>" id="txtForInscricaoMunicipal" name="txtForInscricaoMunicipal" placeholder="Insc. Municipal" maxlength="30">
+                    				</div>
 										
-									<input id="txtForEmail" name="txtForEmail" type="text" class="modal-field" value="<%= fornecedor.getEmail() %>"
-										placeholder="Email" required> 
+									<div class="form-group col-5">
+				                        <label for="txtForEmail">Email: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedor.getEmail()%>" id="txtForEmail" name="txtForEmail" placeholder="Email" maxlength="30">
+                    				</div>
 										
-									<input id="txtForTipoEmpresas" name="txtForTipoEmpresas" type="text" class="modal-field" value="<%= fornecedor.getEmpresas().get(0).getTipoEmpresa() %>"
-										placeholder="Tipo Empresa" required> 
+									<div class="form-group col-5">
+				                        <label for="txtForTipoEmpresa">TipoEmpresa: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedor.getEmpresa().getTipo()%>" id="txtForTipoEmpresa" name="txtForTipoEmpresa" placeholder="TipoEmpresa" maxlength="30">
+                    				</div>
 										
-									<input id="txtForTipoFornecimento" name="txtForTipoFornecimento" type="text" class="modal-field" value="<%= fornecedor.getEmpresas().get(0).getTipoFornecimento() %>"
-										placeholder="Tipo Fornecimento" required>
-
+									<div class="form-group col-5">
+				                        <label for="txtForTipoFornecimento">TipoFornecimento: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedor.getEmpresa().getTipoFornecimento()%>" id="txtForTipoFornecimento" name="txtForTipoFornecimento" placeholder="TipoFornecimento" maxlength="30">
+                    				</div>
+                    				
 								</div>
+								</div>		
 							</div></li>
-						<li><input type="radio" name="tabs" class="rd_tab" id="tab2">
+							
+						<%-- <li><input type="radio" name="tabs" class="rd_tab" id="tab2">
 							<label for="tab2" class="tab_label">CNAE</label>
 							<div class="tab-content">
 								<h2></h2>
 								<div id="form2" class="modal-form">
 									<input id="txtCnaeCodigo" type="text" name="txtCnaeCodigo" class="modal-field" value="<%= fornecedor.getCnaes().get(0).getCodigo() %>"
-										placeholder="CNAE" required>
+										placeholder="CNAE" >
 
 									<button type="button" class="button addContato"
 										id="adicionarCnae">Add+</button>
-								</div>
-							</div></li>
-						<li><input type="radio" name="tabs" class="rd_tab" id="tab3">
-							<label for="tab3" class="tab_label">Fornecimento</label>
-							<div class="tab-content">
-								<h2></h2>
-								<div id="form3" class="modal-form">
-									<input id="tipo_fornecimento" name="tipo_fornecimento" type="text" class="modal-field" value="<%= fornecedor.getEmpresas().get(0).getTipoFornecimento() %>"
-										placeholder="Tipo"> 
-									<input id="descricao_fornecimento" name="descricao_fornecimento" type="text" class="modal-field" value="<%= fornecedor.getProdutosOfertados().get(0).getDescricao() %>"
-										placeholder="Descrição">
-									<input id="descricao_fornecimento" type="text" class="modal-field" value="<%= fornecedor.getProdutosOfertados().get(0).getDescricao() %>"
-										placeholder="Descrição">
-
-									<button type="button" class="button addContato"
-										id="adicionarFornecimento">Add+</button>
-								</div>
-							</div></li>
-						<li><input type="radio" name="tabs" class="rd_tab" id="tab4">
-							<label for="tab4" class="tab_label">Endereço</label>
-							<div class="tab-content">
-								<h2></h2>
-								<div id="form4" class="modal-form">
-									<input id="txtEndTipo" name="txtEndTipo" type="text" class="modal-field" value="<%= fornecedor.getEndereco().getTipo() %>"
-										placeholder="Tipo Endereço" required> 
-										
-									<input id="txtEndTipoLogradouro" name="txtEndTipoLogradouro" type="text" class="modal-field" value="<%= fornecedor.getEndereco().getTipoLogradouro() %>"
-										placeholder="Tipo Logradouro" required> 
-										
-									<input id="txtEndLogradouro" name="txtEndLogradouro" type="text" class="modal-field" value="<%= fornecedor.getEndereco().getLogradouro() %>"
-										placeholder="Logradouro" required> 
-										
-									<input id="txtEndNumero" name="txtEndNumero" type="text" class="modal-field" value="<%= fornecedor.getEndereco().getNumero() %>"
-										placeholder="Numero" required>
-										
-									<input id="txtEndBairro" name="txtEndBairro" type="text" class="modal-field" value="<%= fornecedor.getEndereco().getBairro() %>"
-										placeholder="Bairro" required> 
-										
-									<input id="txtEndCidade" name="txtEndCidade" type="text" class="modal-field" value="<%= fornecedor.getEndereco().getCidade() %>"
-										placeholder="Cidade" required>
-										
-									<input id="txtEndEstadoUf" name="txtEndEstadoUf" type="text" class="modal-field" value="<%= fornecedor.getEndereco().getEstadoUf() %>"
-										placeholder="UF" required> 
-										
-									<input id="txtEndPais" name="txtEndPais" type="text" class="modal-field" value="<%= fornecedor.getEndereco().getPais() %>"
-										placeholder="País" required> 
-										
-									<input id="txtEndCEP" name="txtEndCEP" type="text" class="modal-field" value="<%= fornecedor.getEndereco().getCep() %>"
-										placeholder="CEP" required> 
-										
-									<input id="txtEndComplemento" name="txtEndComplemento" type="text" class="modal-field" value="<%= fornecedor.getEndereco().getComplemento() %>"
-										placeholder="Complemento">
-								</div>
-							</div></li>
-						<li><input type="radio" name="tabs" class="rd_tab" id="tab5">
-							<label for="tab5" class="tab_label">Contato</label>
-							<div class="tab-content">
-								<h2></h2>
-								<div id="form5" class="modal-form">
-									<input id="txtCttnome" name="txtCttnome" type="text" class="modal-field" value="<%= fornecedor.getContatos().get(0).getNome() %>"
-										placeholder="Nome" required> 
-										
-									<input id="txtCttemail" name="txtCttemail" type="email" class="modal-field" value="<%= fornecedor.getContatos().get(0).getEmail() %>" 
-										placeholder="Email" required>
-										
-									<input id="txtCttdepartamento" name="txtCttdepartamento" type="text" class="modal-field" value="<%= fornecedor.getContatos().get(0).getDepartamento() %>"
-										placeholder="Departamento" required> 
-										
-									<input id="txtTelDDI" name="txtTelDDI" type="text" class="modal-field" value="<%= fornecedor.getContatos().get(0).getTelefone().getDdi() %>"
-										placeholder="DDI" required> 
-										
-									<input id="txtTelDDD" name="txtTelDDD" type="text" class="modal-field" value="<%= fornecedor.getContatos().get(0).getTelefone().getDdd() %>"
-										placeholder="DDD" required>
-										
-									<input id="txtTelNumero" name="txtTelNumero" type="tel" class="modal-field" value="<%= fornecedor.getContatos().get(0).getTelefone().getNumero() %>"
-										placeholder="Telefone" required>
-									<!--  <input id="ramal_contato" type="text" class="modal-field" placeholder="Ramal">
-                                    <input id="codigo_contato" type="text" class="modal-field" placeholder="Código">
-                                    <input id="descricao_contato" type="text" class="modal-field"
-                                        placeholder="Descrição"> -->
-									<button type="button" class="button addContato"
-										id="adicionarContato">Add+</button>
-								</div>
-							</div></li>
-						<li><input type="radio" name="tabs" class="rd_tab" id="tab6">
-							<label for="tab6" class="tab_label">Telefone</label>
-							<div class="tab-content">
-								<h2></h2>
-								<div id="form6" class="modal-form">
-									<input id="ddd_telefone" name="ddd_telefone" type="text" class="modal-field" value="<%= fornecedor.getTelefones().get(0).getDdi() %>"
-										placeholder="DDD"> 
-										
-									<input id="ddi_telefone" name="ddi_telefone" type="text" class="modal-field" value="<%= fornecedor.getTelefones().get(0).getDdd() %>"
-										placeholder="DDI"> 
-										
-									<input id="numero_telefone" name="numero_telefone" type="tel" class="modal-field" value="<%= fornecedor.getTelefones().get(0).getNumero()%>"
-										placeholder="Numero">
-										
-									<button type="button" class="button addContato"
-										id="adicionarTelefone">Add+</button>
-								</div>
-							</div></li>
-					</ul>
+											</div>
+										</div></li>
+									<li><input type="radio" name="tabs" class="rd_tab" id="tab3">
+										<label for="tab3" class="tab_label">Fornecimento</label>
+										<div class="tab-content">
+											<h2></h2>
+											<div id="form3" class="modal-form">
+												<input id="txtDescProduto" name="txtDescProduto" type="text" class="modal-field" value="<%= proDescricao %>"
+													placeholder="Produto"> 
+												<input id="txtDescServico" name="txtDescServico" type="text" class="modal-field" value="<%= serDescricao %>"
+													placeholder="Servico">
+												
+			
+												<button type="button" class="button addContato"
+													id="adicionarFornecimento">Add+</button>
+											</div>
+										</div></li>
+									<li><input type="radio" name="tabs" class="rd_tab" id="tab4">
+										<label for="tab4" class="tab_label">Endereço</label>
+										<div class="tab-content">
+											<h2></h2>
+											<div id="form4" class="modal-form">
+												<input id="txtEndTipo" name="txtEndTipo" type="text" class="modal-field" value="<%= endTipo %>"
+													placeholder="Tipo Endereço" > 
+													
+												<input id="txtEndTipoLogradouro" name="txtEndTipoLogradouro" type="text" class="modal-field" value="<%= endTipoLogradouro %>"
+													placeholder="Tipo Logradouro" > 
+													
+												<input id="txtEndLogradouro" name="txtEndLogradouro" type="text" class="modal-field" value="<%= endLogradouro %>"
+													placeholder="Logradouro" > 
+													
+												<input id="txtEndNumero" name="txtEndNumero" type="text" class="modal-field" value="<%= endNumero %>"
+													placeholder="Numero" >
+													
+												<input id="txtEndBairro" name="txtEndBairro" type="text" class="modal-field" value="<%= endBairro %>"
+													placeholder="Bairro" > 
+													
+												<input id="txtEndCidade" name="txtEndCidade" type="text" class="modal-field" value="<%= endCidade %>"
+													placeholder="Cidade" >
+													
+												<input id="txtEndEstadoUf" name="txtEndEstadoUf" type="text" class="modal-field" value="<%= endEstadoUf %>"
+													placeholder="UF" > 
+													
+												<input id="txtEndPais" name="txtEndPais" type="text" class="modal-field" value="<%= endPais %>"
+													placeholder="País" > 
+													
+												<input id="txtEndCEP" name="txtEndCEP" type="text" class="modal-field" value="<%= endCEP %>"
+													placeholder="CEP" > 
+													
+												<input id="txtEndComplemento" name="txtEndComplemento" type="text" class="modal-field" value="<%= endComplemento %>"
+													placeholder="Complemento">
+											</div>
+										</div></li>
+									<li><input type="radio" name="tabs" class="rd_tab" id="tab5">
+										<label for="tab5" class="tab_label">Contato</label>
+										<div class="tab-content">
+											<h2></h2>
+											<div id="form5" class="modal-form">
+												<input id="txtCttnome" name="txtCttnome" type="text" class="modal-field" value="<%= cttNome %>"
+													placeholder="Nome" > 
+													
+												<input id="txtCttemail" name="txtCttemail" type="email" class="modal-field" value="<%= cttEmail %>" 
+													placeholder="Email" >
+													
+												<input id="txtCttdepartamento" name="txtCttdepartamento" type="text" class="modal-field" value="<%= cttDepartamento %>"
+													placeholder="Departamento" > 
+													
+												<input id="txtTelDDI" name="txtTelDDI" type="text" class="modal-field" value="<%= cttTelDDI %>"
+													placeholder="DDI" > 
+													
+												<input id="txtTelDDD" name="txtTelDDD" type="text" class="modal-field" value="<%= cttTelDDD %>"
+													placeholder="DDD" >
+													
+												<input id="txtTelNumero" name="txtTelNumero" type="tel" class="modal-field" value="<%= cttTelNumero %>"
+													placeholder="Telefone" >
+												
+												<button type="button" class="button addContato"
+													id="adicionarContato">Add+</button>
+											</div>
+										</div></li>
+									<li><input type="radio" name="tabs" class="rd_tab" id="tab6">
+										<label for="tab6" class="tab_label">Telefone</label>
+										<div class="tab-content">
+											<h2></h2>
+											<div id="form6" class="modal-form">
+												<input id="ddd_telefone" name="ddd_telefone" type="text" class="modal-field" value="<%= telDDI %>"
+													placeholder="DDD"> 
+													
+												<input id="ddi_telefone" name="ddi_telefone" type="text" class="modal-field" value="<%= telDDD %>"
+													placeholder="DDI"> 
+													
+												<input id="numero_telefone" name="numero_telefone" type="tel" class="modal-field" value="<%= telNumero %>"
+													placeholder="Numero">
+													
+												<button type="button" class="button addContato"
+													id="adicionarTelefone">Add+</button>
+											</div>
+										</div></li> --%>
+								</ul>
 				</nav>
-				<footer class="modal-footer">
-					<button id="salvar" class="button save">Salvar</button>
-					 <input type="submit" class="button save" id="OPERACAO" name="OPERACAO" value="SALVAR"/>
-					<button id="cancelar" class="button cancel">Cancelar</button>
+				<footer class="modal-footer">				
+					  <input type="submit" class="btn btn-success"id="OPERACAO" name="OPERACAO" value="ALTERAR"/>
 				</footer>
 			</div>
 			</form>
@@ -249,5 +264,3 @@
 	</main>
 	<footer> </footer>
 </html>
-
- --%>

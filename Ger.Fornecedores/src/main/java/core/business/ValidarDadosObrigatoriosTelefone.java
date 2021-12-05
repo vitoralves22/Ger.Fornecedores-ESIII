@@ -10,25 +10,25 @@ public class ValidarDadosObrigatoriosTelefone implements IStrategy {
 		Fornecedor fornecedor = (Fornecedor)entidade;
 
         for (int i = 0; i<fornecedor.getTelefones().size(); i++) {
-
-			if(fornecedor.getTelefones().get(i).getTipoTelefone() == null || 
-			   fornecedor.getTelefones().get(i).getTipoTelefone() == ""){
-			 	verificaDado += "Tipo Telefone invalido\n";
+        	String tipoTelefone = fornecedor.getTelefones().get(i).getTipoTelefone();
+			String ddi = fornecedor.getTelefones().get(i).getDdi();
+        	String ddd = fornecedor.getTelefones().get(i).getDdd();
+        	String numero = fornecedor.getTelefones().get(i).getNumero();
+        	
+			if(tipoTelefone == null || tipoTelefone == ""){
+			 	verificaDado += "Tipo Telefone obrigatório\n";
 		 	}
 
-			if(fornecedor.getTelefones().get(i).getDdi() == null || 
-			   fornecedor.getTelefones().get(i).getDdi() == ""){
-			 	verificaDado += "DDI Telefone invalido(s)\n";
+			if(ddi == null || ddi == ""){
+			 	verificaDado += "DDI Telefone obrigatório(s)\n";
 		 	}
 
-			if(fornecedor.getTelefones().get(i).getDdd() == null || 
-			   fornecedor.getTelefones().get(i).getDdd() == ""){
-			 	verificaDado += "DDD Telefone invalido(s)\n";
+			if(ddd == null || ddd == ""){
+			 	verificaDado += "DDD Telefone obrigatório(s)\n";
 		 	}
 			 
-			if(fornecedor.getTelefones().get(i).getNumero() == null || 
-			   fornecedor.getTelefones().get(i).getNumero() == ""){
-			 	verificaDado += "Numero Telefone invalido(s)\n";
+			if(numero == null || numero == ""){
+			 	verificaDado += "Numero Telefone obrigatório(s)\n";
 		 	}
 
 			if(verificaDado != ""){

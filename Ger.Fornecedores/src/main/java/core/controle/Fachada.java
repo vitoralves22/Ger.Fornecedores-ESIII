@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import core.business.IStrategy;
 import core.business.ValidadorCnpj;
+import core.business.ValidarDadosObrigatoriosFornecimento;
 import core.dao.FornecedorDAO;
 import core.dao.IDAO;
 import dominio.*;
@@ -19,34 +20,25 @@ public class Fachada implements IFachada {
 	private Resultado resultado;
 	
 	public Fachada() {
+
         daos = new HashMap<String, IDAO>();
-		daos.put(Fornecedor.class.getName(), new FornecedorDAO());
         rns = new HashMap<String, Map<String, List<IStrategy>>>();
-		Map<String, List<IStrategy>> rnsSALVAR = new HashMap<String, List<IStrategy>>();
-		Map<String, List<IStrategy>> rnsALTERAR = new HashMap<String, List<IStrategy>>();
-		Map<String, List<IStrategy>> rnsCONSULTAR = new HashMap<String, List<IStrategy>>();
-		Map<String, List<IStrategy>> rnsEXCLUIR = new HashMap<String, List<IStrategy>>();
 
-        ValidadorCnpj vCnpj = new ValidadorCnpj();
+        daos.put(Fornecedor.class.getName(), new FornecedorDAO());    
 
-        ArrayList<IStrategy> rnsFornecedorSalvar = new ArrayList<IStrategy>();
-        rnsFornecedorSalvar.add(vCnpj);
+        List<IStrategy> rnsSalvarFornecedor = new ArrayList<IStrategy>();
+        rnsSalvarFornecedor.add(new ValidadorCnpj()); 
+        rnsSalvarFornecedor.add(new ValidarDadosObrigatoriosFornecimento());  
         
-        ArrayList<IStrategy> rnsFornecedorAlterar = new ArrayList<IStrategy>();
-        rnsFornecedorAlterar.add(vCnpj);
-        
-        ArrayList<IStrategy> rnsFornecedorConsultar = new ArrayList<IStrategy>();
-        
-        ArrayList<IStrategy> rnsFornecedorExcluir = new ArrayList<IStrategy>();
-        
-        
-        rnsSALVAR.put(Fornecedor.class.getName(), rnsFornecedorSalvar);
-        rnsALTERAR.put(Fornecedor.class.getName(), rnsFornecedorAlterar);
+        List<IStrategy> rnsAlterarFornecedor = new ArrayList<IStrategy>();
+        List<IStrategy> rnsExcluirFornecedor = new ArrayList<IStrategy>();
+
+        Map<String, List<IStrategy>> rnsFornecedor = new HashMap<String, List<IStrategy>>();
+        rnsFornecedor.put("SALVAR", rnsSalvarFornecedor);
+        rnsFornecedor.put("ALTERAR", rnsAlterarFornecedor);
        
-        rns.put("SALVAR", rnsSALVAR);
-        rns.put("ALTERAR", rnsALTERAR);
-        rns.put("CONSULTAR", rnsCONSULTAR);
-        rns.put("EXCLUIR", rnsEXCLUIR);
+        rns.put(Fornecedor.class.getName(), rnsFornecedor);
+ 
     }
 	
 	 @Override
@@ -74,6 +66,7 @@ public class Fachada implements IFachada {
 	            resultado.setMsg(msg);
 	            entidades.add(entidade);
 	            resultado.setEntidades(entidades);
+	            System.out.println(msg);
 
 	        }
 

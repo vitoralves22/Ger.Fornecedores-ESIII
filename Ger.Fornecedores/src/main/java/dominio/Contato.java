@@ -73,7 +73,8 @@ public class Contato extends EntidadeDominio {
 	@Override
     public String toString() {
         return String.format(
-            "CONTATO - Nome: %2s, email: %2s, Dpto: %2s, tel: %2s\n",
+            "CONTATO - ID: 2%s, Nome: %2s, email: %2s, Dpto: %2s, tel: %2s\n",
+            this.getId(),
             this.getNome(),
             this.getDepartamento(),
             this.getEmail(),

@@ -29,7 +29,9 @@ public class Servico extends EntidadeDominio {
 	    @Override
 	    public String toString() {
 	        return String.format(
-	            "SERVIÇO - Descrição: %2s",
+	            "SERVIÇO - ID: 2%s, Descrição: %2s",
+	            
+	            this.getId(),
 	            this.getDescricao()
 	        );
 	    }

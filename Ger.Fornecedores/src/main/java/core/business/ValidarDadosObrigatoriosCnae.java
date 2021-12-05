@@ -9,9 +9,10 @@ public class ValidarDadosObrigatoriosCnae implements IStrategy {
 		Fornecedor fornecedor = (Fornecedor)entidade;
 
         for (int i = 0; i<fornecedor.getCnaes().size(); i++) {
-            if(fornecedor.getCnaes().get(i).getCodigo() == null || 
-			   fornecedor.getCnaes().get(i).getCodigo() == ""){
-				return "Cnae(s) invalido(s)\n";
+        String cnae = fornecedor.getCnaes().get(i).getCodigo();
+           
+        	if(cnae == null || cnae.isBlank()){
+				return "Cnae(s) obrigatório(s)\n";
 			}
         }
 		

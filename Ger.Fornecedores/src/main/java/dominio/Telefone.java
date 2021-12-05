@@ -62,7 +62,9 @@ public class Telefone extends EntidadeDominio {
 	    @Override
 	    public String toString() {
 	        return String.format(
-	            "TELEFONE - DDD: %2s, DDI: %2s, Número: %12s\n",
+	            "TELEFONE - ID: %2s, DDD: %2s, DDI: %2s, Número: %12s\n",
+	            
+	            this.getId(),
 	            this.getDdd(),
 	            this.getDdi(),
 	            this.getNumero()

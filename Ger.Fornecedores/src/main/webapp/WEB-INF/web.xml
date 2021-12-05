@@ -17,6 +17,11 @@
         <url-pattern>/AlterarFornecedor</url-pattern>
     </servlet-mapping>
     
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/VisualizarFornecedor</url-pattern>
+    </servlet-mapping>
+    
     
     <servlet-mapping>
         <servlet-name>Controle</servlet-name>

@@ -31,7 +31,7 @@ public class TesteControleAlterar {
         Endereco endereco1 = new Endereco("ViranoAdireita", "cep1", "tipoLog1", "log1", "num1", "bai1", "comple1", "cid1", "RJ", "pais1");
         Fornecedor for1 = new Fornecedor("CreusaAlterada", "rzsocialDaCreusa", "22222222555", "insmun1", "insest1", "email1", endereco1);
         Cnae cnae1 = new Cnae("123");
-        Contato ctt1 = new Contato("fulano1", "email1", "dpto1", new Telefone("11","22","40028922"));
+        Contato ctt1 = new Contato("fulano1ALTERADO", "email1", "dpto1", new Telefone("11","22","40028922"));
         Telefone tel1 = new Telefone("11", "11", "111111111");
         Empresa emp1 = new Empresa("Filial", "Venda");
         Produto pro1 = new Produto("pneu");
@@ -42,9 +42,9 @@ public class TesteControleAlterar {
         Fornecedor for2 = new Fornecedor("ValentinAlterado", "xhongas", "33333333777", "insmun2", "insest2", "email2", endereco2);   
         Cnae cnae2 = new Cnae("321");
         Cnae cnae3 = new Cnae("456");
-        Contato ctt2 = new Contato("fulano2", "email2", "dpto2", new Telefone("22","11","40028922"));
-        Contato ctt3 = new Contato("fulano3", "email3", "dpto3", new Telefone("11","22","40028922"));
-        Contato ctt4 = new Contato("fulano4", "email4", "dpto4", new Telefone("22","11","40028922"));
+        Contato ctt2 = new Contato("fulano2AAAAA", "email2", "dpto2", new Telefone("22","11","40028922"));
+        Contato ctt3 = new Contato("fulano3EEEE", "email3", "dpto3", new Telefone("11","22","40028922"));
+        Contato ctt4 = new Contato("fulano4III", "email4", "dpto4", new Telefone("22","11","40028922"));
         Telefone tel2 = new Telefone("22", "22", "222222222");
         Telefone tel3 = new Telefone("33", "33", "333333333");
         Empresa emp2 = new Empresa("Filial", "Venda");

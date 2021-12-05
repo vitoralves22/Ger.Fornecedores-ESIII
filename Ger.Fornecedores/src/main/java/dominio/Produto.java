@@ -30,7 +30,9 @@ public class Produto extends EntidadeDominio {
 	    @Override
 	    public String toString() {
 	        return String.format(
-	            "PRODUTO - Descrição: %2s",
+	            "PRODUTO - ID: %2s, Descrição: %2s",
+	            
+	            this.getId(),
 	            this.getDescricao()
 	        );
 	    }

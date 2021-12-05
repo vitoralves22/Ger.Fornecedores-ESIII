@@ -22,16 +22,19 @@ public class FornecedorDAO extends AbstractJdbcDAO{
     public FornecedorDAO() {
         super("tab_fornecedores", "for_id");
     }
+    
+    IDAO cnaeDAO = new CnaeDAO();
+	IDAO contatoDAO = new ContatoDAO();
+	IDAO telefoneDAO = new TelefoneDAO();
+	IDAO produtoDAO = new ProdutoDAO();
+	IDAO servicoDAO = new ServicoDAO();
+    
+   
 
     @Override
     public void salvar(EntidadeDominio entidade) throws SQLException {
+    	    
         	Fornecedor fornecedor = (Fornecedor)entidade;  	
-        	
-        	IDAO cnaeDAO = new CnaeDAO();
-            IDAO contatoDAO = new ContatoDAO();
-            IDAO telefoneDAO = new TelefoneDAO();
-            IDAO produtoDAO = new ProdutoDAO();
-            IDAO servicoDAO = new ServicoDAO();
             
         	openConnection();
 			PreparedStatement pst=null;
@@ -154,11 +157,6 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 
     	Fornecedor fornecedor = (Fornecedor)entidade;  	
     	
-    	IDAO cnaeDAO = new CnaeDAO();
-        IDAO contatoDAO = new ContatoDAO();
-        IDAO telefoneDAO = new TelefoneDAO();
-        IDAO produtoDAO = new ProdutoDAO();
-        IDAO servicoDAO = new ServicoDAO();
         
     	openConnection();
 		PreparedStatement pst=null;
@@ -274,7 +272,8 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 
     
     @Override
-    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {    	 	
+    	
         Fornecedor fornecedor = (Fornecedor) entidade;
         List<Contato> contatos = new ArrayList<>();
         List<Telefone> telefones = new ArrayList<>();
@@ -283,11 +282,11 @@ public class FornecedorDAO extends AbstractJdbcDAO{
         List<Servico> servicos = new ArrayList<>();
 
         PreparedStatement pstFornecedor = null;
-        PreparedStatement pstCnae = null;
+        /*PreparedStatement pstCnae = null;
         PreparedStatement pstTelefone = null;
         PreparedStatement pstContato = null;
         PreparedStatement pstProduto = null;
-        PreparedStatement pstServico = null;
+        PreparedStatement pstServico = null;*/
         
 
         String sqlFornecedor = null;
@@ -307,14 +306,14 @@ public class FornecedorDAO extends AbstractJdbcDAO{
             
 
         } else {
-            sqlFornecedor = "SELECT * FROM tab_fornecedor ORDER BY for_id;";
+            sqlFornecedor = "SELECT * FROM tab_fornecedores ORDER BY for_id;";
         }
         
-        String sqlContato = "SELECT * FROM tab_contatos WHERE ctt_for_id = ? ORDER BY ctt_id;";
+        /*String sqlContato = "SELECT * FROM tab_contatos WHERE ctt_for_id = ? ORDER BY ctt_id;";
         String sqlTelefone = "SELECT * FROM tab_telefones WHERE tel_for_id = ? ORDER BY tel_id;";
         String sqlCnae = "SELECT * FROM tab_cnaes WHERE cna_for_id = ? ORDER BY cna_id;";
         String sqlProduto = "SELECT * FROM tab_produtos WHERE pro_for_id = ? ORDER BY pro_id;";
-        String sqlServico = "SELECT * FROM tab_servicos WHERE ser_for_id = ? ORDER BY ser_id;";
+        String sqlServico = "SELECT * FROM tab_servicos WHERE ser_for_id = ? ORDER BY ser_id;";*/
 
         try {
             openConnection();
@@ -333,6 +332,7 @@ public class FornecedorDAO extends AbstractJdbcDAO{
                 f.setInscricaoEstadual(rsFornecedor.getString("for_inscestadual"));
                 f.setInscricaoMunicipal(rsFornecedor.getString("for_inscmunicipal"));
                 f.setEmail(rsFornecedor.getString("for_email"));
+                f.setStatus(rsFornecedor.getString("for_status"));
                 Endereco e = new Endereco();
                 e.setTipo(rsFornecedor.getString("for_end_tipo"));
                 e.setCep(rsFornecedor.getString("for_end_cep"));
@@ -349,82 +349,19 @@ public class FornecedorDAO extends AbstractJdbcDAO{
                 emp.setTipo(rsFornecedor.getString("for_tipo_empresa"));
                 emp.setTipoFornecimento(rsFornecedor.getString("for_tipo_fornecimento"));
                 f.setEmpresa(emp);
+                      
+                cnaes = (List<Cnae>)(List<?>)cnaeDAO.consultar(f);
+                contatos = (List<Contato>)(List<?>)contatoDAO.consultar(f);
+                telefones = (List<Telefone>)(List<?>)telefoneDAO.consultar(f);
+                produtos = (List<Produto>)(List<?>)produtoDAO.consultar(f);
+                servicos = (List<Servico>)(List<?>)servicoDAO.consultar(f);
                 
-                
-                pstCnae = connection.prepareStatement(sqlCnae);
-                pstCnae.setInt(1, f.getId());
-                ResultSet rsCnae = pstCnae.executeQuery();
-
-                while (rsCnae.next()) {
-                    Cnae cnae = new Cnae();
-                    cnae.setId(rsCnae.getInt("cna_id"));
-                    cnae.setCodigo(rsCnae.getString("cna_numero"));
-                    cnae.setDtCadastro(rsCnae.getDate("cna_dtcadastro"));
-                    cnaes.add(cnae);
-                    f.setCnaes(cnaes);
-                }
-                
-                
-                pstContato = connection.prepareStatement(sqlContato);
-                pstContato.setInt(1, f.getId());
-                ResultSet rsContato = pstContato.executeQuery();
-
-                while (rsContato.next()) {
-                    Contato c = new Contato();
-                    c.setId(rsContato.getInt("ctt_id"));
-                    c.setNome(rsContato.getString("ctt_nome"));
-                    c.setDepartamento(rsContato.getString("ctt_dpto"));
-                    c.setEmail(rsContato.getString("ctt_email"));
-                    Telefone t = new Telefone();
-                    t.setDdd(rsContato.getString("ctt_dddtelefone"));
-                    t.setDdi(rsContato.getString("ctt_dditelefone"));
-                    t.setNumero(rsContato.getString("ctt_numerotelefone"));
-                    c.setTelefone(t);
-                    contatos.add(c);
-                    f.setContatos(contatos);
-                }
-
-                pstTelefone = connection.prepareStatement(sqlTelefone);
-                pstTelefone.setInt(1, f.getId());
-                ResultSet rsTelefone = pstTelefone.executeQuery();
-
-                while (rsTelefone.next()) {
-                    Telefone telefone = new Telefone();
-                    telefone.setId(rsTelefone.getInt("tel_id"));
-                    telefone.setDdi(rsTelefone.getString("tel_dditelefone"));
-                    telefone.setDdd(rsTelefone.getString("tel_dddtelefone"));
-                    telefone.setNumero(rsTelefone.getString("tel_numerotelefone"));
-                    telefones.add(telefone);
-                    f.setTelefones(telefones);
-                }
-                
-                
-                pstProduto = connection.prepareStatement(sqlProduto);
-                pstProduto.setInt(1, f.getId());
-                ResultSet rsProduto = pstProduto.executeQuery();
-
-                while (rsProduto.next()) {
-                    Produto p = new Produto();
-                    p.setId(rsProduto.getInt("pro_id"));
-                    p.setDescricao(rsProduto.getString("pro_descricao"));
-                    p.setDtCadastro(rsProduto.getDate("pro_dtcadastro"));
-                    produtos.add(p);
-                    f.setProdutosOfertados(produtos);
-                }
-                
-                
-                pstServico = connection.prepareStatement(sqlServico);
-                pstServico.setInt(1, f.getId());
-                ResultSet rsServico = pstServico.executeQuery();
-
-                while (rsServico.next()) {
-                    Servico s = new Servico();
-                    s.setId(rsServico.getInt("ser_id"));
-                    s.setDescricao(rsServico.getString("ser_descricao"));
-                    s.setDtCadastro(rsServico.getDate("ser_dtcadastro"));
-                    servicos.add(s);
-                    f.setServicosOfertados(servicos);
-                }
+                f.setCnaes(cnaes);
+                f.setContatos(contatos);
+                f.setTelefones(telefones);
+                f.setProdutosOfertados(produtos);
+                f.setServicosOfertados(servicos);        	
+                             
                 fornecedores.add(f);
             }
 

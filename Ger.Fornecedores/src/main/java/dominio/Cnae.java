@@ -29,7 +29,8 @@ public class Cnae extends EntidadeDominio {
     @Override
     public String toString() {
         return String.format(
-            "CNAE - Código: %2s\n",
+            "CNAE - ID: %2s, Código: %2s\n",
+            this.getId(),
             this.getCodigo()
         );
     }

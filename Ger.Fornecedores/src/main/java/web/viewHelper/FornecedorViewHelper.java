@@ -223,7 +223,6 @@ public class FornecedorViewHelper implements IViewHelper {
 
 			HttpSession session = request.getSession();
 			Resultado resultado = (Resultado) session.getAttribute("fornecedorSessao");
-			//System.out.println(resultado.getEntidades().get(0).getId());
 			String listaId = request.getParameter("txtListaId");
 			String pesquisa = request.getParameter("txtPesquisa");
 			
@@ -282,17 +281,14 @@ public class FornecedorViewHelper implements IViewHelper {
 			dispatcher = request.getRequestDispatcher("/ConsultarFornecedor.jsp");
 			
 		} else if (operacao.equals("VISUALIZAR")) {
-			
-			
-
 			request.getSession().setAttribute("VisualizarFornecedor", resultado.getEntidades().get(0));
-			dispatcher = request.getRequestDispatcher("cliente/FormVisualizarCliente.jsp");
+			dispatcher = request.getRequestDispatcher("VisualizarFornecedor.jsp");
 
 		} else if (operacao.equals("ALTERAR")) {
 
 			if (resultado.getMsg().equals("Alterado com sucesso.")) {
 				request.setAttribute("resultado", resultado);
-				//request.getSession().setAttribute("fornecedorSessao", resultado);
+				request.getSession().setAttribute("fornecedorSessao", resultado);
 				dispatcher = request.getRequestDispatcher("/ConsultarFornecedor?txtPesquisa=ativo&OPERACAO=CONSULTAR");
 			} else {
 				request.setAttribute("resultado", resultado);

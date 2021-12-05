@@ -20,16 +20,16 @@ public class TesteControleSalvar {
 	        List<Telefone> listaTelefones = new ArrayList<Telefone>();
 	
 	        Endereco endereco1 = new Endereco("ViranoAdireita", "cep1", "tipoLog1", "log1", "num1", "bai1", "comple1", "cid1", "RJ", "pais1");
-	        Fornecedor for1 = new Fornecedor("Creusa", "rzsocialDaCreusa", "22222222555", "insmun1", "insest1", "email1", endereco1);
+	        Fornecedor for1 = new Fornecedor("Creusa", "rzsocialDaCreusa", "99999999999999", "insmun1", "insest1", "email1", endereco1);
 	        Cnae cnae1 = new Cnae("123");
 	        Contato ctt1 = new Contato("fulano1", "email1", "dpto1", new Telefone("11","22","40028922"));
-	        Telefone tel1 = new Telefone("11", "11", "111111111");
-	        Empresa emp1 = new Empresa("Filial", "Venda");
+	        Telefone tel1 = new Telefone("11", "11", "1");
+	        Empresa emp1 = new Empresa("Filial", "Servico");
 	        Produto pro1 = new Produto("pneu");
-	        Servico ser1 = new Servico("limpeza");
+	        Servico ser1 = new Servico("ergerg");
 	        
 	        Endereco endereco2 = new Endereco("LogoAli", "cep2", "tipoLog2", "log2", "num2", "bai2", "comple2", "cid2", "SP", "pais2");
-	        Fornecedor for2 = new Fornecedor("Valentin", "rzsocial2", "33333333777", "insmun2", "insest2", "email2", endereco2);   
+	        Fornecedor for2 = new Fornecedor("Valentin", "rzsocial2", "99999999999999", "insmun2", "insest2", "email2", endereco2);   
 	        Cnae cnae2 = new Cnae("321");
 	        Cnae cnae3 = new Cnae("456");
 	        Contato ctt2 = new Contato("fulano2", "email2", "dpto2", new Telefone("22","11","40028922"));
@@ -37,8 +37,8 @@ public class TesteControleSalvar {
 	        Contato ctt4 = new Contato("fulano4", "email4", "dpto4", new Telefone("22","11","40028922"));
 	        Telefone tel2 = new Telefone("22", "22", "222222222");
 	        Telefone tel3 = new Telefone("33", "33", "333333333");
-	        Empresa emp2 = new Empresa("Filial", "Venda");
-	        Produto pro2 = new Produto("pneu");
+	        Empresa emp2 = new Empresa("Filial", "Produto");
+	        Produto pro2 = new Produto("geger");
 	        Servico ser2 = new Servico("limpeza");
 	        
 	        ICommand command = new SalvarCommand();

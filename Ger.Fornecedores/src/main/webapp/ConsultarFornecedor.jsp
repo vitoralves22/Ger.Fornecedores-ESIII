@@ -34,11 +34,30 @@
 	    <%
             Resultado resultado = (Resultado) session.getAttribute("fornecedorSessao");
         %>
+        
+        
+        
+        <%--  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="${pageContext.request.contextPath}/ConsultarFornecedor?OPERACAO=CONSULTAR" class="btn btn-default">Lista</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/index.jsp">Cadastrar</a>
+                    </li>
+                </ul>
+            </div>
+        </nav> --%>
+        
+        
+        
 	<header>
 		<h1 class="header-title">Cadastro de Fornecedores</h1>
 	</header>
 	
 	<main>
+		
 		
 		<form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/ConsultarFornecedor">
               <input type="text" class="form-control" id="txtPesquisa"name="txtPesquisa" placeholder="Pesquisa">

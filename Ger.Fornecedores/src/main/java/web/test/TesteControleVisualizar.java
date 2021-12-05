@@ -2,6 +2,7 @@ package web.test;
 import web.command.ConsultarCommand;
 import web.command.ICommand;
 import web.command.SalvarCommand;
+import web.command.VisualizarCommand;
 import web.controle.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,11 +13,11 @@ import core.controle.Fachada;
 import core.dao.FornecedorDAO;
 import dominio.*;
 
-public class TesteControleConsultar {
+public class TesteControleVisualizar {
 	
 	public static void main(String[] args) throws SQLException {
 	
-		ICommand command = new ConsultarCommand();
+		ICommand command = new VisualizarCommand();
 		Fornecedor fornecedor = new Fornecedor("Creusa");
         Resultado resultado = new Resultado();
         List<EntidadeDominio> creusas = new ArrayList<>();       

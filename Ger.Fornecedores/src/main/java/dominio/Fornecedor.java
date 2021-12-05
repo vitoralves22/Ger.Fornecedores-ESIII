@@ -41,7 +41,7 @@ public class Fornecedor extends EntidadeDominio {
     	this.inscricaoMunicipal = inscMunicipal;
     	this.email = email;
     	this.endereco = end;    
-    	System.out.println("Fornecedor criado com sucesso");
+    	
     }
     
     public Fornecedor(String nmFantasia, String rzSocial, String cnpj, String inscEstadual, String inscMunicipal, String email) {
@@ -51,7 +51,7 @@ public class Fornecedor extends EntidadeDominio {
     	this.inscricaoEstadual = inscEstadual;
     	this.inscricaoMunicipal = inscMunicipal;
     	this.email = email; 
-    	System.out.println("Fornecedor criado com sucesso");
+    	
     }
     
     public Fornecedor(String nmFantasia, String rzSocial, String cnpj, String inscricaoEstadual, String inscricaoMunicipal,
@@ -252,8 +252,8 @@ public class Fornecedor extends EntidadeDominio {
 	@Override
     public String toString() {
         return String.format(
-            "FORNECEDOR - Nome Fantasia: %2s, Razao Social: %2s CNPJ: %2s,  email: %2s, Status: %2s",
-         
+            "FORNECEDOR - ID: %2s, Nome Fantasia: %2s, Razao Social: %2s CNPJ: %2s,  email: %2s, Status: %2s",
+            this.getId(),
             this.getNmFantasia(),
             this.getRzSocial(),
             this.getCnpj(),

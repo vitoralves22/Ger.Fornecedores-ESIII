@@ -2,7 +2,6 @@ package web.controle;
 
 import core.aplicacao.Resultado;
 import dominio.EntidadeDominio;
-import dominio.Fornecedor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,6 +21,7 @@ public class Controle extends jakarta.servlet.http.HttpServlet {
         commands = new HashMap<>();
 
         commands.put("ALTERAR", new AlterarCommand());
+        commands.put("VISUALIZAR", new VisualizarCommand());
         commands.put("CONSULTAR", new ConsultarCommand());
         commands.put("SALVAR", new SalvarCommand());
         commands.put("EXCLUIR", new ExcluirCommand());
@@ -29,6 +29,7 @@ public class Controle extends jakarta.servlet.http.HttpServlet {
         vhs = new HashMap<>();
 
         vhs.put("/Ger.Fornecedores/AlterarFornecedor", new FornecedorViewHelper());
+        vhs.put("/Ger.Fornecedores/VisualizarFornecedor", new FornecedorViewHelper());
         vhs.put("/Ger.Fornecedores/ConsultarFornecedor", new FornecedorViewHelper());
         vhs.put("/Ger.Fornecedores/SalvarFornecedor", new FornecedorViewHelper());
         vhs.put("/Ger.Fornecedores/ExcluirFornecedor", new FornecedorViewHelper());
@@ -45,7 +46,7 @@ public class Controle extends jakarta.servlet.http.HttpServlet {
 
         EntidadeDominio entidade = vh.getEntidade(request);
         
-        //System.out.println(entidade.getId());
+        System.out.println(entidade.getId());
        
         ICommand command = commands.get(operacao);
 

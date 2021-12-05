@@ -5,43 +5,50 @@ import dominio.Fornecedor;
 
 
 public class ValidarDadosObrigatoriosFornecimento implements IStrategy {
-
-	public String processar(EntidadeDominio entidade) {
-		String verificaDado = new String();
-		Fornecedor fornecedor = (Fornecedor)entidade;
-
+	
+	String verificaDado = new String();
+	
+	void verificarProdutos(Fornecedor fornecedor) {
 		for (int i = 0; i<fornecedor.getProdutosOfertados().size(); i++) {
-
-			if(fornecedor.getProdutosOfertados().get(i).getDescricao() == null || 
-			   fornecedor.getProdutosOfertados().get(i).getDescricao() == ""){
-			 	verificaDado += "Codigo de Produto invalido\n";
-		 	}
-
-			if(fornecedor.getProdutosOfertados().get(i).getDescricao() == null || 
-			   fornecedor.getProdutosOfertados().get(i).getDescricao() == ""){
-			    verificaDado += "Descricao de Produto invalida\n";
-		    }
-        }
-
-        for (int i = 0; i<fornecedor.getServicosOfertados().size(); i++) {
-
-			if(fornecedor.getServicosOfertados().get(i).getDescricao() == null || 
-			   fornecedor.getServicosOfertados().get(i).getDescricao() == ""){
-			 	verificaDado += "Codigo de Servico invalido\n";
-		 	}
-
-			if(fornecedor.getServicosOfertados().get(i).getDescricao() == null || 
-			   fornecedor.getServicosOfertados().get(i).getDescricao() == ""){
-			    verificaDado += "Descricao de Servico invalida\n";
-		    }
-        }
-
-		if(verificaDado != ""){
+			String descProduto = fornecedor.getProdutosOfertados().get(i).getDescricao();
+				if( descProduto == null || descProduto == ""){
+						    verificaDado += "Descricao de Produto obrigatória\n";
+			    }
+			}
+	}
+	
+	void verificarServicos(Fornecedor fornecedor) {
+		for (int i = 0; i<fornecedor.getServicosOfertados().size(); i++) {
+			String descServico = fornecedor.getServicosOfertados().get(i).getDescricao();
+				if( descServico == null || descServico == ""){
+						    verificaDado += "Descricao de Servico obrigatória\n";
+				}
+			}
+	}
+	
+	public String processar(EntidadeDominio entidade) {
+		Fornecedor fornecedor = (Fornecedor)entidade;
+		String tipoFornecimento = fornecedor.getEmpresa().getTipoFornecimento();
+		
+		if(tipoFornecimento=="Produto") {
+			verificarProdutos(fornecedor);
+			
+		}else if(tipoFornecimento=="Servico"){
+			verificarServicos(fornecedor);
+			
+		}else if(tipoFornecimento=="Ambos"){
+			verificarProdutos(fornecedor);
+			verificarServicos(fornecedor);		
+		}else{
+			return "Produto(s) ou Servico(s) obrigatório(s)\n";
+		}
+				
+		
+    	if(verificaDado != ""){
 			return verificaDado;
 		}
 
 		return null;
-		
-	}
-
+	
+	}			
 }
