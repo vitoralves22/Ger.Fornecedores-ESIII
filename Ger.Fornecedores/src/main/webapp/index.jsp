@@ -4,7 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Date"%>
 <%@page import="dominio.*"%>
-<%@page import="core.*"%>
+<%@page import="core.aplicacao.Resultado"%>
 <%@page import="web.command.*"%>
 <%@page import="web.controle.*"%>
 <%@page import="web.viewHelper.*"%>
@@ -36,10 +36,50 @@
 	<header>
 		<h1 class="header-title">Cadastro de Fornecedores</h1>
 	</header>
-	 <%
-            Resultado resultado = (Resultado) request.getAttribute("resultado");
-            Resultado fornecedores = (Resultado) session.getAttribute("fornecedorSessao");
+	
+	<main>
+		
+		<div>
+    		<button type="button" class="button blue mobile" id="cadastrarFornecedor">Cadastrar Fornecedor</button>					
+			<span id="spanSearch" class="search material-icons">search</span>
+   		 </div>
+			
+		<table id="tableFornecedor" class="records">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nome Fantasia</th>
+					<th>CNPJ</th>
+					<th>UF</th>
+					<th>Tipo</th>
+					<th>Contato</th>
+					<th>Ativo</th>
+				</tr>
+			</thead>		
 
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    
+                    <td></td>
+                    <td></td>
+                </tr>
+
+		</table>
+		
+		
+		<div class="modal" id="modal">
+		<form action="${pageContext.request.contextPath}/SalvarFornecedor">
+		
+						 <%       
+            Resultado resultadoCadastro = (Resultado) request.getAttribute("resultado");
+            Resultado fornecedoresCadastro = (Resultado) session.getAttribute("fornecedorSessao");
+            
             String nomeFantasia =  "";
 			String razaoSocial =  "";
 			String cnpj =  "";
@@ -68,14 +108,12 @@
 			String cttTelDDI = "";
 			String cttTelDDD = "";;
 			String cttTelNumero = "";
-			String pdtDescricao = "";
-			String srvDescricao = "";
+			String proDescricao = "";
+			String serDescricao = "";
 					
-
-            if (resultado != null) {
-                if (resultado.getEntidades() != null) {
-                    Fornecedor fornecedor = (Fornecedor) fornecedores.getEntidades().get(0);
-
+            if (resultadoCadastro != null) {
+                if (resultadoCadastro.getEntidades() != null) {
+                    Fornecedor fornecedor = (Fornecedor) fornecedoresCadastro.getEntidades().get(0);
                     if (fornecedor.getNmFantasia() == null) {
                     	nomeFantasia = "";
                     } else {
@@ -101,16 +139,19 @@
                     } else {
                     	inscricaoMunicipal = fornecedor.getInscricaoMunicipal();
                     }
-                   /*  if (fornecedor.getTipoEmpresa() == null) {
+                    
+                   	if (fornecedor.getEmpresa().getTipo() == null) {
                     	tipoEmpresa = "";
                     } else {
-                    	tipoEmpresa = fornecedor.getTipoEmpresa();
+                    	tipoEmpresa = fornecedor.getEmpresa().getTipo();
                     }
-                    if (fornecedor.getTipoFornecimento() == null) {
+                   	
+                    if (fornecedor.getEmpresa().getTipoFornecimento() == null) {
                     	tipoFornecimento = "";
                     } else {
-                    	tipoFornecimento = fornecedor.getTipoFornecimento();
-                    } */
+                    	tipoFornecimento = fornecedor.getEmpresa().getTipoFornecimento();
+                    }
+                    
                     if (fornecedor.getEmail() == null) {
                     	email  = "";
                     } else {
@@ -217,54 +258,20 @@
                     	telNumero = fornecedor.getContatos().get(0).getTelefone().getNumero() ;
                     }
                     if (fornecedor.getProdutosOfertados().get(0).getDescricao() == null) {
-                    	pdtDescricao = "";
+                    	proDescricao = "";
                     } else {
-                    	pdtDescricao = fornecedor.getProdutosOfertados().get(0).getDescricao();
+                    	proDescricao = fornecedor.getProdutosOfertados().get(0).getDescricao();
                     }
                     if (fornecedor.getServicosOfertados().get(0).getDescricao() == null) {
-                    	srvDescricao = "";
+                    	serDescricao = "";
                     } else {
-                    	srvDescricao = fornecedor.getServicosOfertados().get(0).getDescricao();
+                    	serDescricao = fornecedor.getServicosOfertados().get(0).getDescricao();
                     }
                 }
             }
         %>
-	<main>
-		<button type="button" class="button blue mobile"
-			id="cadastrarFornecedor">Cadastrar Fornecedor</button>
-		<table id="tableFornecedor" class="records">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Nome Fantasia</th>
-					<th>CNPJ</th>
-					<th>UF</th>
-					<th>Tipo</th>
-					<th>Contato</th>
-					<th>Ativo</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>
-						<div class="form-group">
-							<input class="checkbox" id="checkbox1" type='checkbox' />
-						</div>
-					</td>
-					<td><span class="edit material-icons"> edit</span> <span
-						class="consult material-icons">description</span> <span
-						class="delete material-icons">delete</span></td>
-				</tr>
-
-			</tbody>
-		</table>
-		<div class="modal" id="modal">
+		
+		
 			<div class="modal-content">
 				<nav class="nav_tabs">
 					<ul>
@@ -273,153 +280,149 @@
 							<label for="tab1" class="tab_label">Empresa</label>
 							<div class="tab-content">
 								<h1></h1>
-								<form id="form" class="modal-form">
+								<div id="form" class="modal-form">
 
-									<input id="txtForNomeFantasia" type="text" data-index="new" class="modal-field" value="<%=nomeFantasia %>"
-										placeholder="Nome Fantasia" required>
+									<input id="txtForNomeFantasia" name="txtForNomeFantasia"  type="text" data-index="new" class="modal-field" value="<%= nomeFantasia %>"
+										placeholder="Nome Fantasia" >
 
-									<input id="txtForRazaoSocial" type="text" class="modal-field" value="<%=razaoSocial %>"
-										placeholder="Razão Social" required> 
+									<input id="txtForRazaoSocial" name="txtForRazaoSocial" type="text" class="modal-field" value="<%= razaoSocial %>"
+										placeholder="Razão Social" > 
 										
-									<input id="txtForCNPJ" type="text" class="modal-field" value="<%=cnpj %>"
-										placeholder="CNPJ" required> 
+									<input id="txtForCNPJ" name="txtForCNPJ" type="text" class="modal-field" value="<%= cnpj %>"
+										placeholder="CNPJ" > 
 									
-									<input id="txtForInscricaoEstadual" type="text" class="modal-field" value="<%=inscricaoEstadual %>"
-										placeholder="Inscrição Estadual" required> 
+									<input id="txtForInscricaoEstadual" name="txtForInscricaoEstadual" type="text" class="modal-field" value="<%= inscricaoEstadual %>"
+										placeholder="Inscrição Estadual" > 
 									
-									<input id="txtForInscricaoMunicipal" type="text" class="modal-field" value="<%=inscricaoMunicipal %>"
-										placeholder="Inscrição Municipal" required> 
+									<input id="txtForInscricaoMunicipal" name="txtForInscricaoMunicipal" type="text" class="modal-field" value="<%= inscricaoMunicipal %>"
+										placeholder="Inscrição Municipal" > 
 										
-									<input id="txtForEmail" type="text" class="modal-field" value="<%=email %>"
-										placeholder="Email" required> 
+									<input id="txtForEmail" name="txtForEmail" type="text" class="modal-field" value="<%= email %>"
+										placeholder="Email" > 
 										
-									<input id="txtForTipoEmpresas" type="text" class="modal-field" value="<%=tipoEmpresa %>"
-										placeholder="Tipo Empresa" required> 
+									<input id="txtForTipoEmpresa" name="txtForTipoEmpresa" type="text" class="modal-field" value="<%= tipoEmpresa %>"
+										placeholder="Tipo Empresa" > 
 										
-									<input id="txtForTipoFornecimento" type="text" class="modal-field" value="<%=tipoFornecimento %>"
-										placeholder="Tipo Fornecimento" required>
+									<input id="txtForTipoFornecimento" name="txtForTipoFornecimento" type="text" class="modal-field" value="<%= tipoFornecimento %>"
+										placeholder="Tipo Fornecimento" >
 
-								</form>
+								</div>
 							</div></li>
 						<li><input type="radio" name="tabs" class="rd_tab" id="tab2">
 							<label for="tab2" class="tab_label">CNAE</label>
 							<div class="tab-content">
 								<h2></h2>
-								<form id="form2" class="modal-form">
-									<input id="txtCnaeCodigo" type="text" class="modal-field" value="<%=codigo %>"
-										placeholder="CNAE" required>
+								<div id="form2" class="modal-form">
+									<input id="txtCnaeCodigo" type="text" name="txtCnaeCodigo" class="modal-field" value="<%= codigo %>"
+										placeholder="CNAE" >
 
 									<button type="button" class="button addContato"
 										id="adicionarCnae">Add+</button>
-								</form>
+								</div>
 							</div></li>
 						<li><input type="radio" name="tabs" class="rd_tab" id="tab3">
 							<label for="tab3" class="tab_label">Fornecimento</label>
 							<div class="tab-content">
 								<h2></h2>
-								<form id="form3" class="modal-form">
-									<input id="tipo_fornecimento" type="text" class="modal-field" value="<%=tipoFornecimento %>"
-										placeholder="Tipo"> 
-									<input id="descricao_fornecimento" type="text" class="modal-field" value="<%=pdtDescricao %>"
-										placeholder="Descrição">
-									<%-- <input id="descricao_fornecimento" type="text" class="modal-field" value="<%=srvDescricao %>"
-										placeholder="Descrição"> --%>
+								<div id="form3" class="modal-form">
+									<input id="txtDescProduto" name="txtDescProduto" type="text" class="modal-field" value="<%= proDescricao %>"
+										placeholder="Produto"> 
+									<input id="txtDescServico" name="txtDescServico" type="text" class="modal-field" value="<%= serDescricao %>"
+										placeholder="Servico">
+									
 
 									<button type="button" class="button addContato"
 										id="adicionarFornecimento">Add+</button>
-								</form>
+								</div>
 							</div></li>
 						<li><input type="radio" name="tabs" class="rd_tab" id="tab4">
 							<label for="tab4" class="tab_label">Endereço</label>
 							<div class="tab-content">
 								<h2></h2>
-								<form id="form4" class="modal-form">
-									<input id="txtEndTipo" type="text" class="modal-field" value="<%=endTipo %>"
-										placeholder="Tipo Endereço" required> 
+								<div id="form4" class="modal-form">
+									<input id="txtEndTipo" name="txtEndTipo" type="text" class="modal-field" value="<%= endTipo %>"
+										placeholder="Tipo Endereço" > 
 										
-									<input id="txtEndTipoLogradouro" type="text" class="modal-field" value="<%=endTipoLogradouro %>"
-										placeholder="Tipo Logradouro" required> 
+									<input id="txtEndTipoLogradouro" name="txtEndTipoLogradouro" type="text" class="modal-field" value="<%= endTipoLogradouro %>"
+										placeholder="Tipo Logradouro" > 
 										
-									<input id="txtEndLogradouro" type="text" class="modal-field" value="<%=endLogradouro %>"
-										placeholder="Logradouro" required> 
+									<input id="txtEndLogradouro" name="txtEndLogradouro" type="text" class="modal-field" value="<%= endLogradouro %>"
+										placeholder="Logradouro" > 
 										
-									<input id="txtEndNumero" type="text" class="modal-field" value="<%=endNumero %>"
-										placeholder="Numero" required>
+									<input id="txtEndNumero" name="txtEndNumero" type="text" class="modal-field" value="<%= endNumero %>"
+										placeholder="Numero" >
 										
-									<input id="txtEndBairro" type="text" class="modal-field" value="<%=endBairro %>"
-										placeholder="Bairro" required> 
+									<input id="txtEndBairro" name="txtEndBairro" type="text" class="modal-field" value="<%= endBairro %>"
+										placeholder="Bairro" > 
 										
-									<input id="txtEndCidade" type="text" class="modal-field" value="<%=endCidade %>"
-										placeholder="Cidade" required>
+									<input id="txtEndCidade" name="txtEndCidade" type="text" class="modal-field" value="<%= endCidade %>"
+										placeholder="Cidade" >
 										
-									<input id="txtEndEstadoUf" type="text" class="modal-field" value="<%=endEstadoUf %>"
-										placeholder="UF" required> 
+									<input id="txtEndEstadoUf" name="txtEndEstadoUf" type="text" class="modal-field" value="<%= endEstadoUf %>"
+										placeholder="UF" > 
 										
-									<input id="txtEndPais" type="text" class="modal-field" value="<%=endPais %>"
-										placeholder="País" required> 
+									<input id="txtEndPais" name="txtEndPais" type="text" class="modal-field" value="<%= endPais %>"
+										placeholder="País" > 
 										
-									<input id="txtEndCEP" type="text" class="modal-field" value="<%=endCEP %>"
-										placeholder="CEP" required> 
+									<input id="txtEndCEP" name="txtEndCEP" type="text" class="modal-field" value="<%= endCEP %>"
+										placeholder="CEP" > 
 										
-									<input id="txtEndComplemento" type="text" class="modal-field" value="<%=endComplemento %>"
+									<input id="txtEndComplemento" name="txtEndComplemento" type="text" class="modal-field" value="<%= endComplemento %>"
 										placeholder="Complemento">
-								</form>
+								</div>
 							</div></li>
 						<li><input type="radio" name="tabs" class="rd_tab" id="tab5">
 							<label for="tab5" class="tab_label">Contato</label>
 							<div class="tab-content">
 								<h2></h2>
-								<form id="form5" class="modal-form">
-									<input id="txtCttnome" type="text" class="modal-field" value="<%=cttNome %>"
-										placeholder="Nome" required> 
+								<div id="form5" class="modal-form">
+									<input id="txtCttnome" name="txtCttnome" type="text" class="modal-field" value="<%= cttNome %>"
+										placeholder="Nome" > 
 										
-									<input id="txtCttemail" type="email" class="modal-field" value="<%=cttEmail %>" 
-										placeholder="Email" required>
+									<input id="txtCttemail" name="txtCttemail" type="email" class="modal-field" value="<%= cttEmail %>" 
+										placeholder="Email" >
 										
-									<input id="txtCttdepartamento" type="text" class="modal-field" value="<%=cttDepartamento %>"
-										placeholder="Departamento" required> 
+									<input id="txtCttdepartamento" name="txtCttdepartamento" type="text" class="modal-field" value="<%= cttDepartamento %>"
+										placeholder="Departamento" > 
 										
-									<input id="txtTelDDI" type="text" class="modal-field" value="<%=cttTelDDI %>"
-										placeholder="DDI" required> 
+									<input id="txtTelDDI" name="txtTelDDI" type="text" class="modal-field" value="<%= cttTelDDI %>"
+										placeholder="DDI" > 
 										
-									<input id="txtTelDDD" type="text" class="modal-field" value="<%=cttTelDDD %>"
-										placeholder="DDD" required>
+									<input id="txtTelDDD" name="txtTelDDD" type="text" class="modal-field" value="<%= cttTelDDD %>"
+										placeholder="DDD" >
 										
-									<input id="txtTelNumero" type="tel" class="modal-field" value="<%=cttTelNumero %>"
-										placeholder="Telefone" required>
-									<!--  <input id="ramal_contato" type="text" class="modal-field" placeholder="Ramal">
-                                    <input id="codigo_contato" type="text" class="modal-field" placeholder="Código">
-                                    <input id="descricao_contato" type="text" class="modal-field"
-                                        placeholder="Descrição"> -->
+									<input id="txtTelNumero" name="txtTelNumero" type="tel" class="modal-field" value="<%= cttTelNumero %>"
+										placeholder="Telefone" >
+									
 									<button type="button" class="button addContato"
 										id="adicionarContato">Add+</button>
-								</form>
+								</div>
 							</div></li>
 						<li><input type="radio" name="tabs" class="rd_tab" id="tab6">
 							<label for="tab6" class="tab_label">Telefone</label>
 							<div class="tab-content">
 								<h2></h2>
-								<form id="form6" class="modal-form">
-									<input id="ddd_telefone" type="text" class="modal-field" value="<%=telDDI %>"
+								<div id="form6" class="modal-form">
+									<input id="ddd_telefone" name="ddd_telefone" type="text" class="modal-field" value="<%= telDDI %>"
 										placeholder="DDD"> 
 										
-									<input id="ddi_telefone" type="text" class="modal-field" value="<%=telDDD %>"
+									<input id="ddi_telefone" name="ddi_telefone" type="text" class="modal-field" value="<%= telDDD %>"
 										placeholder="DDI"> 
 										
-									<input id="numero_telefone" type="tel" class="modal-field" value="<%=telNumero %>"
+									<input id="numero_telefone" name="numero_telefone" type="tel" class="modal-field" value="<%= telNumero %>"
 										placeholder="Numero">
 										
 									<button type="button" class="button addContato"
 										id="adicionarTelefone">Add+</button>
-								</form>
+								</div>
 							</div></li>
 					</ul>
 				</nav>
-				<footer class="modal-footer">
-					<button id="salvar" class="button save">Salvar</button>
-					<button id="cancelar" class="button cancel">Cancelar</button>
+				<footer class="modal-footer">				
+					 <input type="submit" class="button save" id="OPERACAO" name="OPERACAO" value="SALVAR"/>
 				</footer>
 			</div>
+			</form>
 		</div>
 	</main>
 	<footer> </footer>
