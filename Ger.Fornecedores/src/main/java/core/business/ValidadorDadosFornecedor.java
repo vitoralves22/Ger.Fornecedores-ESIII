@@ -3,8 +3,7 @@ package core.business;
 import dominio.EntidadeDominio;
 import dominio.Fornecedor;
 
-
-public class ValidarDadosObrigatoriosFornecedor implements IStrategy {
+public class ValidadorDadosFornecedor implements IStrategy {
 
 	public String processar(EntidadeDominio entidade) {
 		Fornecedor fornecedor = (Fornecedor)entidade;
@@ -39,3 +38,4 @@ public class ValidarDadosObrigatoriosFornecedor implements IStrategy {
 	}
 
 }
+

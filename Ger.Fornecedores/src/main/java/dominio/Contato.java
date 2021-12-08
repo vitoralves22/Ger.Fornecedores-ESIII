@@ -22,6 +22,14 @@ public class Contato extends EntidadeDominio {
         this.email = email;
         this.telefone = telefone;
     }
+    
+    public Contato(Integer id, String nome, String departamento, String email, Telefone telefone) {
+    	super(id);
+        this.nome = nome;
+        this.departamento = departamento;
+        this.email = email;
+        this.telefone = telefone;
+    }
     public Contato(Integer id, String nome, String departamento, String email, Telefone telefone, Date dtCadastro, Integer forId) {
         super(id, dtCadastro, forId);
         this.nome = nome;

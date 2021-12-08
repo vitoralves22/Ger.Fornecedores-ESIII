@@ -10,9 +10,16 @@ public class Servico extends EntidadeDominio {
 	    public Servico(Integer id){
 	        super(id);
 	    }
+	    
 	    public Servico(String descricao) {
 	        this.descricao = descricao;
 	    }
+	    
+	    public Servico(Integer id, String descricao) {
+	    	super(id);
+	        this.descricao = descricao;
+	    }
+	    
 	    public Servico(Integer id, String descricao, Date dtCadastro, Integer servicoForId) {
 	        super(id, dtCadastro, servicoForId);
 	        this.descricao = descricao;

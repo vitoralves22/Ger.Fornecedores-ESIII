@@ -86,14 +86,15 @@ public class ProdutoDAO extends AbstractJdbcDAO{
             StringBuilder sql = new StringBuilder();
             
             sql.append("UPDATE tab_produtos SET pro_descricao=?"); 
-            sql.append("WHERE pro_for_id=?");
+            sql.append("WHERE pro_for_id=? AND pro_id=?");
             
             try {
                 connection.setAutoCommit(false);
 
             pst = connection.prepareStatement(sql.toString());
             pst.setString(1, produto.getDescricao());
-            pst.setInt(2, produto.getForId());          
+            pst.setInt(2, produto.getForId()); 
+            pst.setInt(3, produto.getId()); 
             pst.executeUpdate();
                         
 

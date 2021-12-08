@@ -1,3 +1,4 @@
+
 const openModal = () => document.getElementById('modal')
     .classList.add('active')
 
@@ -8,30 +9,7 @@ const closeModal = () => {
     enableFields()
 }
 
-//crud
-//delete
-const deleteFornecedor = (index) => {
-    const dbFornecedor = readFornecedor()
-    dbFornecedor.splice(index, 1)
-    setLocalStorage(dbFornecedor)
-}
 
-//update
-const updateFornecedor = (index, fornecedor) => {
-    const dbFornecedor = readFornecedor()
-    dbFornecedor[index] = fornecedor
-    setLocalStorage(dbFornecedor)
-}
-
-//read
-const readFornecedor = () => getLocalStorage()
-
-//create
-const createFornecedor = (fornecedor) => {
-    const dbFornecedor = getLocalStorage()
-    dbFornecedor.push(fornecedor)
-    setLocalStorage(dbFornecedor)
-}
 
 //Interação com layout
 const isValidFields = () => {
@@ -78,4 +56,5 @@ document.getElementById('cancelar')
 
 document.querySelector('#tableFornecedor>tbody')
     .addEventListener('click', editConsultDelete)
+
 

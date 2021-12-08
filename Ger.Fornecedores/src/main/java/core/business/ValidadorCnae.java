@@ -3,7 +3,7 @@ package core.business;
 import dominio.EntidadeDominio;
 import dominio.Fornecedor;
 
-public class ValidarDadosObrigatoriosCnae implements IStrategy {
+public class ValidadorCnae implements IStrategy {
 
 	public String processar(EntidadeDominio entidade) {
 		Fornecedor fornecedor = (Fornecedor)entidade;
@@ -14,8 +14,7 @@ public class ValidarDadosObrigatoriosCnae implements IStrategy {
         	if(cnae == null || cnae.isBlank()){
 				return "Cnae(s) obrigatório(s)\n";
 			}
-        }
-		
+        }	
 		return null;
 		
 	}

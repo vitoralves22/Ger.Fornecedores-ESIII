@@ -1,7 +1,6 @@
 package core.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,8 +8,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
-import core.util.Conexao;
 import dominio.*;
 
 public class FornecedorDAO extends AbstractJdbcDAO{
@@ -280,13 +277,8 @@ public class FornecedorDAO extends AbstractJdbcDAO{
         List<Cnae> cnaes = new ArrayList<>();
         List<Produto> produtos = new ArrayList<>();
         List<Servico> servicos = new ArrayList<>();
-
         PreparedStatement pstFornecedor = null;
-        /*PreparedStatement pstCnae = null;
-        PreparedStatement pstTelefone = null;
-        PreparedStatement pstContato = null;
-        PreparedStatement pstProduto = null;
-        PreparedStatement pstServico = null;*/
+       
         
 
         String sqlFornecedor = null;
@@ -309,12 +301,6 @@ public class FornecedorDAO extends AbstractJdbcDAO{
             sqlFornecedor = "SELECT * FROM tab_fornecedores ORDER BY for_id;";
         }
         
-        /*String sqlContato = "SELECT * FROM tab_contatos WHERE ctt_for_id = ? ORDER BY ctt_id;";
-        String sqlTelefone = "SELECT * FROM tab_telefones WHERE tel_for_id = ? ORDER BY tel_id;";
-        String sqlCnae = "SELECT * FROM tab_cnaes WHERE cna_for_id = ? ORDER BY cna_id;";
-        String sqlProduto = "SELECT * FROM tab_produtos WHERE pro_for_id = ? ORDER BY pro_id;";
-        String sqlServico = "SELECT * FROM tab_servicos WHERE ser_for_id = ? ORDER BY ser_id;";*/
-
         try {
             openConnection();
             pstFornecedor = connection.prepareStatement(sqlFornecedor);
@@ -372,99 +358,7 @@ public class FornecedorDAO extends AbstractJdbcDAO{
 
         return null;
     }
-
-
-
     
-    public void ativar(EntidadeDominio entidade) {
-		Fornecedor fornecedor = (Fornecedor) entidade;
-		openConnection();
-		PreparedStatement pst=null;
-		StringBuilder sql = new StringBuilder();
-		
-		sql.append("UPDATE ");
-		sql.append(table);
-		sql.append(" SET ");
-		sql.append("for_status");
-		sql.append("=");
-		sql.append("?");	
-		sql.append(" WHERE ");
-		sql.append(idTable);
-		sql.append("=");
-		sql.append("?");	
-		try {
-			connection.setAutoCommit(false);				
-			pst = connection.prepareStatement(sql.toString());
-				
-			pst.setString(1, "ATIVO");
-			pst.setInt(2, fornecedor.getId());
-		
-			pst.executeUpdate();		
-			connection.commit();					
-		} catch (SQLException e) {
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();	
-		}finally{
-			if(ctrlTransaction) {
-				try {
-					pst.close();
-					if(ctrlTransaction)
-						connection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	public void inativar(EntidadeDominio entidade) {
-		Fornecedor fornecedor = (Fornecedor) entidade;
-		openConnection();
-		PreparedStatement pst=null;
-		StringBuilder sql = new StringBuilder();
-		
-		sql.append("UPDATE ");
-		sql.append(table);
-		sql.append(" SET ");
-		sql.append("for_status");
-		sql.append("=");
-		sql.append("?");	
-		sql.append(" WHERE ");
-		sql.append(idTable);
-		sql.append("=");
-		sql.append("?");	
-		try {
-			connection.setAutoCommit(false);				
-			pst = connection.prepareStatement(sql.toString());
-				
-			pst.setString(1, "INATIVO");
-			pst.setInt(2, fornecedor.getId());
-		
-			pst.executeUpdate();		
-			connection.commit();					
-		} catch (SQLException e) {
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();	
-		}finally{
-			if(ctrlTransaction) {
-				try {
-					pst.close();
-					if(ctrlTransaction)
-						connection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}   
 }
 
 

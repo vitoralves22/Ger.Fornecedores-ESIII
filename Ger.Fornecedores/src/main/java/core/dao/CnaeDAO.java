@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import core.util.Conexao;
-import dominio.Empresa;
 import dominio.EntidadeDominio;
 import dominio.Fornecedor;
 import dominio.Cnae;
@@ -86,7 +85,7 @@ public class CnaeDAO extends AbstractJdbcDAO{
             StringBuilder sql = new StringBuilder();
             
             sql.append("UPDATE tab_cnaes SET cna_numero=?"); 
-            sql.append("WHERE cna_for_id=?");
+            sql.append("WHERE cna_for_id=? AND cna_id=?");
             
             try {
                 connection.setAutoCommit(false);
@@ -94,6 +93,7 @@ public class CnaeDAO extends AbstractJdbcDAO{
             pst = connection.prepareStatement(sql.toString());
             pst.setString(1, cnae.getCodigo());
             pst.setInt(2, cnae.getForId());
+            pst.setInt(3, cnae.getId());
             pst.executeUpdate();
 
             connection.commit();

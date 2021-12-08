@@ -87,7 +87,7 @@ public class TelefoneDAO extends AbstractJdbcDAO {
 		
 		
 		sql.append("UPDATE tab_telefones SET tel_dddTelefone=?, tel_ddiTelefone=?, tel_numeroTelefone=?");
-        sql.append("WHERE tel_for_id=?");
+        sql.append("WHERE tel_for_id=? AND tel_id=?");
 
 		try {
 			connection.setAutoCommit(false);
@@ -99,6 +99,7 @@ public class TelefoneDAO extends AbstractJdbcDAO {
             pst.setString(2, tel.getDdi());
             pst.setString(3, tel.getNumero());
             pst.setInt(4, tel.getForId());
+            pst.setInt(5, tel.getId());
 			pst.executeUpdate();		
 					
 			connection.commit();					

@@ -34,10 +34,6 @@
 
 <body>
 
-		<%
-           Resultado resultado = (Resultado) request.getAttribute("resultado");
-           Fornecedor fornecedor = (Fornecedor) session.getAttribute("VisualizarFornecedor");
-        %>
 
 	<header>
 		<h1 class="header-title">Cadastro de Fornecedores</h1>
@@ -46,7 +42,7 @@
 	<main>
 		
 		 <div>
-    		<button type="button" class="button blue mobile" id="cadastrarFornecedor">Cadastrar Fornecedor</button>					
+    		<button type="button" class="button blue mobile" id="cadastrarFornecedor">Alterar Fornecedor</button>					
 			<span id="spanSearch" class="search material-icons">search</span>
    		 </div>
 			
@@ -80,6 +76,12 @@
 		
 		
 		<div class="modal" id="modal">
+		
+			<%
+	           Resultado resultadoVisualizar = (Resultado) request.getAttribute("resultado");
+	           Fornecedor fornecedorVisualizar = (Fornecedor) session.getAttribute("VisualizarFornecedor");
+	        %>
+		
 		<form action="${pageContext.request.contextPath}/AlterarFornecedor">
 		
 		
@@ -98,162 +100,283 @@
 								
 									<div class="form-group col-1">
 				                        <label for="txtAlterarFornecedorId">Id: </label>
-				                        <input type="text" class="form-control" value="<%=fornecedor.getId()%>" id="txtAlterarFornecedorId" name="txtAlterarFornecedorId" readonly>
+				                        <input type="text" class="form-control" value="<%=fornecedorVisualizar.getId()%>" id="txtAlterarFornecedorId" name="txtAlterarFornecedorId" readonly>
                    					 </div>
 
 									<div class="form-group col-5">
 				                        <label for="txtForNomeFantasia">Nome Fantasia: </label>
-				                        <input type="text" class="form-control" value="<%= fornecedor.getNmFantasia()%>" id="txtForNomeFantasia" name="txtForNomeFantasia" placeholder="Nome fantasia" maxlength="30">
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getNmFantasia()%>" id="txtForNomeFantasia" name="txtForNomeFantasia" placeholder="Nome fantasia" maxlength="30">
                     				</div>
                     				
 									<div class="form-group col-5">
 				                        <label for="txtForRazaoSocial">Razao Social: </label>
-				                        <input type="text" class="form-control" value="<%= fornecedor.getRzSocial()%>" id="txtForRazaoSocial" name="txtForRazaoSocial" placeholder="Razao social" maxlength="30">
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getRzSocial()%>" id="txtForRazaoSocial" name="txtForRazaoSocial" placeholder="Razao social" maxlength="30">
                     				</div>
                     				
 									<div class="form-group col-5">
 				                        <label for="txtForCNPJ">Cnpj: </label>
-				                        <input type="text" class="form-control" value="<%= fornecedor.getCnpj()%>" id="txtForCNPJ" name="txtForCNPJ" placeholder="CNPJ" maxlength="14">
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getCnpj()%>" id="txtForCNPJ" name="txtForCNPJ" placeholder="CNPJ" maxlength="14">
                     				</div>
                     				
 									<div class="form-group col-5">
 				                        <label for="txtForInscricaoEstadual">Inscricao Estadual: </label>
-				                        <input type="text" class="form-control" value="<%= fornecedor.getInscricaoEstadual()%>" id="txtForInscricaoEstadual" name="txtForInscricaoEstadual" placeholder="Insc. Estadual" maxlength="30">
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getInscricaoEstadual()%>" id="txtForInscricaoEstadual" name="txtForInscricaoEstadual" placeholder="Insc. Estadual" maxlength="30">
                     				</div>
 									
 									<div class="form-group col-5">
 				                        <label for="txtForInscricaoMunicipal">Inscricao Municipal: </label>
-				                        <input type="text" class="form-control" value="<%= fornecedor.getInscricaoMunicipal()%>" id="txtForInscricaoMunicipal" name="txtForInscricaoMunicipal" placeholder="Insc. Municipal" maxlength="30">
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getInscricaoMunicipal()%>" id="txtForInscricaoMunicipal" name="txtForInscricaoMunicipal" placeholder="Insc. Municipal" maxlength="30">
                     				</div>
-										
-									<div class="form-group col-5">
+                    				
+                    				<div class="form-group col-5">
 				                        <label for="txtForEmail">Email: </label>
-				                        <input type="text" class="form-control" value="<%= fornecedor.getEmail()%>" id="txtForEmail" name="txtForEmail" placeholder="Email" maxlength="30">
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEmail()%>" id="txtForEmail" name="txtForEmail" placeholder="Email" maxlength="30">
+                    				</div>
+                    				
+                    				<div class="form-group col-5">
+				                        <label for="txtForStatus">Status: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getStatus()%>" id="txtForStatus" name="txtForStatus" placeholder="Status" maxlength="30">
                     				</div>
 										
 									<div class="form-group col-5">
 				                        <label for="txtForTipoEmpresa">TipoEmpresa: </label>
-				                        <input type="text" class="form-control" value="<%= fornecedor.getEmpresa().getTipo()%>" id="txtForTipoEmpresa" name="txtForTipoEmpresa" placeholder="TipoEmpresa" maxlength="30">
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEmpresa().getTipo()%>" id="txtForTipoEmpresa" name="txtForTipoEmpresa" placeholder="TipoEmpresa" maxlength="30">
                     				</div>
 										
 									<div class="form-group col-5">
 				                        <label for="txtForTipoFornecimento">TipoFornecimento: </label>
-				                        <input type="text" class="form-control" value="<%= fornecedor.getEmpresa().getTipoFornecimento()%>" id="txtForTipoFornecimento" name="txtForTipoFornecimento" placeholder="TipoFornecimento" maxlength="30">
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEmpresa().getTipoFornecimento()%>" id="txtForTipoFornecimento" name="txtForTipoFornecimento" placeholder="TipoFornecimento" maxlength="30">
                     				</div>
                     				
 								</div>
 								</div>		
 							</div></li>
 							
-						<%-- <li><input type="radio" name="tabs" class="rd_tab" id="tab2">
+						<li><input type="radio" name="tabs" class="rd_tab" id="tab2">
 							<label for="tab2" class="tab_label">CNAE</label>
 							<div class="tab-content">
-								<h2></h2>
+							<h2></h2>
+								<% 	
+    								for (int i = 0; i< fornecedorVisualizar.getCnaes().size(); i++) {
+    							%>
 								<div id="form2" class="modal-form">
-									<input id="txtCnaeCodigo" type="text" name="txtCnaeCodigo" class="modal-field" value="<%= fornecedor.getCnaes().get(0).getCodigo() %>"
-										placeholder="CNAE" >
+									
+                   					<div class="form-group col-5">
+					                     <label for="txtCnaeId">Id: </label>
+					                     <input type="text" class="form-control" value="<%= fornecedorVisualizar.getCnaes().get(i).getId()%>" id="txtCnaeId" name="txtCnaeId" maxlength="30" readonly>
+	                    			</div>
+	                    			
+									<div class="form-group col-5">
+				                        <label for="txtCnaeCodigo">Codigo Cnae: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getCnaes().get(i).getCodigo()%>" id="txtCnaeCodigo" name="txtCnaeCodigo" placeholder="Codigo Cnae" maxlength="30">
+                    				</div>
+                    				<%
+                        				}
+                 					 %>
 
 									<button type="button" class="button addContato"
 										id="adicionarCnae">Add+</button>
-											</div>
-										</div></li>
-									<li><input type="radio" name="tabs" class="rd_tab" id="tab3">
-										<label for="tab3" class="tab_label">Fornecimento</label>
-										<div class="tab-content">
-											<h2></h2>
-											<div id="form3" class="modal-form">
-												<input id="txtDescProduto" name="txtDescProduto" type="text" class="modal-field" value="<%= proDescricao %>"
-													placeholder="Produto"> 
-												<input id="txtDescServico" name="txtDescServico" type="text" class="modal-field" value="<%= serDescricao %>"
-													placeholder="Servico">
+								</div>
+							</div>
+						</li>
+						
+						<li><input type="radio" name="tabs" class="rd_tab" id="tab3">
+							<label for="tab3" class="tab_label">Fornecimento</label>
+							<div class="tab-content">
+							<h2></h2>
+								<div id="form3" class="modal-form">
+									<% 	
+	    								for (int i = 0; i< fornecedorVisualizar.getProdutosOfertados().size(); i++) {
+	    							%>
+	    							<div class="form-group col-5">
+					                      <label for="txtProId">Id: </label>
+					                      <input type="text" class="form-control" value="<%= fornecedorVisualizar.getProdutosOfertados().get(i).getId()%>" id="txtProId" name="txtProId" maxlength="30" readonly>
+	                    			</div>
+	                    			
+									<div class="form-group col-5">
+				                        <label for="txtDescProduto">Produto: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getProdutosOfertados().get(i).getDescricao()%>" id="txtDescProduto" name="txtDescProduto" placeholder="Codigo Cnae" maxlength="30">
+                    				</div>
+                    					
+                    				<%
+                        				}
+                 					%>
+                    				
+                    				<% 	
+	    								for (int i = 0; i< fornecedorVisualizar.getServicosOfertados().size(); i++) {
+	    							%>
+	    							<div class="form-group col-5">
+					                      <label for="txtSerId">Id: </label>
+					                      <input type="text" class="form-control" value="<%= fornecedorVisualizar.getServicosOfertados().get(i).getId()%>" id="txtSerId" name="txtSerId" maxlength="30" readonly>
+	                    			</div>
+	    							
+                    				<div class="form-group col-5">
+				                        <label for="txtDescServico">Servico: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getServicosOfertados().get(i).getDescricao()%>" id="txtDescServico" name="txtDescServico" placeholder="Codigo Cnae" maxlength="30">
+                    				</div>
+                    				<%
+                        				}
+                 					%>
+                    				
+									<button type="button" class="button addContato"
+										id="adicionarFornecimento">Add+</button>
+										
+								</div>
+							</div>
+						</li>
+						<li><input type="radio" name="tabs" class="rd_tab" id="tab4">
+							<label for="tab4" class="tab_label">Endereço</label>
+							<div class="tab-content">
+							<h2></h2>
+								<div id="form4" class="modal-form">
+								
+									<div class="form-group col-5">
+				                        <label for="txtEndTipo">Tipo: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEndereco().getTipo()%>" id="txtEndTipo" name="txtEndTipo" placeholder="Tipo Endereco" maxlength="30">
+                    				</div>
+                    				
+                    				<div class="form-group col-5">
+				                        <label for="txtEndTipoLogradouro">Tipo Logradouro: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEndereco().getTipoLogradouro()%>" id="txtEndTipoLogradouro" name="txtEndTipoLogradouro" placeholder="Tipo Logradouro" maxlength="30">
+                    				</div>
+                    				
+                    				<div class="form-group col-5">
+				                        <label for="txtEndLogradouro">Logradouro: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEndereco().getLogradouro()%>" id="txtEndLogradouro" name="txtEndLogradouro" placeholder="Logradouro" maxlength="30">
+                    				</div>
+                    				
+                    				<div class="form-group col-5">
+				                        <label for="txtEndNumero">Numero: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEndereco().getNumero()%>" id="txtEndNumero" name="txtEndNumero" placeholder="Numero" maxlength="30">
+                    				</div>
+                    				
+                    				<div class="form-group col-5">
+				                        <label for="txtEndBairro">Bairro: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEndereco().getBairro()%>" id="txtEndBairro" name="txtEndBairro" placeholder="Bairro" maxlength="30">
+                    				</div>
+                    				
+                    				<div class="form-group col-5">
+				                        <label for="txtEndCidade">Cidade: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEndereco().getCidade()%>" id="txtEndCidade" name="txtEndCidade" placeholder="Cidade" maxlength="30">
+                    				</div>
+                    				
+                    				<div class="form-group col-5">
+				                        <label for="txtEndEstadoUf">UF: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEndereco().getEstadoUf()%>" id="txtEndEstadoUf" name="txtEndEstadoUf" placeholder="UF" maxlength="2">
+                    				</div>
+                    				
+                    				<div class="form-group col-5">
+				                        <label for="txtEndPais">Pais: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEndereco().getPais()%>" id="txtEndPais" name="txtEndPais" placeholder="Pais" maxlength="30">
+                    				</div>
+                    				
+                    				<div class="form-group col-5">
+				                        <label for="txtEndCEP">CEP: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEndereco().getCep()%>" id="txtEndCEP" name="txtEndCEP" placeholder="CEP" maxlength="8">
+                    				</div>
+                    				
+                    				<div class="form-group col-5">
+				                        <label for="txtEndComplemento">Complemento: </label>
+				                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getEndereco().getComplemento()%>" id="txtEndComplemento" name="txtEndComplemento" placeholder="Complemento" maxlength="30">
+                    				</div>
+								</div>
+							</div></li>
+							<li><input type="radio" name="tabs" class="rd_tab" id="tab5">
+								<label for="tab5" class="tab_label">Contato</label>
+								<div class="tab-content">
+								<h2></h2>
+									<div id="form5" class="modal-form">
+									
+										
+										<% 	
+	    									for (int i = 0; i< fornecedorVisualizar.getContatos().size(); i++) {
+	    								%>
+	    								
+	    								<div class="form-group col-5">
+					                        <label for="txtCttId">Id: </label>
+					                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getContatos().get(i).getId()%>" id="txtCttId" name="txtCttId" placeholder="Nome" maxlength="30" readonly>
+	                    				</div>
+	    								
+										<div class="form-group col-5">
+					                        <label for="txtCttnome">Nome: </label>
+					                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getContatos().get(i).getNome()%>" id="txtCttnome" name="txtCttnome" placeholder="Nome" maxlength="30">
+	                    				</div>
+	                    				
+	                    				<div class="form-group col-5">
+					                        <label for="txtCttemail">Email: </label>
+					                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getContatos().get(i).getEmail()%>" id="txtCttemail" name="txtCttemail" placeholder="Email" maxlength="30">
+	                    				</div>
+	                    				
+	                    				<div class="form-group col-5">
+					                        <label for="txtCttdepartamento">Departamento: </label>
+					                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getContatos().get(i).getDepartamento()%>" id="txtCttdepartamento" name="txtCttdepartamento" placeholder="Departamento" maxlength="30">
+	                    				</div>
+	                    				
+	                    				<div class="form-group col-5">
+					                        <label for="txtTelDDI">DDI contato: </label>
+					                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getContatos().get(i).getTelefone().getDdi()%>" id="txtTelDDI" name="txtTelDDI" placeholder="DDI contato" maxlength="3">
+	                    				</div>
+	                    				
+	                    				<div class="form-group col-5">
+					                        <label for="txtTelDDD">DDD contato: </label>
+					                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getContatos().get(i).getTelefone().getDdd()%>" id="txtTelDDD" name="txtTelDDD" placeholder="DDD contato" maxlength="2">
+	                    				</div>	
+	                    				
+	                    				<div class="form-group col-5">
+					                        <label for="txtTelNumero">Numero contato: </label>
+					                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getContatos().get(i).getTelefone().getNumero()%>" id="txtTelNumero" name="txtTelNumero" placeholder="Numero contato" maxlength="9">
+	                    				</div>	
+	                    				
+	                    				<%
+	    									}
+	                    				%>						
+																								
 												
-			
-												<button type="button" class="button addContato"
-													id="adicionarFornecimento">Add+</button>
-											</div>
-										</div></li>
-									<li><input type="radio" name="tabs" class="rd_tab" id="tab4">
-										<label for="tab4" class="tab_label">Endereço</label>
-										<div class="tab-content">
-											<h2></h2>
-											<div id="form4" class="modal-form">
-												<input id="txtEndTipo" name="txtEndTipo" type="text" class="modal-field" value="<%= endTipo %>"
-													placeholder="Tipo Endereço" > 
-													
-												<input id="txtEndTipoLogradouro" name="txtEndTipoLogradouro" type="text" class="modal-field" value="<%= endTipoLogradouro %>"
-													placeholder="Tipo Logradouro" > 
-													
-												<input id="txtEndLogradouro" name="txtEndLogradouro" type="text" class="modal-field" value="<%= endLogradouro %>"
-													placeholder="Logradouro" > 
-													
-												<input id="txtEndNumero" name="txtEndNumero" type="text" class="modal-field" value="<%= endNumero %>"
-													placeholder="Numero" >
-													
-												<input id="txtEndBairro" name="txtEndBairro" type="text" class="modal-field" value="<%= endBairro %>"
-													placeholder="Bairro" > 
-													
-												<input id="txtEndCidade" name="txtEndCidade" type="text" class="modal-field" value="<%= endCidade %>"
-													placeholder="Cidade" >
-													
-												<input id="txtEndEstadoUf" name="txtEndEstadoUf" type="text" class="modal-field" value="<%= endEstadoUf %>"
-													placeholder="UF" > 
-													
-												<input id="txtEndPais" name="txtEndPais" type="text" class="modal-field" value="<%= endPais %>"
-													placeholder="País" > 
-													
-												<input id="txtEndCEP" name="txtEndCEP" type="text" class="modal-field" value="<%= endCEP %>"
-													placeholder="CEP" > 
-													
-												<input id="txtEndComplemento" name="txtEndComplemento" type="text" class="modal-field" value="<%= endComplemento %>"
-													placeholder="Complemento">
-											</div>
-										</div></li>
-									<li><input type="radio" name="tabs" class="rd_tab" id="tab5">
-										<label for="tab5" class="tab_label">Contato</label>
-										<div class="tab-content">
-											<h2></h2>
-											<div id="form5" class="modal-form">
-												<input id="txtCttnome" name="txtCttnome" type="text" class="modal-field" value="<%= cttNome %>"
-													placeholder="Nome" > 
-													
-												<input id="txtCttemail" name="txtCttemail" type="email" class="modal-field" value="<%= cttEmail %>" 
-													placeholder="Email" >
-													
-												<input id="txtCttdepartamento" name="txtCttdepartamento" type="text" class="modal-field" value="<%= cttDepartamento %>"
-													placeholder="Departamento" > 
-													
-												<input id="txtTelDDI" name="txtTelDDI" type="text" class="modal-field" value="<%= cttTelDDI %>"
-													placeholder="DDI" > 
-													
-												<input id="txtTelDDD" name="txtTelDDD" type="text" class="modal-field" value="<%= cttTelDDD %>"
-													placeholder="DDD" >
-													
-												<input id="txtTelNumero" name="txtTelNumero" type="tel" class="modal-field" value="<%= cttTelNumero %>"
-													placeholder="Telefone" >
-												
-												<button type="button" class="button addContato"
-													id="adicionarContato">Add+</button>
-											</div>
-										</div></li>
-									<li><input type="radio" name="tabs" class="rd_tab" id="tab6">
-										<label for="tab6" class="tab_label">Telefone</label>
-										<div class="tab-content">
-											<h2></h2>
-											<div id="form6" class="modal-form">
-												<input id="ddd_telefone" name="ddd_telefone" type="text" class="modal-field" value="<%= telDDI %>"
-													placeholder="DDD"> 
-													
-												<input id="ddi_telefone" name="ddi_telefone" type="text" class="modal-field" value="<%= telDDD %>"
-													placeholder="DDI"> 
-													
-												<input id="numero_telefone" name="numero_telefone" type="tel" class="modal-field" value="<%= telNumero %>"
-													placeholder="Numero">
-													
-												<button type="button" class="button addContato"
-													id="adicionarTelefone">Add+</button>
-											</div>
-										</div></li> --%>
-								</ul>
+										<button type="button" class="button addContato"
+											id="adicionarContato">Add+</button>
+									</div>
+								</div></li>
+								
+								<li><input type="radio" name="tabs" class="rd_tab" id="tab6">
+								<label for="tab6" class="tab_label">Telefone</label>
+								<div class="tab-content">
+								<h2></h2>
+									<div id="form6" class="modal-form">
+										
+										<% 	
+	    									for (int i = 0; i< fornecedorVisualizar.getTelefones().size(); i++) {
+	    								%>
+	    								
+	    								<div class="form-group col-5">
+					                        <label for="txtTelId">Id: </label>
+					                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getTelefones().get(i).getId()%>" id="txtTelId" name="txtTelId" maxlength="30" readonly>
+	                    				</div>
+										
+										<div class="form-group col-5">
+					                        <label for="ddd_telefone">ddd fornecedor: </label>
+					                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getTelefones().get(i).getDdd()%>" id="ddd_telefone" name="ddd_telefone" placeholder="ddd fornecedor" maxlength="2">
+	                    				</div>
+	                    				
+	                    				<div class="form-group col-5">
+					                        <label for="ddi_telefone">ddi fornecedor: </label>
+					                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getTelefones().get(i).getDdi()%>" id="ddi_telefone" name="ddi_telefone" placeholder="ddi fornecedor" maxlength="3">
+	                    				</div>
+	                    				
+	                    				<div class="form-group col-5">
+					                        <label for="numero_telefone">telefone fornecedor: </label>
+					                        <input type="text" class="form-control" value="<%= fornecedorVisualizar.getTelefones().get(i).getDdi()%>" id="numero_telefone" name="numero_telefone" placeholder="numero telefone fornecedor" maxlength="9">
+	                    				</div>
+	                    				
+	                    				<%
+	    									}
+	                    				%>
+	                										
+											<button type="button" class="button addContato"
+												id="adicionarTelefone">Add+</button>
+									</div>
+								</div></li>
+								
+							</ul>
 				</nav>
 				<footer class="modal-footer">				
 					  <input type="submit" class="btn btn-success"id="OPERACAO" name="OPERACAO" value="ALTERAR"/>

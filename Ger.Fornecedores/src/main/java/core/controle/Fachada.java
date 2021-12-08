@@ -9,6 +9,7 @@ import java.util.Map;
 import core.business.IStrategy;
 import core.business.ValidadorCnpj;
 import core.business.ValidarDadosObrigatoriosFornecimento;
+import core.business.VerificarUnicidadeCnpj;
 import core.dao.FornecedorDAO;
 import core.dao.IDAO;
 import dominio.*;
@@ -28,10 +29,10 @@ public class Fachada implements IFachada {
 
         List<IStrategy> rnsSalvarFornecedor = new ArrayList<IStrategy>();
         rnsSalvarFornecedor.add(new ValidadorCnpj()); 
-        rnsSalvarFornecedor.add(new ValidarDadosObrigatoriosFornecimento());  
+        rnsSalvarFornecedor.add(new VerificarUnicidadeCnpj());  
         
         List<IStrategy> rnsAlterarFornecedor = new ArrayList<IStrategy>();
-        List<IStrategy> rnsExcluirFornecedor = new ArrayList<IStrategy>();
+        //List<IStrategy> rnsExcluirFornecedor = new ArrayList<IStrategy>();
 
         Map<String, List<IStrategy>> rnsFornecedor = new HashMap<String, List<IStrategy>>();
         rnsFornecedor.put("SALVAR", rnsSalvarFornecedor);
@@ -66,8 +67,6 @@ public class Fachada implements IFachada {
 	            resultado.setMsg(msg);
 	            entidades.add(entidade);
 	            resultado.setEntidades(entidades);
-	            System.out.println(msg);
-
 	        }
 
 	        return resultado;
@@ -137,11 +136,7 @@ public class Fachada implements IFachada {
 	
 	@Override
     public Resultado consultar(EntidadeDominio entidade) {
-
         resultado = new Resultado();
-        
-        
-
         String msg = executarRegras(entidade, "CONSULTAR");
         String nomeClasse = entidade.getClass().getName();
         if (msg == null) {
@@ -165,20 +160,6 @@ public class Fachada implements IFachada {
         }
         
         return resultado;  
-    }
-	
-	public String ativar(EntidadeDominio entidade) {
-        Fornecedor fornecedor = (Fornecedor) entidade;
-        FornecedorDAO fornecedorDAO = new FornecedorDAO();
-        fornecedorDAO.ativar(fornecedor);
-        return null;
-    }
-
-    public String inativar(EntidadeDominio entidade) {
-        Fornecedor fornecedor = (Fornecedor) entidade;
-        FornecedorDAO fornecedorDAO = new FornecedorDAO();
-        fornecedorDAO.inativar(fornecedor);
-        return null;
     }
 	
 	

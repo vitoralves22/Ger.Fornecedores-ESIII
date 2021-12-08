@@ -2,7 +2,7 @@ package dominio;
 
 import java.util.Date;
 
-public abstract class EntidadeDominio implements IEntidade {
+public abstract class EntidadeDominio{
     
 	private Integer id;
     private Date dtCadastro;

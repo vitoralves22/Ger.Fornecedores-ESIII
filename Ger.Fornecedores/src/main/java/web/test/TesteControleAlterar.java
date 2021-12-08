@@ -3,8 +3,7 @@ package web.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.dao.FornecedorDAO;
-import core.dao.IDAO;
+
 import dominio.Cnae;
 import dominio.Contato;
 import dominio.Empresa;
@@ -15,13 +14,13 @@ import dominio.Servico;
 import dominio.Telefone;
 import web.command.AlterarCommand;
 import web.command.ICommand;
-import web.command.SalvarCommand;
+
 
 public class TesteControleAlterar {
 	
 	public static void main(String[] args) {
 		
-		IDAO fornecedorDAO = new FornecedorDAO();
+		
 		List<Contato> listaContatos = new ArrayList<>();
         List<Cnae> listaCnaes = new ArrayList<>();
         List<Produto> listaProdutos = new ArrayList<>();
@@ -39,7 +38,7 @@ public class TesteControleAlterar {
         for1.setId(1);
         
         Endereco endereco2 = new Endereco("LogoAli", "cep2", "tipoLog2", "log2", "num2", "bai2", "comple2", "cid2", "SP", "pais2");
-        Fornecedor for2 = new Fornecedor("ValentinAlterado", "xhongas", "33333333777", "insmun2", "insest2", "email2", endereco2);   
+        Fornecedor for2 = new Fornecedor("KauanAlterado", "xhongas", "33333333777", "insmun2", "insest2", "email2", endereco2);   
         Cnae cnae2 = new Cnae("321");
         Cnae cnae3 = new Cnae("456");
         Contato ctt2 = new Contato("fulano2AAAAA", "email2", "dpto2", new Telefone("22","11","40028922"));
@@ -50,7 +49,7 @@ public class TesteControleAlterar {
         Empresa emp2 = new Empresa("Filial", "Venda");
         Produto pro2 = new Produto("pneu");
         Servico ser2 = new Servico("limpeza");
-        for2.setId(2);
+        for2.setId(32);
         
         ICommand command = new AlterarCommand();
         
@@ -66,7 +65,7 @@ public class TesteControleAlterar {
         for1.setStatus("Ativo");
         for1.setTelefones(listaTelefones);
         for1.setEmpresa(emp1);
-        command.executar(for1);
+        //command.executar(for1);
         
         listaContatos.clear();
         listaCnaes.clear();

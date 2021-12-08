@@ -14,6 +14,12 @@ public class Produto extends EntidadeDominio {
 	    public Produto(String descricao) {
 	        this.descricao = descricao;
 	    }
+	    
+	    public Produto(Integer id, String descricao) {
+	    	 super(id);
+	        this.descricao = descricao;
+	    }
+	    
 	    public Produto(Integer id, String descricao, Date dtCadastro, Integer produtoForId) {
 	        super(id, dtCadastro, produtoForId);
 	        this.descricao = descricao;

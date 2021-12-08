@@ -3,10 +3,9 @@ package core.business;
 import dominio.EntidadeDominio;
 import dominio.Fornecedor;
 
-
-public class ValidarDadosObrigatoriosEndereco implements IStrategy {
-
+public class ValidadorEndereco implements IStrategy {
 	public String processar(EntidadeDominio entidade) {
+		
 		Fornecedor fornecedor = (Fornecedor)entidade;
 		String tipoEndereco = fornecedor.getEndereco().getTipo();
 		String tipoLogradouro = fornecedor.getEndereco().getTipoLogradouro();

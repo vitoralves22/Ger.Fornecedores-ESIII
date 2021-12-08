@@ -30,19 +30,9 @@ public class FornecedorViewHelper implements IViewHelper {
 		Endereco endereco = new Endereco();
 		Fornecedor fornecedor = new Fornecedor();
 		Empresa empresa = new Empresa();
-		Cnae cnae = new Cnae();
-		List<Cnae> listaCnaes = new ArrayList<>();
-		Telefone telefone = new Telefone();
-		List<Telefone> listaTelefones = new ArrayList<Telefone>();
-		Contato contato = new Contato();
-		List<Contato> listaContatos = new ArrayList<>();
-		Produto produto = new Produto();
-		List<Produto> listaProdutos = new ArrayList<>();
-		Servico servico = new Servico();
-		List<Servico> listaServicos = new ArrayList<>();
-
+		
 		if (!operacao.equals("VISUALIZAR") && !operacao.equals("EXCLUIR") && !operacao.equals("CONSULTAR")) {
-
+					
 			// Dados de Endereco.
 			String endTipo = request.getParameter("txtEndTipo");
 			String endCEP = request.getParameter("txtEndCEP");
@@ -87,58 +77,117 @@ public class FornecedorViewHelper implements IViewHelper {
 			}
 
 			// Dados de Telefone.
-			String telDDI = request.getParameter("txtTelDDI");
-			String telDDD = request.getParameter("txtTelDDD");
-			String telNumero = request.getParameter("txtTelNumero");
-
-			if (telDDI != null && !telDDI.trim().equals("")) {
-				telefone.setDdi(telDDI);
-			}
-			if (telDDD != null && !telDDD.trim().equals("")) {
-				telefone.setDdd(telDDD);
-			}
-			if (telNumero != null && !telNumero.trim().equals("")) {
-				telefone.setNumero(telNumero);
-			}
+			String[] telsId = request.getParameterValues("txtTelId");
+			String[] telsDDI = request.getParameterValues("ddi_telefone");
+			String[] telsDDD = request.getParameterValues("ddd_telefone");
+			String[] telsNumero = request.getParameterValues("numero_telefone");
+			List<Telefone> listaTelefones = new ArrayList<Telefone>();
 			
-			// Dados do Cnae.
-			String codigo = request.getParameter("txtCnaeCodigo");
+			for(int i = 0; i < telsNumero.length; i++) {
+				if (telsId == null &&telsDDI[i] != null && !telsDDI[i].trim().equals("") && 
+						telsDDD[i] != null && !telsDDD[i].trim().equals("") && 
+							telsNumero[i] != null && !telsNumero[i].trim().equals("")) {
+					listaTelefones.add(new Telefone(telsDDI[i], telsDDD[i], telsNumero[i]));
+					
+				}else if(telsId != null && !telsId[i].trim().equals("") && telsDDI[i] != null && !telsDDI[i].trim().equals("") && 
+						telsDDD[i] != null && !telsDDD[i].trim().equals("") && 
+							telsNumero[i] != null && !telsNumero[i].trim().equals("")) {
+					int telId = Integer.parseInt(telsId[i]);
+					listaTelefones.add(new Telefone(telId, telsDDI[i], telsDDD[i], telsNumero[i]));
+				}
+			}
+			fornecedor.setTelefones(listaTelefones);		
+				
+			
+			//	Dados do Cnae.
+			String[] cnaesId = request.getParameterValues("txtCnaeId");
+			String[] cnaesString = request.getParameterValues("txtCnaeCodigo");
+			List<Cnae> listaCnaes = new ArrayList<>();
+			for(int i = 0; i < cnaesString.length; i++) {
+				if (cnaesId == null && cnaesString[i] != null && !cnaesString[i].trim().equals("")) {
+					listaCnaes.add(new Cnae(cnaesString[i]));
+					
+				}else if(cnaesId != null && !cnaesId[i].trim().equals("") && 
+						cnaesString[i] != null && !cnaesString[i].trim().equals("")) {
+					int cnaeId = Integer.parseInt(cnaesId[i]);
+					listaCnaes.add(new Cnae(cnaeId, cnaesString[i]));
+				}
+			}
+			fornecedor.setCnaes(listaCnaes);
+			
 
-			if (codigo != null && !codigo.trim().equals("")) {
-				cnae.setCodigo(codigo);
+			// Dados do Contato.		
+			List<Contato> listaContatos = new ArrayList<>();
+			
+			String[] cttsId = request.getParameterValues("txtCttId");
+			String[] cttsNome = request.getParameterValues("txtCttnome");
+			String[] cttsDepartamento = request.getParameterValues("txtCttdepartamento");
+			String[] cttsEmail = request.getParameterValues("txtCttemail");
+			String[] cttsDDI = request.getParameterValues("txtTelDDI");
+			String[] cttsDDD = request.getParameterValues("txtTelDDD");
+			String[] cttsNumero = request.getParameterValues("txtTelNumero");
+			
+			for(int i = 0; i < cttsNome.length; i++) {
+				if (cttsId != null && !cttsId[i].trim().equals("") &&
+						cttsNome[i] != null && !cttsNome[i].trim().equals("") && 
+							cttsDepartamento[i] != null && !cttsDepartamento[i].trim().equals("") &&
+								cttsEmail[i] != null && !cttsEmail[i].trim().equals("") && cttsDDI[i] != null &&
+									!cttsDDI[i].trim().equals("") && cttsDDD[i] != null && !cttsDDD[i].trim().equals("") &&
+										cttsNumero[i] != null && !cttsNumero[i].trim().equals("")){
+					int cttId = Integer.parseInt(cttsId[i]);
+					listaContatos.add(new Contato(cttId, cttsNome[i], cttsDepartamento[i], cttsEmail[i], new Telefone (cttsDDI[i], cttsDDD[i], cttsNumero[i])));
+				}else if(cttsId == null &&
+						cttsNome[i] != null && !cttsNome[i].trim().equals("") && 
+							cttsDepartamento[i] != null && !cttsDepartamento[i].trim().equals("") &&
+								cttsEmail[i] != null && !cttsEmail[i].trim().equals("") && cttsDDI[i] != null &&
+									!cttsDDI[i].trim().equals("") && cttsDDD[i] != null && !cttsDDD[i].trim().equals("") &&
+										cttsNumero[i] != null && !cttsNumero[i].trim().equals("")){
+					listaContatos.add(new Contato(cttsNome[i], cttsDepartamento[i], cttsEmail[i], new Telefone (cttsDDI[i], cttsDDD[i], cttsNumero[i])));
+				}	
 			}
-
-			// Dados do Contato.
-			String cttNome = request.getParameter("txtCttnome");
-			String cttDepartamento = request.getParameter("txtCttdepartamento");
-			String cttEmail = request.getParameter("txtCttemail");
-
-			if (cttNome != null && !cttNome.trim().equals("")) {
-				contato.setNome(cttNome);
-			}
-			if (cttDepartamento != null && !cttDepartamento.trim().equals("")) {
-				contato.setDepartamento(cttDepartamento);
-			}
-			if (cttEmail != null && !cttEmail.trim().equals("")) {
-				contato.setEmail(cttEmail);
-			}
-			if (telefone != null) {
-				contato.setTelefone(telefone);
-			}
+			fornecedor.setContatos(listaContatos);
+			
+			
+			
+			
 			
 			// Dados do Produto.
-			String proDescricao = request.getParameter("txtDescProduto");
+			String[] produtosId = request.getParameterValues("txtProId");
+			String[] produtosDescricao = request.getParameterValues("txtDescProduto");
+			List<Produto> listaProdutos = new ArrayList<>();
 			
-			if (proDescricao != null && !proDescricao.trim().equals("")) {
-				produto.setDescricao(proDescricao);
+			for(int i = 0; i < produtosDescricao.length; i++) {
+				if (produtosId == null && produtosDescricao[i] != null && !produtosDescricao[i].trim().equals("")) {
+					listaProdutos.add(new Produto(produtosDescricao[i]));	
+					
+				}else if(produtosId != null && !produtosId[i].trim().equals("") && 
+						produtosDescricao[i] != null && !produtosDescricao[i].trim().equals("")){
+					
+					int proId = Integer.parseInt(produtosId[i]);
+					listaProdutos.add(new Produto(proId, produtosDescricao[i]));
+				}
 			}
+			fornecedor.setProdutosOfertados(listaProdutos);
+			
+			
 						
 			// Dados do Serviço.
-			String srvDescricao = request.getParameter("txtDescServico");
+			String[] servicosId = request.getParameterValues("txtSerId");
+			List<Servico> listaServicos = new ArrayList<>();
+			String[] servicosDescricao = request.getParameterValues("txtDescServico");
 			
-			if (srvDescricao != null && !srvDescricao.trim().equals("")) {
-				servico.setDescricao(srvDescricao);
+			for(int i = 0; i < servicosDescricao.length; i++) {
+				if (servicosId == null && servicosDescricao[i] != null && !servicosDescricao[i].trim().equals("")) {
+					listaServicos.add(new Servico(servicosDescricao[i]));	
+					
+				}else if(servicosId != null && !servicosId[i].trim().equals("") && 
+						servicosDescricao[i] != null && !servicosDescricao[i].trim().equals("")){
+					
+					int serId = Integer.parseInt(servicosId[i]);
+					listaServicos.add(new Servico(serId, servicosDescricao[i]));
+				}
 			}
+			fornecedor.setServicosOfertados(listaServicos);
 			
 			// Dados do Fornecedor.
 			String nomeFantasia = request.getParameter("txtForNomeFantasia");
@@ -149,7 +198,7 @@ public class FornecedorViewHelper implements IViewHelper {
 			String tipoEmpresa = request.getParameter("txtForTipoEmpresa");
 			String tipoFornecimento = request.getParameter("txtForTipoFornecimento");
 			String email = request.getParameter("txtForEmail");
-			
+						
 			if (nomeFantasia != null && !nomeFantasia.trim().equals("")) {
 				fornecedor.setNmFantasia(nomeFantasia);
 			}
@@ -165,20 +214,20 @@ public class FornecedorViewHelper implements IViewHelper {
 			if (inscricaoMunicipal != null && !inscricaoMunicipal.trim().equals("")) {
 				fornecedor.setInscricaoMunicipal(inscricaoMunicipal);
 			}
-			
+						
 			if (tipoEmpresa != null && !tipoEmpresa.trim().equals("")) {
-			  empresa.setTipo(tipoEmpresa); 
+				empresa.setTipo(tipoEmpresa); 
 			} 			
-			
+						
 			if (tipoFornecimento != null &&
-			  !tipoFornecimento.trim().equals("")) {
-			  empresa.setTipoFornecimento(tipoFornecimento); 
+				!tipoFornecimento.trim().equals("")) {
+				empresa.setTipoFornecimento(tipoFornecimento); 
 			}
-			
+						
 			if (empresa != null) {
 				fornecedor.setEmpresa(empresa);
 			}
-			 
+						 
 			if (email != null && !email.trim().equals("")) {
 				fornecedor.setEmail(email);
 			}
@@ -187,37 +236,12 @@ public class FornecedorViewHelper implements IViewHelper {
 				fornecedor.setEndereco(endereco);
 			}	
 
-			if (cnae != null) {
-				listaCnaes.add(cnae);
-				fornecedor.setCnaes(listaCnaes);
-			}
-
-			if (telefone != null) {
-				listaTelefones.add(telefone);
-				fornecedor.setTelefones(listaTelefones);
-			}
-
-			if (contato != null) {
-				listaContatos.add(contato);
-				fornecedor.setContatos(listaContatos);
-			}
-
-			if (produto != null) {
-				listaProdutos.add(produto);
-				fornecedor.setProdutosOfertados(listaProdutos);
-			}
-
-			if (servico != null) {
-				listaServicos.add(servico);
-				fornecedor.setServicosOfertados(listaServicos);
-				fornecedor.setStatus("ativo");
-			}
 
 			if (operacao.equals("ALTERAR")) {
-
 				int for_id = Integer.valueOf(request.getParameter("txtAlterarFornecedorId"));
 				fornecedor.setId(for_id);
 			}
+
 
 			} else {
 
@@ -267,13 +291,13 @@ public class FornecedorViewHelper implements IViewHelper {
 
 		if (operacao.equals("SALVAR")) {
 			if (resultado.getMsg().equals("Fornecedor salvo com sucesso.")) {
-				request.setAttribute("resultado", resultado);						//reflita :O
-				dispatcher = request.getRequestDispatcher("index.jsp");
+				request.setAttribute("resultado", resultado);						
+				dispatcher = request.getRequestDispatcher("ConsultarFornecedor.jsp");
 
 			} else {
 				request.setAttribute("resultado", resultado);
 				request.getSession().setAttribute("fornecedorSessao", resultado);
-				dispatcher = request.getRequestDispatcher("index.jsp");
+				dispatcher = request.getRequestDispatcher("ConsultarFornecedor.jsp");
 			}
 		} else if (operacao.equals("CONSULTAR")) {
 			
@@ -297,7 +321,6 @@ public class FornecedorViewHelper implements IViewHelper {
 			}
 
 		} else if (operacao.equals("EXCLUIR")) {
-
 			request.setAttribute("fornecedorSessao", resultado);
 			dispatcher = request.getRequestDispatcher("/ConsultarFornecedor?OPERACAO=CONSULTAR");
 		}

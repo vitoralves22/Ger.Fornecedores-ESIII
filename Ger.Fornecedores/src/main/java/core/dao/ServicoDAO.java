@@ -84,14 +84,15 @@ public class ServicoDAO extends AbstractJdbcDAO{
             StringBuilder sql = new StringBuilder();
             
             sql.append("UPDATE tab_servicos SET ser_descricao=?"); 
-            sql.append("WHERE ser_for_id=?");
+            sql.append("WHERE ser_for_id=? AND ser_id=?");
             
             try {
                 connection.setAutoCommit(false);
 
             pst = connection.prepareStatement(sql.toString());
             pst.setString(1, servico.getDescricao());
-            pst.setInt(2, servico.getForId());          
+            pst.setInt(2, servico.getForId());  
+            pst.setInt(3, servico.getId()); 
             pst.executeUpdate();
                         
 

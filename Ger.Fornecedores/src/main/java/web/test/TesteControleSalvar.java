@@ -20,7 +20,7 @@ public class TesteControleSalvar {
 	        List<Telefone> listaTelefones = new ArrayList<Telefone>();
 	
 	        Endereco endereco1 = new Endereco("ViranoAdireita", "cep1", "tipoLog1", "log1", "num1", "bai1", "comple1", "cid1", "RJ", "pais1");
-	        Fornecedor for1 = new Fornecedor("Creusa", "rzsocialDaCreusa", "99999999999999", "insmun1", "insest1", "email1", endereco1);
+	        Fornecedor for1 = new Fornecedor("Lenita", "rzsocialDaCreusa", "99999999999999", "insmun1", "insest1", "email1", endereco1);
 	        Cnae cnae1 = new Cnae("123");
 	        Contato ctt1 = new Contato("fulano1", "email1", "dpto1", new Telefone("11","22","40028922"));
 	        Telefone tel1 = new Telefone("11", "11", "1");
@@ -29,7 +29,7 @@ public class TesteControleSalvar {
 	        Servico ser1 = new Servico("ergerg");
 	        
 	        Endereco endereco2 = new Endereco("LogoAli", "cep2", "tipoLog2", "log2", "num2", "bai2", "comple2", "cid2", "SP", "pais2");
-	        Fornecedor for2 = new Fornecedor("Valentin", "rzsocial2", "99999999999999", "insmun2", "insest2", "email2", endereco2);   
+	        Fornecedor for2 = new Fornecedor("Kauan", "rzsocial2", "99999999999999", "insmun2", "insest2", "email2", endereco2);   
 	        Cnae cnae2 = new Cnae("321");
 	        Cnae cnae3 = new Cnae("456");
 	        Contato ctt2 = new Contato("fulano2", "email2", "dpto2", new Telefone("22","11","40028922"));

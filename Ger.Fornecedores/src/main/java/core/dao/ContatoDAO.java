@@ -90,7 +90,7 @@ public class ContatoDAO extends AbstractJdbcDAO {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE tab_contatos SET ctt_nome=?, ctt_dpto=?, ctt_email=?, ctt_dddtelefone=?, ctt_dditelefone=?, ctt_numerotelefone=?");
-		sql.append("WHERE ctt_for_id=?");
+		sql.append("WHERE ctt_for_id=? AND ctt_id=?");
 		
 		try {
 			connection.setAutoCommit(false);
@@ -105,6 +105,7 @@ public class ContatoDAO extends AbstractJdbcDAO {
 			pst.setString(5, ctt.getTelefone().getDdi());
 			pst.setString(6, ctt.getTelefone().getNumero());
 			pst.setInt(7, ctt.getForId());
+			pst.setInt(8, ctt.getId());
 			pst.executeUpdate();		
 					
 			connection.commit();					

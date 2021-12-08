@@ -3,7 +3,7 @@ package core.aplicacao;
 import dominio.EntidadeDominio;
 import java.util.List;
 
-public class Resultado extends EntidadeAplicacao {
+public class Resultado{
 
     private String msg;
     private List<EntidadeDominio> entidades;

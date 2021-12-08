@@ -13,6 +13,10 @@ public class Cnae extends EntidadeDominio {
     public Cnae(String codigo) {
         this.codigo = codigo;
     }
+    public Cnae(Integer id, String codigo) {
+    	super(id);
+        this.codigo = codigo;
+    }
     public Cnae(Integer id, String codigo, Date dtCadastro, Integer forId) {
         super(id, dtCadastro, forId);
         this.codigo = codigo;
