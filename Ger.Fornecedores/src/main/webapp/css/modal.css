@@ -55,15 +55,16 @@
 
 .modal-form{
     display: flex;
-    justify-content: space-between;
+    justify-content: revert;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 0 20px;
+    gap:5px 20px;
+    padding: 0 15px;
+    margin:8px;
 }
 
 .modal-field{
-    width: calc(50% - 10px);
-    height: 40px;
+    width: calc(90% - 10px);
+    height: 30px;
     outline-style: none;
     border-style: none;
     box-shadow: 0 0 2px var(--boxshadow-color);
@@ -80,6 +81,13 @@
     background-color: inherit;
     text-align: right;
     padding: 0 20px;
+}
+
+#conteudo-column{
+	width:300px;
+	height:35px;
+  	float:left;
+  	margin: 0 3px 20px 0; 	
 }
 
 @media (max-width:480px){

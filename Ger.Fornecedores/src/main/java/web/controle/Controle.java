@@ -24,6 +24,7 @@ public class Controle extends jakarta.servlet.http.HttpServlet {
         commands.put("VISUALIZAR", new VisualizarCommand());
         commands.put("CONSULTAR", new ConsultarCommand());
         commands.put("SALVAR", new SalvarCommand());
+        commands.put("RASCUNHO", new SalvarCommand());
         commands.put("EXCLUIR", new ExcluirCommand());
 
         vhs = new HashMap<>();
@@ -32,8 +33,7 @@ public class Controle extends jakarta.servlet.http.HttpServlet {
         vhs.put("/Ger.Fornecedores/VisualizarFornecedor", new FornecedorViewHelper());
         vhs.put("/Ger.Fornecedores/ConsultarFornecedor", new FornecedorViewHelper());
         vhs.put("/Ger.Fornecedores/SalvarFornecedor", new FornecedorViewHelper());
-        vhs.put("/Ger.Fornecedores/ExcluirFornecedor", new FornecedorViewHelper());
-        
+        vhs.put("/Ger.Fornecedores/ExcluirFornecedor", new FornecedorViewHelper());  
     }
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,8 +45,6 @@ public class Controle extends jakarta.servlet.http.HttpServlet {
         IViewHelper vh = vhs.get(uri);
 
         EntidadeDominio entidade = vh.getEntidade(request);
-        
-        System.out.println(entidade.getId());
        
         ICommand command = commands.get(operacao);
 

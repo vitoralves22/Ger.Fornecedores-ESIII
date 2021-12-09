@@ -10,7 +10,7 @@ public class ValidadorCnpj implements IStrategy {
 		String cnpj = fornecedor.getCnpj().replace("-", "").replace(".", "").replace("/", "");
 				
 		if(cnpj == null || cnpj.length()!=14){
-			return "CPNJ inválido";
+			return "CPNJ inválido<br/>";
 		}else {
 			return null;
 		}

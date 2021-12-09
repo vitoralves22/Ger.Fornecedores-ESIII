@@ -15,15 +15,14 @@ public class VerificarUnicidadeCnpj implements IStrategy {
 		Fornecedor fornecedorAnalisado = (Fornecedor)entidade;
 		Fornecedor cnpj = new Fornecedor();
 		
-		List<String> cnpjs = new ArrayList<String>();
+		
 		cnpj.setPesquisa(fornecedorAnalisado.getCnpj().toString());
 		List<EntidadeDominio> fornecedoresDoBanco = new FornecedorDAO().consultar(cnpj);
 		
-		for(EntidadeDominio entidades : fornecedoresDoBanco) {
-			Fornecedor f = (Fornecedor) entidades;
+		for(EntidadeDominio fornecedores : fornecedoresDoBanco) {
+			Fornecedor f = (Fornecedor) fornecedores;
 			if(f.getCnpj().equals(fornecedorAnalisado.getCnpj())) {
-				verificaDado = "Cnpj Já Existe";	
-				System.out.println("Aqui" + verificaDado);
+				verificaDado = "Cnpj Já Existe<br/>";	
 				break;
 			}
 		}

@@ -1,14 +1,11 @@
 package core.controle;
 
 import core.aplicacao.Resultado;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import core.business.IStrategy;
-import core.business.ValidadorCnpj;
-import core.business.ValidarDadosObrigatoriosFornecimento;
+import core.business.*;
 import core.business.VerificarUnicidadeCnpj;
 import core.dao.FornecedorDAO;
 import core.dao.IDAO;
@@ -30,9 +27,19 @@ public class Fachada implements IFachada {
         List<IStrategy> rnsSalvarFornecedor = new ArrayList<IStrategy>();
         rnsSalvarFornecedor.add(new ValidadorCnpj()); 
         rnsSalvarFornecedor.add(new VerificarUnicidadeCnpj());  
+        rnsSalvarFornecedor.add(new ValidadorDadosContato());  
+        rnsSalvarFornecedor.add(new ValidadorDadosFornecedor());  
+        rnsSalvarFornecedor.add(new ValidadorEndereco());  
+        rnsSalvarFornecedor.add(new ValidadorFornecimento()); 
         
         List<IStrategy> rnsAlterarFornecedor = new ArrayList<IStrategy>();
-        //List<IStrategy> rnsExcluirFornecedor = new ArrayList<IStrategy>();
+        rnsAlterarFornecedor.add(new ValidadorCnpj());  
+        rnsAlterarFornecedor.add(new ValidadorDadosContato());  
+        rnsAlterarFornecedor.add(new ValidadorDadosFornecedor());  
+        rnsAlterarFornecedor.add(new ValidadorEndereco());  
+        rnsAlterarFornecedor.add(new ValidadorFornecimento()); 
+        
+        List<IStrategy> rnsExcluirFornecedor = new ArrayList<IStrategy>();
 
         Map<String, List<IStrategy>> rnsFornecedor = new HashMap<String, List<IStrategy>>();
         rnsFornecedor.put("SALVAR", rnsSalvarFornecedor);
@@ -46,10 +53,12 @@ public class Fachada implements IFachada {
 	    public Resultado salvar(EntidadeDominio entidade) {
 	        resultado = new Resultado();
 	        String nomeClasse = entidade.getClass().getName();
-	        List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
-	        String msg = executarRegras(entidade, "SALVAR");
-
-	        if (msg == null) {
+	        List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();        
+	        Fornecedor f = (Fornecedor) entidade;
+	        
+	        if(f.getStatus() != "Rascunho" ) {
+	        	String msg = executarRegras(entidade, "SALVAR");
+	        if (msg == null ) {
 	            IDAO dao = daos.get(nomeClasse);
 	            try {
 	                dao.salvar(entidade);
@@ -68,6 +77,26 @@ public class Fachada implements IFachada {
 	            entidades.add(entidade);
 	            resultado.setEntidades(entidades);
 	        }
+	        
+	        }else{
+	        	IDAO dao = daos.get(nomeClasse);
+	            try {
+	                dao.salvar(entidade);
+	                entidades.add(entidade);
+	                resultado.setEntidades(entidades);
+	                resultado.setMsg("Salvo com sucesso.");
+
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	                resultado.setMsg("Não foi possivel registrar!");
+	                entidades.add(entidade);
+	                resultado.setEntidades(entidades);
+	            } 	
+	        }
+	       
+	       
+	       
+	       
 
 	        return resultado;
 	    }

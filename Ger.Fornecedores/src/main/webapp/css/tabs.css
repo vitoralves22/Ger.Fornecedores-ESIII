@@ -1,7 +1,6 @@
 .nav_tabs{
     width: 800px;
-    height: 450px;
-    
+    height: 500px;
     background-color: var(--primary-color);
     position: relative;
 }
@@ -42,11 +41,12 @@
     border-bottom: solid 5px var(--tabchecked-color);
     background-color: var(--background-color);
     display: none;
+    flex-direction: column;
     position: absolute;
     height: 90%;
     width: 100%;
     left: 0;
-    padding: 7%;	
+    padding: 3%;	
 }
 
 .rd_tab:checked ~ .tab-content{

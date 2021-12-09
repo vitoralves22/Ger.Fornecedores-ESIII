@@ -35,7 +35,7 @@ public class FornecedorViewHelper implements IViewHelper {
 					
 			// Dados de Endereco.
 			String endTipo = request.getParameter("txtEndTipo");
-			String endCEP = request.getParameter("txtEndCEP");
+			String endCEP = request.getParameter("txtEndCEP").replace(".", "").replace("/", "").replace("-", "");
 			String endTipoLogradouro = request.getParameter("txtEndTipoLogradouro");
 			String endLogradouro = request.getParameter("txtEndLogradouro");
 			String endNumero = request.getParameter("txtEndNumero");
@@ -127,6 +127,7 @@ public class FornecedorViewHelper implements IViewHelper {
 			String[] cttsDDD = request.getParameterValues("txtTelDDD");
 			String[] cttsNumero = request.getParameterValues("txtTelNumero");
 			
+			//if (cttsNome != null) {
 			for(int i = 0; i < cttsNome.length; i++) {
 				if (cttsId != null && !cttsId[i].trim().equals("") &&
 						cttsNome[i] != null && !cttsNome[i].trim().equals("") && 
@@ -144,8 +145,10 @@ public class FornecedorViewHelper implements IViewHelper {
 										cttsNumero[i] != null && !cttsNumero[i].trim().equals("")){
 					listaContatos.add(new Contato(cttsNome[i], cttsDepartamento[i], cttsEmail[i], new Telefone (cttsDDI[i], cttsDDD[i], cttsNumero[i])));
 				}	
+				
 			}
 			fornecedor.setContatos(listaContatos);
+			//}
 			
 			
 			
@@ -166,8 +169,9 @@ public class FornecedorViewHelper implements IViewHelper {
 					int proId = Integer.parseInt(produtosId[i]);
 					listaProdutos.add(new Produto(proId, produtosDescricao[i]));
 				}
+				fornecedor.setProdutosOfertados(listaProdutos);
 			}
-			fornecedor.setProdutosOfertados(listaProdutos);
+			
 			
 			
 						
@@ -186,19 +190,25 @@ public class FornecedorViewHelper implements IViewHelper {
 					int serId = Integer.parseInt(servicosId[i]);
 					listaServicos.add(new Servico(serId, servicosDescricao[i]));
 				}
+				fornecedor.setServicosOfertados(listaServicos);
 			}
-			fornecedor.setServicosOfertados(listaServicos);
+			
 			
 			// Dados do Fornecedor.
 			String nomeFantasia = request.getParameter("txtForNomeFantasia");
 			String razaoSocial = request.getParameter("txtForRazaoSocial");
-			String cnpj = request.getParameter("txtForCNPJ");
-			String inscricaoEstadual = request.getParameter("txtForInscricaoEstadual");
-			String inscricaoMunicipal = request.getParameter("txtForInscricaoMunicipal");
+			String cnpj = request.getParameter("txtForCNPJ").replace(".", "").replace("/", "").replace("-", "");
+			String inscricaoEstadual = request.getParameter("txtForInscricaoEstadual").replace("-", "").replace(".", "").replace("/", "");
+			String inscricaoMunicipal = request.getParameter("txtForInscricaoMunicipal").replace("-", "").replace(".", "").replace("/", "");
 			String tipoEmpresa = request.getParameter("txtForTipoEmpresa");
 			String tipoFornecimento = request.getParameter("txtForTipoFornecimento");
 			String email = request.getParameter("txtForEmail");
-						
+			String status = request.getParameter("txtForStatus");
+			
+			if (status != null && !status.trim().equals("")) {
+				fornecedor.setStatus(status);
+			}
+			
 			if (nomeFantasia != null && !nomeFantasia.trim().equals("")) {
 				fornecedor.setNmFantasia(nomeFantasia);
 			}
@@ -227,11 +237,17 @@ public class FornecedorViewHelper implements IViewHelper {
 			if (empresa != null) {
 				fornecedor.setEmpresa(empresa);
 			}
+			
+			if (empresa != null) {
+				fornecedor.setEmpresa(empresa);
+			}
+				
 						 
 			if (email != null && !email.trim().equals("")) {
 				fornecedor.setEmail(email);
 			}
-
+			
+				
 			if (endereco != null) {
 				fornecedor.setEndereco(endereco);
 			}	
@@ -240,6 +256,10 @@ public class FornecedorViewHelper implements IViewHelper {
 			if (operacao.equals("ALTERAR")) {
 				int for_id = Integer.valueOf(request.getParameter("txtAlterarFornecedorId"));
 				fornecedor.setId(for_id);
+			}
+			
+			if(operacao.equals("RASCUNHO")) {
+				fornecedor.setStatus("Rascunho");
 			}
 
 
@@ -275,6 +295,8 @@ public class FornecedorViewHelper implements IViewHelper {
 
 		}
 		return fornecedor;
+		
+		
 	}
 
 	@Override
@@ -289,7 +311,7 @@ public class FornecedorViewHelper implements IViewHelper {
 		
 		RequestDispatcher dispatcher = null;
 
-		if (operacao.equals("SALVAR")) {
+		if (operacao.equals("SALVAR")|| operacao.equals("RASCUNHO")) {
 			if (resultado.getMsg().equals("Fornecedor salvo com sucesso.")) {
 				request.setAttribute("resultado", resultado);						
 				dispatcher = request.getRequestDispatcher("ConsultarFornecedor.jsp");
@@ -313,11 +335,11 @@ public class FornecedorViewHelper implements IViewHelper {
 			if (resultado.getMsg().equals("Alterado com sucesso.")) {
 				request.setAttribute("resultado", resultado);
 				request.getSession().setAttribute("fornecedorSessao", resultado);
-				dispatcher = request.getRequestDispatcher("/ConsultarFornecedor?txtPesquisa=ativo&OPERACAO=CONSULTAR");
+				dispatcher = request.getRequestDispatcher("/ConsultarFornecedor.jsp");
 			} else {
 				request.setAttribute("resultado", resultado);
 				request.getSession().setAttribute("fornecedorSessao", resultado);
-				dispatcher = request.getRequestDispatcher("VisualizarFornecedor.jsp");
+				dispatcher = request.getRequestDispatcher("ConsultarFornecedor.jsp");
 			}
 
 		} else if (operacao.equals("EXCLUIR")) {

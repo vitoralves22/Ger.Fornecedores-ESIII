@@ -18,13 +18,19 @@
     background-color:var(--buttongreen-color);
 }
 
+.rascunho{
+	background-color:var(--buttonyellow-color);
+}
+
 .cancel{
     background-color:var(--buttonred-color);
 }
 
-.addContato{
+.buttom-add{
     background-color:var(--buttonblue-color);
     border-radius: 20px;
+    height:30px;
+    color: var(--text-color);
 }
 
 .button:hover{

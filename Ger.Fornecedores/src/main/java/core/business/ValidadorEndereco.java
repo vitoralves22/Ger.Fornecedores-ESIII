@@ -19,39 +19,39 @@ public class ValidadorEndereco implements IStrategy {
 		
 		
 		if ( tipoEndereco  == null || tipoEndereco.isBlank()){
-			return "Tipo do endereco obrigatório";
+			return "Tipo do endereco obrigatório<br/>";
 		}
 		
 		if ( tipoLogradouro== null ||tipoLogradouro.isBlank()) {
-			return "Tipo do logradouro obrigatório";	
+			return "Tipo do logradouro obrigatório<br/>";	
 		}
 		
 		if (logradouro == null || logradouro.isBlank()) {
-			return "Logradouro obrigatório";	
+			return "Logradouro obrigatório<br/>";	
 		}
 		
 		if (numero == null || numero.isBlank()) {
-			return "Número obrigatório";	
+			return "Número obrigatório<br/>";	
 		}
 
 		if (bairro == null || bairro.isBlank()) {
-			return "Bairro obrigatório";	
+			return "Bairro obrigatório<br/>";	
 		}
 		
 		if (cidade == null|| cidade.isBlank()) {
-			return "Cidade obrigatória";	
+			return "Cidade obrigatória<br/>";	
 		}
 
 		if (estado == null || estado.isBlank()) {
-			return "Estado obrigatório";	
+			return "Estado obrigatório<br/>";	
 		}
 		
 		if (pais == null || pais.isBlank()) {
-			return "País obrigatório";	
+			return "País obrigatório<br/>";	
 		}
 
 		if (cep == null || cep.isBlank()) {
-			return "CEP obrigatório";	
+			return "CEP obrigatório<br/>";	
 		
 		}else {
 			return null;

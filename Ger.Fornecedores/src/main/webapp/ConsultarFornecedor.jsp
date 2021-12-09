@@ -30,14 +30,13 @@
 		href="https://fonts.googleapis.com/icon?family=Material+Icons">	
 		<script src="main.js" defer></script> 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script>
 </head>
 
 <body>
 
-	    <%
-            Resultado resultado = (Resultado) session.getAttribute("fornecedorSessao");
-        %>                
+	               
         
 	<header>
 		<h1 class="header-title">Cadastro de Fornecedores</h1>
@@ -47,7 +46,6 @@
 	
 		 <div>
     		<button type="button" class="button blue mobile" id="cadastrarFornecedor">Cadastrar Fornecedor</button>					
-			<span id="spanSearch" class="search material-icons">search</span>
    		 </div>
 		
 		
@@ -55,8 +53,12 @@
               <input type="text" class="form-control" id="txtPesquisa"name="txtPesquisa" placeholder="Pesquisa">
               <input class="btn btn-info" type="submit" id="OPERACAO" name="OPERACAO" value="CONSULTAR" />
         </form>
+      
 			
 		<table id="tableFornecedor" class="records">
+		  	    <%
+            		Resultado resultado = (Resultado) session.getAttribute("fornecedorSessao");
+       			 %> 
 				<thead>
                     <tr>
 						<th>ID</th>
@@ -65,8 +67,7 @@
 						<th>Email</th>
 						<th>Status</th>	
 						<th>Visualizar</th>	
-						<th>Excluir</th>	
-									
+						<th>Excluir</th>				
 					</tr>
                 </thead>		
 
@@ -76,8 +77,7 @@
                         if (fornecedores != null) {
                             for (int i = 0; i < fornecedores.size(); i++) {
                                 Fornecedor f = (Fornecedor) fornecedores.get(i);
-
-                                
+                                	if(f.getId() != null){                   
                 %>
                  <tr>
                     <td><%= f.getId()%></td>
@@ -85,17 +85,18 @@
                     <td><%= f.getCnpj()%></td>
                     <td><%= f.getEmail()%></td>
                     <td><%= f.getStatus()%></td>
-                    <td><a href="${pageContext.request.contextPath}/ConsultarFornecedor?txtListaId=<%=f.getId()%>&OPERACAO=VISUALIZAR" class="btn btn-default" >Visualizar</a></td>
-                    <td><a href="${pageContext.request.contextPath}/ExcluirFornecedor?OPERACAO=EXCLUIR&txtListaId=<%=f.getId()%>" class="btn btn-default" >Excluir</a></td>
+                    <td><a href="${pageContext.request.contextPath}/ConsultarFornecedor?txtListaId=<%=f.getId()%>&OPERACAO=VISUALIZAR" class="btn btn-default" ><span class="consult material-icons">description</span></a></td>
+                    <td><a href="${pageContext.request.contextPath}/ExcluirFornecedor?OPERACAO=EXCLUIR&txtListaId=<%=f.getId()%>" class="btn btn-default" ><span class="delete material-icons">delete</span></a></td>
                 </tr>
 
                 <%
-                                
-                            }
-                        }
-                    }
+                                	} 
+                           	}
+                       	}
+                   	}
                 %>
-
+				
+				
 		</table>
 		
 		
@@ -117,7 +118,7 @@
 				  
 						  $(addCnaeButton).click(function (e) { //on add input button click
 							e.preventDefault();
-							$(wrapperCnaes).append('<div id="form2" class="modal-form"><input id="txtCnaeCodigo" type="text" name="txtCnaeCodigo" class="modal-field" placeholder="CNAE"><a style="text-align:right" href="#" class="remove_field">Remover CNAE</a></div>');
+							$(wrapperCnaes).append('<div id="form2" class="modal-form"><div id="conteudo-column" class="conteudo-column"><label for="txtCnaeCodigo">CNAE: </label><br><input id="txtCnaeCodigo" type="text" name="txtCnaeCodigo" class="modal-field" placeholder="CNAE" ></div><a style="text-align:right" href="#" class="remove_field"><span class="delete material-icons">delete</span></a></div>');
 						  });
 				  
 						  $(wrapperCnaes).on("click", ".remove_field", function (e) { //user click on remove text
@@ -134,7 +135,7 @@
 				  
 						  $(addTelButton).click(function (e) { //on add input button click
 							e.preventDefault();
-							$(wrapperTels).append('<div id="form6" class="modal-form"><input id="ddd_telefone" type="text" name="ddd_telefone" class="modal-field" placeholder="DDD"><input id="ddi_telefone" type="text" name="ddi_telefone" class="modal-field" placeholder="DDI"><input id="numero_telefone" type="text" name="numero_telefone" class="modal-field" placeholder="Numero"><a style="text-align:right" href="#" class="remove_field">Remover Telefone</a></div>');
+							$(wrapperTels).append('<div id="form6" class="modal-form"><div id="conteudo-column" class="conteudo-column"><label for="ddi_telefone">DDI: </label><br><input id="ddi_telefone" name="ddi_telefone" type="text" class="modal-field" placeholder="DDI" maxlength="3"></div><div id="conteudo-column" class="conteudo-column"><label for="ddd_telefone">DDD: </label><br><input id="ddd_telefone" name="ddd_telefone" type="text" class="modal-field" placeholder="DDD" maxlength="2"></div><div id="conteudo-column" class="conteudo-column"><label for="numero_telefone">Numero: </label><br><input id="numero_telefone" name="numero_telefone" type="tel" class="modal-field" placeholder="Numero"></div><a style="text-align:right" href="#" class="remove_field"><span class="delete material-icons">delete</span></a></div>');
 						  });
 				  
 						  $(wrapperTels).on("click", ".remove_field", function (e) { //user click on remove text
@@ -151,7 +152,7 @@
 				  
 						  $(addCttButton).click(function (e) { //on add input button click
 							e.preventDefault();
-							$(wrapperCtts).append('<div id="form5" class="modal-form"><input id="txtCttnome" type="text" name="txtCttnome" class="modal-field" placeholder="Nome"><input id="txtCttemail" type="text" name="txtCttemail" class="modal-field" placeholder="Email"><input id="txtCttdepartamento" type="text" name="txtCttdepartamento" class="modal-field" placeholder="Departamento"><input id="txtTelDDI" type="text" name="txtTelDDI" class="modal-field" placeholder="DDI"><input id="txtTelDDD" type="text" name="txtTelDDD" class="modal-field" placeholder="DDD"><input id="txtTelNumero" type="text" name="txtTelNumero" class="modal-field" placeholder="Numero Tel"><a style="text-align:right" href="#" class="remove_field">Remover Telefone</a></div>');
+							$(wrapperCtts).append('<div id="form5" class="modal-form"><div id="conteudo-column" class="conteudo-column"><label for="txtCttnome">Nome: </label><br><input id="txtCttnome" name="txtCttnome" type="text" class="modal-field" placeholder="Nome" ></div><div id="conteudo-column" class="conteudo-column"><label for="txtCttemail">Email: </label><br><input id="txtCttemail" name="txtCttemail" type="email" class="modal-field" placeholder="Email" ></div><div id="conteudo-column" class="conteudo-column"><label for="txtCttdepartamento">Departamento: </label><br><input id="txtCttdepartamento" name="txtCttdepartamento" type="text" class="modal-field" placeholder="Departamento" ></div><div id="conteudo-column" class="conteudo-column"><label for="txtTelDD">DDI: </label><br><input id="txtTelDDI" name="txtTelDDI" type="text" class="modal-field" placeholder="DDI" maxlength="3"> </div><div id="conteudo-column" class="conteudo-column"><label for="txtTelDDD">DDD: </label><br><input id="txtTelDDD" name="txtTelDDD" type="text" class="modal-field" placeholder="DDD" maxlength="2"></div><div id="conteudo-column" class="conteudo-column"><label for="txtTelNumero">Numero telefone: </label><br><input id="txtTelNumero" name="txtTelNumero" type="tel" class="modal-field" placeholder="Telefone" maxlength="9"></div><a style="text-align:right" href="#" class="remove_field"><span class="delete material-icons">delete</span></a></div>');
 						  });
 				  
 						  $(wrapperCtts).on("click", ".remove_field", function (e) { //user click on remove text
@@ -169,7 +170,7 @@
 				  
 						  $(addFornButton).click(function (e) { //on add input button click
 							e.preventDefault();
-							$(wrapperForn).append('<div id="form3" class="modal-form"><input id="txtDescProduto" type="text" name="txtDescProduto" class="modal-field" placeholder="Produto"><input id="txtDescServico" type="text" name="txtDescServico" class="modal-field" placeholder="Servico"><a style="text-align:right" href="#" class="remove_field">Remover</a></div>');
+							$(wrapperForn).append('<div id="form3" class="modal-form"><div id="conteudo-column" class="conteudo-column"><label for="txtDescProduto">Produto: </label><br><input id="txtDescProduto" name="txtDescProduto" type="text" class="modal-field" placeholder="Produto"></div><div id="conteudo-column" class="conteudo-column"><label for="txtDescServico">Servico: </label><br><input id="txtDescServico" name="txtDescServico" type="text" class="modal-field" placeholder="Servico"></div><a style="text-align:right" href="#" class="remove_field"><span class="delete material-icons">delete</span></a></div>');
 						  });
 				  
 						  $(wrapperForn).on("click", ".remove_field", function (e) { //user click on remove text
@@ -178,7 +179,15 @@
 				  
 						});
 	  				</script>
-	  				
+	  				<script>
+	  					$(document).ready(function(){
+							$("#txtForCNPJ").mask("00.000.000/0000-00");
+							$("#txtTelNumero").mask("0000-0000");
+							$("#txtTelDDI").mask('000');
+							$("#txtTelDDD").mask('00');
+							$("#txtEndCEP").mask('00000-000');
+						});
+					</script>
 	  				
 				<nav class="nav_tabs">
 					<ul>
@@ -189,66 +198,109 @@
 								<h1></h1>
 								<div id="form" class="modal-form">
 
-									<input id="txtForNomeFantasia" name="txtForNomeFantasia"  type="text" data-index="new" class="modal-field"
-										placeholder="Nome Fantasia" >
-
-									<input id="txtForRazaoSocial" name="txtForRazaoSocial" type="text" class="modal-field"
-										placeholder="Razão Social" > 
-										
-									<input id="txtForCNPJ" name="txtForCNPJ" type="text" class="modal-field" 
-										placeholder="CNPJ" maxlength="14"> 
+									<div id="conteudo-column" class="conteudo-column">
+				                        <label for="txtForNomeFantasia">Nome Fantasia: </label>
+										<br>
+										<input id="txtForNomeFantasia" name="txtForNomeFantasia"  type="text" data-index="new" class="modal-field" 
+											placeholder="Nome Fantasia" >
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+				                        <label for="txtForRazaoSocial">Razao Social: </label>
+										<br>
+										<input id="txtForRazaoSocial" name="txtForRazaoSocial" type="text" class="modal-field"
+											placeholder="Razão Social" >  
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtForCNPJ">CNPJ: </label>
+										<br>
+										<input id="txtForCNPJ" name="txtForCNPJ" type="text" class="modal-field" 
+											placeholder="CNPJ" maxlength="14">  
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtForInscricaoEstadual">Inscricao Estadual: </label>
+										<br>
+										<input id="txtForInscricaoEstadual" name="txtForInscricaoEstadual" type="text" class="modal-field" 
+											placeholder="Inscrição Estadual" maxlength="15" > 
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtForInscricaoMunicipal">Inscricao Municipal: </label>
+										<br>
+										<input id="txtForInscricaoMunicipal" name="txtForInscricaoMunicipal" type="text" class="modal-field" 
+											placeholder="Inscrição Municipal" maxlength="15"> 
+									</div>
+									<div id="conteudo-column" class="conteudo-column">	
+										<label for="txtForEmail">Email: </label>
+										<br>
+										<input id="txtForEmail" name="txtForEmail" type="text" class="modal-field"
+											placeholder="Email" > 
+									</div>
 									
-									<input id="txtForInscricaoEstadual" name="txtForInscricaoEstadual" type="text" class="modal-field" 
-										placeholder="Inscrição Estadual" maxlength="11" > 
+									<div id="conteudo-column" class="conteudo-column">	
+										<label for="txtForStatus">Status: </label>
+										<br>
+										<select id="txtForStatus" name="txtForStatus" class="modal-field">
+											<option value="Ativo" >Ativo</option>
+											<option value="Inativo" >Inativo</option>
+											
+										</select>
+									</div>
 									
-									<input id="txtForInscricaoMunicipal" name="txtForInscricaoMunicipal" type="text" class="modal-field" 
-										placeholder="Inscrição Municipal" maxlength="11"> 
-										
-									<input id="txtForEmail" name="txtForEmail" type="text" class="modal-field"
-										placeholder="Email" > 
-										
-									<input id="txtForTipoEmpresa" name="txtForTipoEmpresa" type="text" class="modal-field"
-										placeholder="Tipo Empresa" > 
-										
-									<input id="txtForTipoFornecimento" name="txtForTipoFornecimento" type="text" class="modal-field"
-										placeholder="Tipo Fornecimento" >
-
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtForTipoEmpresa">TipoEmpresa: </label>
+										<br>
+										<input id="txtForTipoEmpresa" name="txtForTipoEmpresa" type="text" class="modal-field"
+											placeholder="Tipo Empresa" >  
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtForTipoFornecimento">Tipo Fornecimento: </label>
+										<br>
+										<select id="txtForTipoFornecimento" name="txtForTipoFornecimento" class="modal-field">
+											<option value="Produto" >Produto</option>
+											<option value="Serviço" >Serviço</option>
+											<option value="Ambos" >Ambos</option>
+										</select>
+									</div>	
 								</div>
 							</div></li>
-							
-							
+						
 						<li><input type="radio" name="tabs" class="rd_tab" id="tab2">
 							<label for="tab2" class="tab_label">CNAE</label>
 							<div class="tab-content">
 								<h2></h2>
 								<div class="wrapperCnaes">
 								<div id="form2" class="modal-form">
-								
-									<input id="txtCnaeCodigo" type="text" name="txtCnaeCodigo" class="modal-field" 
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtCnaeCodigo">CNAE: </label>
+										<br>
+										<input id="txtCnaeCodigo" type="text" name="txtCnaeCodigo" class="modal-field" 
 										placeholder="CNAE" >
-
-									<button type="button" class="button addContato"
+									</div>
+									<button type="button" class="buttom-add"
 										id="addCnaeButton">Add+</button>
 								</div>
-								</div>
-								
+								</div>	
 							</div></li>
-							
-							
+
 						<li><input type="radio" name="tabs" class="rd_tab" id="tab3">
 							<label for="tab3" class="tab_label">Fornecimento</label>
 							<div class="tab-content">
 								<h2></h2>
 								<div class="wrapperFornecimento">
 								<div id="form3" class="modal-form">
-								
-									<input id="txtDescProduto" name="txtDescProduto" type="text" class="modal-field" 
-										placeholder="Produto"> 
-											
-									<input id="txtDescServico" name="txtDescServico" type="text" class="modal-field" 
-										placeholder="Servico">
-									
-									<button type="button" class="button addContato"
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtDescProduto">Produto: </label>
+										<br>
+										<input id="txtDescProduto" name="txtDescProduto" type="text" class="modal-field" 
+											placeholder="Produto"> 
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtDescServico">Servico: </label>
+										<br>
+										<input id="txtDescServico" name="txtDescServico" type="text" class="modal-field" 
+											placeholder="Servico">
+									</div>
+
+									<button type="button" class="buttom-add"
 										id="addFornecimento">Add+</button>
 								</div>	
 								</div>
@@ -258,35 +310,66 @@
 							<div class="tab-content">
 								<h2></h2>
 								<div id="form4" class="modal-form">
-									<input id="txtEndTipo" name="txtEndTipo" type="text" class="modal-field" 
-										placeholder="Tipo Endereço" > 
-										
-									<input id="txtEndTipoLogradouro" name="txtEndTipoLogradouro" type="text" class="modal-field"
-										placeholder="Tipo Logradouro" > 
-										
-									<input id="txtEndLogradouro" name="txtEndLogradouro" type="text" class="modal-field" 
-										placeholder="Logradouro" >
-										
-									<input id="txtEndNumero" name="txtEndNumero" type="text" class="modal-field" 
-										placeholder="Numero" >
-										
-									<input id="txtEndBairro" name="txtEndBairro" type="text" class="modal-field"
-										placeholder="Bairro" > 
-										
-									<input id="txtEndCidade" name="txtEndCidade" type="text" class="modal-field"
-										placeholder="Cidade" >
-										
-									<input id="txtEndEstadoUf" name="txtEndEstadoUf" type="text" class="modal-field"
-										placeholder="UF" maxlength="2"> 
-										
-									<input id="txtEndPais" name="txtEndPais" type="text" class="modal-field"
-										placeholder="País" > 
-										
-									<input id="txtEndCEP" name="txtEndCEP" type="text" class="modal-field"
-										placeholder="CEP" maxlength="8"> 
-										
-									<input id="txtEndComplemento" name="txtEndComplemento" type="text" class="modal-field"
-										placeholder="Complemento">
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtEndTipo">Tipo Endereco: </label>
+										<br>
+										<input id="txtEndTipo" name="txtEndTipo" type="text" class="modal-field" 
+											placeholder="Tipo Endereço" > 	 
+									</div>	
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtEndTipoLogradouro">Tipo Logradouro: </label>
+										<br>
+										<input id="txtEndTipoLogradouro" name="txtEndTipoLogradouro" type="text" class="modal-field"
+											placeholder="Tipo Logradouro" >  
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtEndLogradouro">Logradouro: </label>
+										<br>
+										<input id="txtEndLogradouro" name="txtEndLogradouro" type="text" class="modal-field" 
+											placeholder="Logradouro" >   
+									</div>		
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtEndNumero">Numero: </label>
+										<br>
+										<input id="txtEndNumero" name="txtEndNumero" type="text" class="modal-field" 
+											placeholder="Numero" >  
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtEndBairro">Bairro: </label>
+										<br>
+										<input id="txtEndBairro" name="txtEndBairro" type="text" class="modal-field"
+											placeholder="Bairro" >    
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtEndCidade">Cidade: </label>
+										<br>
+										<input id="txtEndCidade" name="txtEndCidade" type="text" class="modal-field"
+											placeholder="Cidade" > 
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtEndEstadoUf">UF: </label>
+										<br>
+										<input id="txtEndEstadoUf" name="txtEndEstadoUf" type="text" class="modal-field"
+											placeholder="UF" maxlength="2"> 
+									</div>	
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtEndPais">País: </label>
+										<br>
+										<input id="txtEndPais" name="txtEndPais" type="text" class="modal-field"
+											placeholder="País" >
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtEndCEP">CEP: </label>
+										<br>
+										<input id="txtEndCEP" name="txtEndCEP" type="text" class="modal-field"
+											placeholder="CEP" maxlength="8">  
+									</div>	
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtEndComplemento">Complemento: </label>
+										<br>
+										<input id="txtEndComplemento" name="txtEndComplemento" type="text" class="modal-field"
+											placeholder="Complemento">
+									</div>	
 								</div>
 							</div></li>
 						<li><input type="radio" name="tabs" class="rd_tab" id="tab5">
@@ -295,25 +378,43 @@
 								<h2></h2>
 								<div class="wrapperContatos">
 								<div id="form5" class="modal-form">
-									<input id="txtCttnome" name="txtCttnome" type="text" class="modal-field" 
-										placeholder="Nome" > 
-										
-									<input id="txtCttemail" name="txtCttemail" type="email" class="modal-field" 
-										placeholder="Email" >
-										
-									<input id="txtCttdepartamento" name="txtCttdepartamento" type="text" class="modal-field" 
-										placeholder="Departamento" > 
-										
-									<input id="txtTelDDI" name="txtTelDDI" type="text" class="modal-field" 
-										placeholder="DDI" maxlength="3"> 
-										
-									<input id="txtTelDDD" name="txtTelDDD" type="text" class="modal-field" 
-										placeholder="DDD" maxlength="2">
-										
-									<input id="txtTelNumero" name="txtTelNumero" type="tel" class="modal-field" 
-										placeholder="Telefone" maxlength="9">
-									
-									<button type="button" class="button addContato"
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtCttnome">Nome: </label>
+										<br>
+										<input id="txtCttnome" name="txtCttnome" type="text" class="modal-field" 
+											placeholder="Nome" > 
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtCttemail">Email: </label>
+										<br>
+										<input id="txtCttemail" name="txtCttemail" type="email" class="modal-field" 
+											placeholder="Email" >
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtCttdepartamento">Departamento: </label>
+										<br>
+										<input id="txtCttdepartamento" name="txtCttdepartamento" type="text" class="modal-field" 
+											placeholder="Departamento" >
+									</div>	
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtTelDD">DDI: </label>
+										<br>
+										<input id="txtTelDDI" name="txtTelDDI" type="text" class="modal-field" 
+											placeholder="DDI" maxlength="3"> 
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtTelDDD">DDD: </label>
+										<br>
+										<input id="txtTelDDD" name="txtTelDDD" type="text" class="modal-field" 
+											placeholder="DDD" maxlength="2">
+									</div>	
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="txtTelNumero">Numero telefone: </label>
+										<br>
+										<input id="txtTelNumero" name="txtTelNumero" type="tel" class="modal-field" 
+											placeholder="Telefone" maxlength="9">
+									</div> 	
+									<button type="button" class="buttom-add"
 										id="addCtt">Add+</button>
 								</div>
 								</div>
@@ -325,16 +426,25 @@
 								<h2></h2>
 								<div class="wrapperTelefones">
 								<div id="form6" class="modal-form">
-									<input id="ddd_telefone" name="ddd_telefone" type="text" class="modal-field" 
-										placeholder="DDD" maxlength="2"> 
-										
-									<input id="ddi_telefone" name="ddi_telefone" type="text" class="modal-field" 
-										placeholder="DDI" maxlength="3"> 
-										
-									<input id="numero_telefone" name="numero_telefone" type="tel" class="modal-field" 
-										placeholder="Numero">
-										
-									<button type="button" class="button addContato"
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="ddi_telefone">DDI: </label>
+										<br>
+										<input id="ddi_telefone" name="ddi_telefone" type="text" class="modal-field" 
+											placeholder="DDI" maxlength="3"> 
+									</div> 
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="ddd_telefone">DDD: </label>
+										<br>
+										<input id="ddd_telefone" name="ddd_telefone" type="text" class="modal-field" 
+											placeholder="DDD" maxlength="2"> 
+									</div>
+									<div id="conteudo-column" class="conteudo-column">
+										<label for="numero_telefone">Numero: </label>
+										<br>
+										<input id="numero_telefone" name="numero_telefone" type="tel" class="modal-field" 
+											placeholder="Numero">
+									</div>
+									<button type="button" class="buttom-add"
 										id="addTel">Add+</button>
 								</div>
 								</div>
@@ -344,20 +454,20 @@
 				</nav>
 				<footer class="modal-footer">				
 					 <input type="submit" class="button save" id="OPERACAO" name="OPERACAO" value="SALVAR"/>
+					 <input type="submit" class="button rascunho" id="OPERACAO" name="OPERACAO" value="RASCUNHO"/>
 				</footer>
 			</div>
 			</form>
 		</div>
-				<div>
-                    <h5>
-                        <%
-                            if (resultadoCadastro != null && resultado.getMsg() != null) {
-                                out.print(resultado.getMsg());
-
-                            }
-                        %>
-                    </h5>
-                </div>
+		<div>
+            <h5>
+               <%
+                   if (resultadoCadastro != null && resultado.getMsg() != null) {
+                      out.println(resultado.getMsg());
+                   }
+               %>         
+            </h5>
+        </div>
 	</main>
 	<footer> </footer>
 </html>
